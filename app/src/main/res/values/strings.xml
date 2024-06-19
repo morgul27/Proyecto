@@ -1,0 +1,131 @@
+<resources>
+    <string name="app_name">Proyecto</string>
+
+    <!--Inicio P1 de todos-->
+    <string name="iniNosf">Una noche de las muchas que han pasado por tu vida, te levantas junto a tus dos hermanos, Pepe (Gangrel) y Antonio (Brujah). Cada uno de los tres hermanos tiene un clan distinto, pero eso no os impide hacer vida juntos, aunque haya veces que vuestros planes interfieran en los objetivos de algún clan y os peleéis. Esta noche habéis decidido salir a cazar juntos por Jerez.</string>
+    <string name="iniGang">Una noche de las muchas que han pasado por tu vida, te levantas junto a tus dos hermanos, Juan (Nosferatu) y Antonio (Brujah). Cada uno de los tres hermanos tiene un clan distinto, pero eso no os impide hacer vida juntos, aunque haya veces que vuestros planes interfieran en los objetivos de algún clan y os peleéis. Esta noche habéis decidido salir a cazar juntos por Jerez.</string>
+    <string name="iniBr">Una noche de las muchas que han pasado por tu vida, te levantas junto a tus dos hermanos, Pepe (Gangrel) y Juan (Nosferatu). Cada uno de los tres hermanos tiene un clan distinto, pero eso no os impide hacer vida juntos, aunque haya veces que vuestros planes interfieran en los objetivos de algún clan y os peleéis. Esta noche habéis decidido salir a cazar juntos por Jerez.</string>
+
+
+    <!--Nosferatu Juan-->
+    <!--P1-->
+    <string name="p1PierdesN">Decides ir con tus hermanos hacia la ciudad, cuando de repente oyes un grito de pánico, te giras y ves una mujer y sus dos hijos gritando y señalándote. El grito alerta a un policía que andaba cerca, viene corriendo, te ve, siente miedo y te dispara sin dudarlo. Tus dos hermanos no pueden reaccionar de lo rápido que ha pasado todo.\n\nPerdiste</string>
+    <string name="p1GanasN">Se te ocurre ir por la alcantarilla para no asustar a nadie y no romper la mascarada.</string>
+
+    <!--P2-->
+    <string name="p2TextN">Quedas con tus hermanos en un lugar concreto, pero tú esperas bajo las alcantarillas.</string>
+    <string name="p2GanasN">Ves a una rata</string>
+    <string name="p2PierdesN">No te das cuentas que hay una rata y esperas</string>
+    <!--P3.1-->
+    <string name="p31TextN">Te das cuenta que hay una rata</string>
+    <string name="p31E1N">Usar animalismo y hablar con ella</string>
+    <string name="p31E2N">Ignorarla</string>
+
+    <!--P3.2-->
+    <string name="p32TextN">La rata te cuenta que en la calle donde han ido a cazar tus hermanos está llena de policías. Sin embargo en dos calles paralelas hay muchas discotecas llenas de gente, pero no se encuentran policías allí.</string>
+    <string name="p32E1N">Llamar a tus hermanos por teléfono</string>
+    <string name="p32E2N">Ignorar la advertencia</string>
+
+    <!--P4.1-->
+    <string name="p41TextN">Decides creer a la rata y llama a tus hermanos por teléfono. Gracias a ti, consiguen convencer a 3 personas y tus hermanos se reúnen contigo.</string>
+
+    <!--P4.2-->
+    <string name="p42TextN">Esperas un rato y de repente entran a tus hermanos frenéticamente junto a 1 persona, han tenido bastantes problemas para encontrar gente y eludir a la policía</string>
+
+    <!--P5.1-->
+    <string name="p51TextN">Tu hermano Brujah quiere guardar sangre, para su clan, para eso, todos tenéis que beber menos. Intentas convencerle de que no lo haga</string>
+
+    <!--P5.2-->
+    <string name="p52TextN">Tu hermano Brujah quiere guardar sangre, para su clan, para eso, todos tenéis que beber menos. Intentas convencerle de que no lo haga</string>
+
+    <!--P6-->
+    <string name="p6TextN">Convences a tu hermano y bebéis toda la sangre que podáis.\nFIN</string>
+
+    <!--P7-->
+    <string name="p7TextN">Tu hermano Brujah te da un puñetazo a ti y a tu hermano Gangrel y os quedáis sin beber.\nFIN</string>
+
+    <!--Brujah Antonio-->
+    <!--P2-->
+    <string name="p2TextB">Tu hermano Juan ha decidido esperaros bajo la alcantarilla, mientras Pepe y tú vais de caza. Para ver mejor la ciudad, decides saltar discretamente de edificio en edificio y ver donde hay más personas</string>
+
+    <!--P3.1-->
+    <string name="p31TextB">Ves qué calle está más concurrida y os dirigís para allá. Y allí os encontráis con mucha gente. Intentáis convencer a gente, para que os acompañe.</string>
+
+    <!--P3.2-->
+    <string name="p32TextB">Te chocas con un edificio, te duele mucho el cuerpo y ves a tu hermano riéndose de tí. Intentas despegarte del edificio y vas a la primera calle con gente que encuentres.</string>
+
+    <!--P4.1-->
+    <string name="p41TextB">Os resulta fácil convencer a gente. Conseguís a 3 humanos, os lo lleváis a la alcantarilla para que Juan también pueda alimentarse. Caes en la cuenta que puedes guardar sangre para tu clan, pero para eso necesitáis beber menos sangre.</string>
+    <string name="p41E1B">Seguir bebiendo con tus hermanos </string>
+    <string name="p41E2B">Intentar amenazar a tus hermanos</string>
+
+    <!--P4.2-->
+    <string name="p42TextB">Cuando llegáis a la calle veis que llega la policía, esto os dificulta mucho, convencer a personas y solo conseguís a una. Llegas a la alcantarilla con la presa y bastante enfadado con el resultado tan pobre. Caes en la cuenta que puedes guardar sangre para tu clan, pero para eso necesitáis beber menos sangre.</string>
+    <string name="p42E1B">Seguir bebiendo con tus hermanos </string>
+    <string name="p42E2B">Intentar amenazar a tus hermanos</string>
+
+    <!--P5.1-->
+    <string name="p51TextB">Borras esa idea tan absurda de tu mente. Cuando ya habéis bebido lo suficiente, lleváis vuestro botín donde estaba y regresáis a casa tranquilamente.\nFIN</string>
+
+    <!--P5.2-->
+    <string name="p52TextB">Consigues intimidar a tus hermanos y huyen. Aunque hayas conseguido sangre para tu clan no volviste a ver a tus hermanos.\nFIN</string>
+
+    <!--P5.3-->
+    <string name="p53TextB">Tus hermanos protestan y te provocan, te enfadas muchísimo y les golpeas. Se levantaron una semana más tarde, tuvieron suerte de estar en las alcantarillas.\nFIN</string>
+
+    <!--Gangrel Pepe-->
+    <!--P2-->
+    <string name="p2TextG">Decides usar Protean para ponerte oídos de murciélago y poder oír mejor.</string>
+
+    <!--P3.1-->
+    <string name="p31TextG">Usas tus oídos de murciélago y decides por qué calle vais a ir y a continuación transformas tus oídos a su forma original.</string>
+
+    <!--P3.2-->
+    <string name="p32TextG">El poder se te ha descontrolado y empiezas a sentir dificultades.</string>
+
+    <!--P3.3-->
+    <string name="p33TextG">Has podido controlar tu poder, pero tus orejas se han quedado en forma de murciélago. Como así vas a llamar mucho la atención decides ir a tu refugio a fumar.\nFIN</string>
+
+    <!--P3.4-->
+    <string name="p34TextG">No has podido controlar tu poder, de todos los sonidos que te han llegado explotan tus oídos. Mueres de dolor.\nFIN</string>
+
+    <!--P4-->
+    <string name="p4TextG">Consigues controlar tus poderes, oír donde hay más gente y transformar tus orejas a tu forma original</string>
+    <string name="p4E1G">Ir donde la gente</string>
+    <string name="p4E2G">Ir a un lugar más apartado</string>
+
+    <!--P5.1-->
+    <string name="p51TextG">Llegáis a la calle y veis mucha policía</string>
+
+    <!--P5.2-->
+    <string name="p52TextG">Tan solo veis a 1 persona, conseguís convencerla para que os siga. De repente veis a otras 2 personas</string>
+    <string name="p52E1G">Convencerles</string>
+    <string name="p52E2G">No convencerles</string>
+
+    <!--P6.1-->
+    <string name="p61TextG">Conseguís evitar a la policía y convencer a 3 personas para que os sigan, bajais a las alcantarillas.</string>
+
+    <!--P6.2-->
+    <string name="p62TextG">La policía casi os pilla. Aún así conseguís convencer a 1 persona. Algo decepcionados os dirigis a las alcantarillas</string>
+
+    <!--P7-->
+    <string name="p7TextG">Os encontráis con Juan y bebéis cuanta sangre podéis. Lleváis a las personas de vuelta a la superficie. Bajáis otra vez a las alcantarillas. Os vais con Juan a casa feliz y bromeando.\nFIN</string>
+
+    <!--P8-->
+    <string name="p8TextG">Solo habéis conseguido a 1 persona. Bajais con Juan e intentáis alimentaros. De repente Antonio se le ocurre la absurda idea, de llevar sangre a su Clan</string>
+
+    <!--P8.1-->
+    <string name="p81TextG">Convenceis a Antonio de que no se lleve la sangre para su clan, pero aún así se enfada. Juan y tú os alimentáis. No volvéis a ver a Antonio.\FIN</string>
+
+    <!--P8.2-->
+    <string name="p82TextG">No conseguís convencer a Antonio y os pega una paliza. Te levantas una semana después. Se te ha quemado la mano izquierda porque a Antonio se le ha olvidado tapar la alcantarilla.\nFIN</string>
+
+    <!--explicaciones-->
+    <string name="generacionExpl">La generación de un vampiro indica lo poderoso o débil que es, cuanto más baja la generación más poderoso es. Las generaciones van de la 1, hasta la 13, la más débil de todas.</string>
+    <string name="clanNosfExpl">Nosferatu: Son el clan de los apestosos y los enfermos, por culpa de su apariencia. Le suele dar bien la tecnología, mentir y robar.</string>
+    <string name="clanGangrExpl">Gangrel: Son los que están más cerca de la naturaleza. Les gustan vivir juntos a los suyos y a otros animales.</string>
+    <string name="clanBrujahExpl">Brujah: Son conocidos por su fuerza, velocidad y su fuerte inclinación a la rebelión. Suelen ser de la Anarquía</string>
+    <string name="expExpl">Experiencia: Para subir un punto a un atributo el cálculo que se hace es coger el número siguiente de que te vas a subir por 5 y ese número se resta a tu experiencia. </string>
+
+
+</resources>
