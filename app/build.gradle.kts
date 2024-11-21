@@ -1,4 +1,5 @@
 plugins {
+    alias(libs.plugins.compose.compiler)
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id ("kotlin-kapt")
@@ -6,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.proyecto"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.proyecto"
