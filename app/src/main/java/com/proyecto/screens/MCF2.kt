@@ -2,6 +2,7 @@ package com.proyecto.screens
 
 import android.annotation.SuppressLint
 import android.icu.text.ListFormatter
+import android.text.style.BackgroundColorSpan
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -29,6 +30,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -50,6 +52,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -172,7 +175,7 @@ fun MCF2BodyContent(
             "Destreza" -> viewModel.state.destreza = nuevoValor
             "Resistencia" -> viewModel.state.resistencia = nuevoValor
             "Carisma" -> viewModel.state.carisma = nuevoValor
-            "Manipulacion" -> viewModel.state.manipulacion = nuevoValor
+            "Manipulación" -> viewModel.state.manipulacion = nuevoValor
             "Compostura" -> viewModel.state.compostura = nuevoValor
             "Inteligencia" -> viewModel.state.inteligencia = nuevoValor
             "Astucia" -> viewModel.state.astucia = nuevoValor
@@ -192,7 +195,7 @@ fun MCF2BodyContent(
             "Destreza",
             "Resistencia",
             "Carisma",
-            "Manipulacion",
+            "Manipulación",
             "Compostura",
             "Inteligencia",
             "Astucia",
@@ -205,7 +208,7 @@ fun MCF2BodyContent(
             "Destreza",
             "Resistencia",
             "Carisma",
-            "Manipulacion",
+            "Manipulación",
             "Compostura",
             "Inteligencia",
             "Astucia",
@@ -243,11 +246,11 @@ fun MCF2BodyContent(
                 ) {
 
                     Box(Modifier.size(200.dp, 45.dp)) {
-                        Text(
-                            atributos[index],
-                            Modifier.align(Alignment.CenterStart),
-                            fontSize = 20.sp,
-                        )
+//                        Text(
+//                            atributos[index],
+//                            Modifier.align(Alignment.CenterStart),
+//                            fontSize = 20.sp,
+//                        )
 
                         Explicacion(
                             texto = atributos[index],
@@ -375,45 +378,91 @@ fun MDF2SecondBody(navController: NavController, viewModel: MPViewModel, sharedV
 
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Explicacion(
     texto: String,
     textoT: String,
     textoExpl: String,
     modifier: Modifier = Modifier,
-    fontSize: TextUnit = 14.sp
-){
+    fontSize: TextUnit = 14.sp,
+    textColor: Color = Blanco, // Color del texto
+    dialogTextColor: Color = Color.Black, // Color del texto del diálogo
+) {
     var showDialog by remember { mutableStateOf(false) }
 
-    // Texto personalizado que actúa como botón
-    Text(
-        text = texto,
-        fontSize = fontSize,
-        modifier = modifier.clickable { showDialog = true } // Hace que el texto sea clickeable
-    )
+    // Fila con fondo personalizado
+    Row(
+        modifier = modifier.clickable { showDialog = true } // Hace clickeable toda la fila
+    ) {
+        // Texto con color personalizado
+        Text(
+            text = texto,
+            fontSize = fontSize,
+            color = textColor // Cambia el color del texto
+        )
+
+        // Imagen justo al lado del texto
+        Image(
+            painter = painterResource(id = R.drawable.infoblanco), // Cambia por tu recurso
+            contentDescription = "Icono de información",
+            modifier = Modifier.size(14.dp) // Tamaño de la imagen
+        )
+    }
 
     // Diálogo
     if (showDialog) {
         AlertDialog(
             onDismissRequest = { showDialog = false },
-            title = { Text(textoT) },
-            text = { Text(textoExpl) },
-            confirmButton = {
-                TextButton(onClick = { showDialog = false }) {
-                    Text("Aceptar")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { showDialog = false }) {
-                    Text("Cerrar")
+            // Contenido completo del diálogo (envolvemos con Surface para el fondo)
+            content = {
+                Surface(
+                    color = Borgoña, // Fondo del diálogo
+                    modifier = Modifier.padding(5.dp),
+                    shape = RoundedCornerShape(10)
+                ) {
+                    Column {
+                        Spacer(modifier = Modifier.height(25.dp))
+
+                        // Título del diálogo
+                        Text(
+                            text = textoT,
+                            color = Blanco, // Color del texto del título
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontSize = 30.sp,
+                            modifier = Modifier.padding(start = 15.dp,bottom = 8.dp)
+                        )
+                        // Contenido del diálogo
+                        Text(
+                            //text = textoExpl,
+                            text = "Las razas es un factor determinante para las personas en el rol, teniendo sus propias repercusiones en el mundo o afectando su desenvolvimiento en las ciudades que existen. Adicionalmente cada raza posee habilidades útiles para el día a día. ",
+                            color = Blanco, // Color del texto del contenido
+                            style = MaterialTheme.typography.bodySmall,
+                            modifier = Modifier.padding(15.dp)
+                        )
+                        // Botones
+                        Row(
+                            modifier = Modifier
+                                .padding(end = 15.dp, top = 16.dp)
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End)
+                        ) {
+                            DefaultButton(onClick = { showDialog = false },
+                                containerColor = Color.Black,
+                                text = "Aceptar"
+                            )
+                            DefaultButton(onClick = { showDialog = false },
+                                containerColor = Color.Black,
+                                text = "Cerrar"
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(25.dp))
+                    }
                 }
             }
         )
     }
 }
-
-
-
 
 
 

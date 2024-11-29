@@ -33,6 +33,15 @@ val Typography = Typography(
         letterSpacing = 0.5.sp
     ),
 
+    bodySmall = TextStyle(
+        fontFamily = ghoticFamily,
+        fontWeight = FontWeight.Normal,
+        color = Color.Black,
+        fontSize = 20.sp,
+        lineHeight = 20.sp,
+        letterSpacing = 0.5.sp
+    ),
+
 
 
 
