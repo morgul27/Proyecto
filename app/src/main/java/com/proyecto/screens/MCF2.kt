@@ -60,6 +60,7 @@ import androidx.navigation.NavController
 import com.proyecto.MPViewModel
 import com.proyecto.R
 import com.proyecto.SharedViewModel
+import com.proyecto.dialog.explicacion
 import com.proyecto.navigation.Screens
 import com.proyecto.ui.theme.Blanco
 import com.proyecto.ui.theme.Borgoña
@@ -252,7 +253,7 @@ fun MCF2BodyContent(
 //                            fontSize = 20.sp,
 //                        )
 
-                        Explicacion(
+                        explicacion(
                             texto = atributos[index],
                             textoT = atributos[index],
                             textoExpl = textoExplicacion[index],
@@ -376,93 +377,6 @@ fun MDF2SecondBody(navController: NavController, viewModel: MPViewModel, sharedV
     }
 }
 
-
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun Explicacion(
-    texto: String,
-    textoT: String,
-    textoExpl: String,
-    modifier: Modifier = Modifier,
-    fontSize: TextUnit = 14.sp,
-    textColor: Color = Blanco, // Color del texto
-    dialogTextColor: Color = Color.Black, // Color del texto del diálogo
-) {
-    var showDialog by remember { mutableStateOf(false) }
-
-    // Fila con fondo personalizado
-    Row(
-        modifier = modifier.clickable { showDialog = true } // Hace clickeable toda la fila
-    ) {
-        // Texto con color personalizado
-        Text(
-            text = texto,
-            fontSize = fontSize,
-            color = textColor // Cambia el color del texto
-        )
-
-        // Imagen justo al lado del texto
-        Image(
-            painter = painterResource(id = R.drawable.infoblanco), // Cambia por tu recurso
-            contentDescription = "Icono de información",
-            modifier = Modifier.size(14.dp) // Tamaño de la imagen
-        )
-    }
-
-    // Diálogo
-    if (showDialog) {
-        AlertDialog(
-            onDismissRequest = { showDialog = false },
-            // Contenido completo del diálogo (envolvemos con Surface para el fondo)
-            content = {
-                Surface(
-                    color = Borgoña, // Fondo del diálogo
-                    modifier = Modifier.padding(5.dp),
-                    shape = RoundedCornerShape(10)
-                ) {
-                    Column {
-                        Spacer(modifier = Modifier.height(25.dp))
-
-                        // Título del diálogo
-                        Text(
-                            text = textoT,
-                            color = Blanco, // Color del texto del título
-                            style = MaterialTheme.typography.bodyLarge,
-                            fontSize = 30.sp,
-                            modifier = Modifier.padding(start = 15.dp,bottom = 8.dp)
-                        )
-                        // Contenido del diálogo
-                        Text(
-                            //text = textoExpl,
-                            text = "Las razas es un factor determinante para las personas en el rol, teniendo sus propias repercusiones en el mundo o afectando su desenvolvimiento en las ciudades que existen. Adicionalmente cada raza posee habilidades útiles para el día a día. ",
-                            color = Blanco, // Color del texto del contenido
-                            style = MaterialTheme.typography.bodySmall,
-                            modifier = Modifier.padding(15.dp)
-                        )
-                        // Botones
-                        Row(
-                            modifier = Modifier
-                                .padding(end = 15.dp, top = 16.dp)
-                                .fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End)
-                        ) {
-                            DefaultButton(onClick = { showDialog = false },
-                                containerColor = Color.Black,
-                                text = "Aceptar"
-                            )
-                            DefaultButton(onClick = { showDialog = false },
-                                containerColor = Color.Black,
-                                text = "Cerrar"
-                            )
-                        }
-                        Spacer(modifier = Modifier.height(25.dp))
-                    }
-                }
-            }
-        )
-    }
-}
 
 
 

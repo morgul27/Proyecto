@@ -3,6 +3,7 @@ package com.proyecto.screens
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -55,6 +57,7 @@ import com.proyecto.R
 import com.proyecto.SharedViewModel
 import com.proyecto.bbdd.entity.Clan
 import com.proyecto.navigation.Screens
+import com.proyecto.ui.theme.Blanco
 import com.proyecto.ui.theme.Borgoña
 import com.proyecto.ui.theme.DefaultButton
 import com.proyecto.ui.theme.ProyectoTheme
@@ -191,16 +194,28 @@ fun MDFBodyContent(navController: NavController, viewModel: MPViewModel, sharedV
                         .clickable(onClick = { dropdownExpanded = true })
                         .padding(start = 16.dp, end = 16.dp)
                         .fillMaxWidth()
+                        .background(Blanco.copy(alpha = 0.5f))
                 ) {
                     Text(
-                        text = if (state.clanVas.isNullOrEmpty()) "Selecciona un clan" else state.clanVas!!,
+                        text = if (state.clanVas.isNullOrEmpty()) "Pulsa aquí" else state.clanVas!!,
                         textAlign = TextAlign.Center,
+                        color = Color.Black,
                         modifier = Modifier
                             .weight(1f) // Hace que el Text ocupe el espacio disponible
                             .padding(start = 45.dp)
                     )
                     IconButton(onClick = { dropdownExpanded = true }) {
-                        Icon(Icons.Default.MoreVert, contentDescription = "Localized description")
+                        val icon = if (!dropdownExpanded) {
+                            R.drawable.abajo
+                        } else {
+                            R.drawable.arriba
+                        }
+
+                        Image(
+                            painter = painterResource(id = icon),
+                            contentDescription = "Flecha personalizada",
+                            modifier = Modifier.size(24.dp) // Tamaño de la imagen
+                        )
                     }
                 }
                 Box(
@@ -213,7 +228,7 @@ fun MDFBodyContent(navController: NavController, viewModel: MPViewModel, sharedV
                 ) {
                     DropdownMenu(
                         expanded = dropdownExpanded,
-                        onDismissRequest = { dropdownExpanded = false }
+                        onDismissRequest = { dropdownExpanded = false },
                     ) {
                         state.nombreClanes.forEach { clan ->
                             DropdownMenuItem(
