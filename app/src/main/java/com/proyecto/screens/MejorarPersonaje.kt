@@ -49,6 +49,7 @@ import androidx.navigation.NavController
 import com.proyecto.MPViewModel
 import com.proyecto.R
 import com.proyecto.SharedViewModel
+import com.proyecto.dialog.explicacion
 import com.proyecto.navigation.Screens
 import com.proyecto.ui.theme.Blanco
 import com.proyecto.ui.theme.Borgoña
@@ -158,11 +159,11 @@ fun MejorarPersonajeBodyContent(
             "Destreza" -> viewModel.state.destreza = nuevoValor
             "Resistencia" -> viewModel.state.resistencia = nuevoValor
             "Carisma" -> viewModel.state.carisma = nuevoValor
-            "Manipulacion" -> viewModel.state.manipulacion = nuevoValor
+            "Manipulación" -> viewModel.state.manipulacion = nuevoValor
             "Compostura" -> viewModel.state.compostura = nuevoValor
             "Inteligencia" -> viewModel.state.inteligencia = nuevoValor
             "Astucia" -> viewModel.state.astucia = nuevoValor
-            "Resolucion" -> viewModel.state.resolucion = nuevoValor
+            "resolución" -> viewModel.state.resolucion = nuevoValor
             else -> Log.e("MDF2BodyContent", "Atributo desconocido: $atributo")
         }
         state.experiencia = exp3
@@ -178,12 +179,25 @@ fun MejorarPersonajeBodyContent(
         "Destreza",
         "Resistencia",
         "Carisma",
-        "Manipulacion",
+        "Manipulación",
         "Compostura",
         "Inteligencia",
         "Astucia",
-        "Resolucion"
-    )
+        "resolución"
+    ) }
+
+    val textoExplicacion = remember {
+        mutableStateListOf(
+            "Fuerza",
+            "Destreza",
+            "Resistencia",
+            "Carisma",
+            "Manipulación",
+            "Compostura",
+            "Inteligencia",
+            "Astucia",
+            "resolución"
+        )
     }
 
     val nombreVas = sharedViewModel.vasName.value ?: ""
@@ -307,8 +321,10 @@ fun MejorarPersonajeBodyContent(
                 ) {
 
                     Box(Modifier.size(200.dp, 45.dp)) {
-                        Text(
-                            atributos[index],
+                        explicacion(
+                            texto = atributos[index],
+                            textoT = atributos[index],
+                            textoExpl = textoExplicacion[index],
                             Modifier.align(Alignment.CenterStart),
                             fontSize = 20.sp,
                         )
@@ -365,6 +381,7 @@ fun MejorarPersonajeBodyContent(
 
         // Botón de guardar
         item {
+            Spacer(modifier = Modifier.height(25.dp))
             DefaultButton(onClick = {
                 state.fuerza_voluntad = state.resolucion?.let { state.compostura?.plus(it) }
                 state.salud = state.resistencia?.plus(3)

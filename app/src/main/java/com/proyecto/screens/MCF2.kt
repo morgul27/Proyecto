@@ -180,7 +180,7 @@ fun MCF2BodyContent(
             "Compostura" -> viewModel.state.compostura = nuevoValor
             "Inteligencia" -> viewModel.state.inteligencia = nuevoValor
             "Astucia" -> viewModel.state.astucia = nuevoValor
-            "Resolucion" -> viewModel.state.resolucion = nuevoValor
+            "resolución" -> viewModel.state.resolucion = nuevoValor
             else -> Log.e("MDF2BodyContent", "Atributo desconocido: $atributo")
         }
         state.experiencia = exp3
@@ -200,7 +200,7 @@ fun MCF2BodyContent(
             "Compostura",
             "Inteligencia",
             "Astucia",
-            "Resolucion"
+            "resolución"
         )
     }
     val textoExplicacion = remember {
@@ -213,7 +213,7 @@ fun MCF2BodyContent(
             "Compostura",
             "Inteligencia",
             "Astucia",
-            "Resolucion"
+            "resolución"
         )
     }
 
