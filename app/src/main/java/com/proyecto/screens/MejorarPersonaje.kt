@@ -18,6 +18,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -407,3 +408,33 @@ private fun calculo(valorAnt: Int): Int {
     return cal
 }
 
+
+@Composable
+fun ExplicacionMejora() {
+    var showDialog by remember { mutableStateOf(false) }
+
+    // Botón para mostrar el diálogo
+    Button(onClick = { showDialog = true }) {
+        Text("Mostrar Diálogo")
+    }
+
+    // Diálogo
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = { Text("Título del Diálogo") },
+            text = { Text("Este es el contenido del diálogo.") },
+            confirmButton = {
+                Button(onClick = { showDialog = false }) {
+                    Text("Aceptar")
+                }
+            },
+            dismissButton = {
+                Button(onClick = { showDialog = false }) {
+                    Text("Cancelar")
+                }
+            }
+        )
+    }
+
+}

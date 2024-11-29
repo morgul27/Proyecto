@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -31,6 +32,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -261,9 +266,48 @@ fun BodyFicha(navController: NavController, viewModel: MPViewModel, sharedViewMo
                 DefaultButton(onClick = { navController.navigate(route = Screens.MenuPrincipal.route) },
                 "Volver"
                 )
+
+
+                DialogExample()
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun PreviewDialogExample() {
+    DialogExample()
+}
+
+@Composable
+fun DialogExample() {
+    var showDialog by remember { mutableStateOf(false) }
+
+    // Botón para mostrar el diálogo
+    Button(onClick = { showDialog = true }) {
+        Text("Mostrar Diálogo")
+    }
+
+    // Diálogo
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = { Text("Título del Diálogo") },
+            text = { Text("Este es el contenido del diálogo.") },
+            confirmButton = {
+                Button(onClick = { showDialog = false }) {
+                    Text("Aceptar")
+                }
+            },
+            dismissButton = {
+                Button(onClick = { showDialog = false }) {
+                    Text("Cancelar")
+                }
+            }
+        )
+    }
+
 }
 
 

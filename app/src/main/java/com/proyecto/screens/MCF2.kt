@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.icu.text.ListFormatter
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -28,6 +30,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -43,9 +46,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -194,6 +199,20 @@ fun MCF2BodyContent(
             "Resolucion"
         )
     }
+    val textoExplicacion = remember {
+        mutableStateListOf(
+            "Fuerza",
+            "Destreza",
+            "Resistencia",
+            "Carisma",
+            "Manipulacion",
+            "Compostura",
+            "Inteligencia",
+            "Astucia",
+            "Resolucion"
+        )
+    }
+
     var puntos = remember { mutableStateListOf(0, 0, 0, 0, 0, 0, 0, 0, 0) }
     var exp2 by remember { mutableStateOf(exp) }
 
@@ -226,6 +245,14 @@ fun MCF2BodyContent(
                     Box(Modifier.size(200.dp, 45.dp)) {
                         Text(
                             atributos[index],
+                            Modifier.align(Alignment.CenterStart),
+                            fontSize = 20.sp,
+                        )
+
+                        Explicacion(
+                            texto = atributos[index],
+                            textoT = atributos[index],
+                            textoExpl = textoExplicacion[index],
                             Modifier.align(Alignment.CenterStart),
                             fontSize = 20.sp,
                         )
@@ -347,6 +374,43 @@ fun MDF2SecondBody(navController: NavController, viewModel: MPViewModel, sharedV
 }
 
 
+
+@Composable
+fun Explicacion(
+    texto: String,
+    textoT: String,
+    textoExpl: String,
+    modifier: Modifier = Modifier,
+    fontSize: TextUnit = 14.sp
+){
+    var showDialog by remember { mutableStateOf(false) }
+
+    // Texto personalizado que actúa como botón
+    Text(
+        text = texto,
+        fontSize = fontSize,
+        modifier = modifier.clickable { showDialog = true } // Hace que el texto sea clickeable
+    )
+
+    // Diálogo
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = { Text(textoT) },
+            text = { Text(textoExpl) },
+            confirmButton = {
+                TextButton(onClick = { showDialog = false }) {
+                    Text("Aceptar")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDialog = false }) {
+                    Text("Cerrar")
+                }
+            }
+        )
+    }
+}
 
 
 
