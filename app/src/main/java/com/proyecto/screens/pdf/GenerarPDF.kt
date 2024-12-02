@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.pdf.PdfDocument
 import android.graphics.pdf.PdfDocument.PageInfo
+import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.proyecto.R
@@ -250,7 +251,11 @@ fun GenerarPDF(context: Context, directory: File, sharedViewModel: SharedViewMod
     //Generación
     canvas.drawText("${sharedViewModel.vasGeneracion.value}", 160f, 225f, title)
     pdfDocument.finishPage(myPage)
-    val file = File(directory, "PDF_De_Vastago.pdf")
+
+    val nombre = sharedViewModel.vasName.value
+    Log.e("Nombre Check", "${sharedViewModel.vasName.value}")
+    Log.e("Nombre2 Check", "Este es el segundo $nombre")
+    val file = File(directory, "$nombre.pdf")
 
     try {
         pdfDocument.writeTo(FileOutputStream(file))
