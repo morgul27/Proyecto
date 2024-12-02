@@ -158,37 +158,43 @@ fun verLista() {
     }
 }
 
-fun getCustomDirectory(context: Context): File {
-    val mediaDir = File(
-        context.getExternalFilesDir(null)?.parentFile?.parentFile,
-        "media/com.proyecto/Fichas_Vastagos"
-    )
-    if (!mediaDir.exists()) {
-        mediaDir.mkdirs()
+fun getCustomDirectory(context: Context): File? {
+    val mediaDir = context.externalMediaDirs.firstOrNull()?.let {
+        File(it, "Fichas_Vastagos").apply { mkdirs() }
+    }
+    if (mediaDir != null) {
+        if (!mediaDir.exists()) {
+            mediaDir.mkdirs()
+        }
     }
     return mediaDir
 }
 
 fun listPdfFilesInCustomDirectory(context: Context): List<File> {
-    val customDira = getCustomDirectory(context)
-    val customDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+    val customDir = getCustomDirectory(context)
+    val customDira = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
 
-    Log.d("CustomDirectory", "Ruta del directorio: ${customDir.absolutePath}")
+    if (customDir != null) {
+        Log.d("CustomDirectory", "Ruta del directorio: ${customDir.absolutePath}")
+    }
 
-    val pdfFiles = customDir.listFiles { file ->
+    val pdfFiles = customDir?.listFiles { file ->
         Log.d("CustomDirectory", "Archivo encontrado: ${file.name}")
         file.extension.equals("pdf", ignoreCase = true)
     }?.toList() ?: emptyList()
 
-    if (!customDir.exists()) {
-        Log.e("Directory Check", "La ruta no existe.")
-    }
-    else {
-        Log.e("Directory Check", "La ruta existe.")
+    if (customDir != null) {
+        if (!customDir.exists()) {
+            Log.e("Directory Check", "La ruta no existe.")
+        } else {
+            Log.e("Directory Check", "La ruta existe.")
+        }
     }
 
-    if (!customDir.exists() || !customDir.isDirectory) {
-        Log.e("Directory Check", "La ruta no es un directorio válido.")
+    if (customDir != null) {
+        if (!customDir.exists() || !customDir.isDirectory) {
+            Log.e("Directory Check", "La ruta no es un directorio válido.")
+        }
     }
 
     if (pdfFiles.isEmpty()) {

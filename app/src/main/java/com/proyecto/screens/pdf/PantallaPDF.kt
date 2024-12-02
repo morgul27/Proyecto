@@ -171,12 +171,12 @@ fun PantallaPDF(navController: NavController, sharedViewModel: SharedViewModel) 
 }
 
 fun getDirectory(context: Context): File {
-    val mediaDira = context.externalMediaDirs.firstOrNull()?.let {
+    val mediaDir = context.externalMediaDirs.firstOrNull()?.let {
         File(it, "Fichas_Vastagos").apply { mkdirs() }
     }
 
     //cambiar esto cuando se solucione
-    val mediaDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+    val mediaDira = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
     return if (mediaDir != null && mediaDir.exists()) mediaDir else context.filesDir
 
 }
