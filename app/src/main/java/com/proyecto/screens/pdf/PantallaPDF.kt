@@ -6,6 +6,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Environment
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -170,9 +171,12 @@ fun PantallaPDF(navController: NavController, sharedViewModel: SharedViewModel) 
 }
 
 fun getDirectory(context: Context): File {
-    val mediaDir = context.externalMediaDirs.firstOrNull()?.let {
-        File(it, "Ficha Vastago").apply { mkdirs() }
+    val mediaDira = context.externalMediaDirs.firstOrNull()?.let {
+        File(it, "Fichas_Vastagos").apply { mkdirs() }
     }
+
+    //cambiar esto cuando se solucione
+    val mediaDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
     return if (mediaDir != null && mediaDir.exists()) mediaDir else context.filesDir
 
 }

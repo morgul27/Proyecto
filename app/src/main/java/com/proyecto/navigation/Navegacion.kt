@@ -49,6 +49,7 @@ import com.proyecto.screens.mod_historia.nosferatu.P52Nosf
 import com.proyecto.screens.mod_historia.nosferatu.P6Nosf
 import com.proyecto.screens.mod_historia.nosferatu.P7Nosf
 import com.proyecto.screens.pdf.PantallaPDF
+import com.proyecto.screens.pdf.VerArchivosPDF
 
 @Composable
 fun Navegacion(viewModel: MPViewModel){
@@ -90,6 +91,11 @@ fun Navegacion(viewModel: MPViewModel){
         composable(route = Screens.BorrarUsuario.route) {
             BorrarUsuario(navController = navController, viewModel = viewModel, sharedViewModel = sharedViewModel)
         }
+        composable(route = Screens.VerArchivosPDF.route) {
+            VerArchivosPDF(navController = navController, viewModel = viewModel, sharedViewModel = sharedViewModel)
+        }
+
+
 
         //menus Nosferatu
         composable(route = Screens.P2Nosf.route) {
