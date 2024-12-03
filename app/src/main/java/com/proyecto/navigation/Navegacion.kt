@@ -200,8 +200,16 @@ fun Navegacion(viewModel: MPViewModel){
     // Manejar el botón de retroceso
     BackHandler {
         if (navController.currentBackStackEntry?.destination?.route == Screens.MenuUsuario.route) {
-            navController.navigate(Screens.MenuPrincipal.route)
-        } else {
+
+        }
+        else if(navController.currentBackStackEntry?.destination?.route == Screens.MenuPrincipal.route) {
+            // Si estamos en MenuPrincipal, navegar a MenuUsuario en lugar de hacer retroceder
+            navController.navigate(Screens.MenuUsuario.route) {
+                // Limpiar la pila de navegación para que no pueda retroceder a MenuPrincipal
+                popUpTo(Screens.MenuPrincipal.route) { inclusive = true }
+            }
+        }
+        else {
             navController.popBackStack()
         }
     }

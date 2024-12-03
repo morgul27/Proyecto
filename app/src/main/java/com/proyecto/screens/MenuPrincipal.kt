@@ -85,7 +85,7 @@ fun MenuPrincipal(navController: NavController, viewModel: MPViewModel, sharedVi
                                 navigationIconContentColor = Borgoña
                             ),
                             navigationIcon = {
-                                IconButton(onClick = { navController.popBackStack() }) {
+                                IconButton(onClick = {navController.navigate(route = Screens.MenuUsuario.route) }) {
                                     Icon(
                                         imageVector = Icons.Default.ArrowBack,
                                         contentDescription = "Arrow back"
