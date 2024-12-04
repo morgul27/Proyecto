@@ -46,15 +46,22 @@ import com.proyecto.MPViewModel
 import com.proyecto.R
 import com.proyecto.SharedViewModel
 import com.proyecto.ui.theme.Borgoña
-import com.proyecto.ui.theme.DefaultButton
 import com.proyecto.ui.theme.ProyectoTheme
 import com.proyecto.ui.theme.Typography
 import com.proyecto.ui.theme.ghoticFamily
 import java.io.File
 import android.Manifest
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.pdf.PdfRenderer
+import android.net.Uri
+import android.os.ParcelFileDescriptor
 import android.util.Log
+import android.widget.Toast
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.core.content.FileProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -206,31 +213,52 @@ fun listPdfFilesInCustomDirectory(context: Context): List<File> {
 
 @Composable
 fun PdfListScreen(pdfFiles: List<File>, onPdfClick: (File) -> Unit) {
-    LazyColumn (
+    val context = LocalContext.current
+
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(top = 50.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
         items(pdfFiles) { pdfFile ->
-            PdfItem(file = pdfFile, onClick = { onPdfClick(pdfFile) })
+            PdfItem(file = pdfFile, onClick = { openPdfWithExternalApp(context, pdfFile) })
         }
     }
 }
 
 @Composable
 fun PdfItem(file: File, onClick: () -> Unit) {
+    val context = LocalContext.current
+    val renderedBitmap = remember { mutableStateOf<Bitmap?>(null) }
+
+    LaunchedEffect(file) {
+        // Renderizar la primera página del archivo PDF
+        renderedBitmap.value = renderPdfFirstPage(file)
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onClick() }
             .padding(16.dp)
     ) {
-        Text(
-            text = file.name,
-            modifier = Modifier.weight(1f)
-        )
+        Column(modifier = Modifier.weight(1f)) {
+            // Mostrar el nombre del archivo
+            Text(text = file.name)
+
+            // Mostrar el renderizado del PDF, si está disponible
+            renderedBitmap.value?.let { bitmap ->
+                Image(
+                    bitmap = bitmap.asImageBitmap(),
+                    contentDescription = "Vista previa del PDF",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp)
+                )
+            }
+        }
     }
 }
 
@@ -238,6 +266,44 @@ fun PdfItem(file: File, onClick: () -> Unit) {
 
 //parte 2 ver PDFs
 
+fun renderPdfFirstPage(file: File): Bitmap? {
+    return try {
+        val fileDescriptor = ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY)
+        val pdfRenderer = PdfRenderer(fileDescriptor)
+        val page = pdfRenderer.openPage(0)
+
+        val bitmap = Bitmap.createBitmap(page.width, page.height, Bitmap.Config.ARGB_8888)
+        page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
+        page.close()
+        pdfRenderer.close()
+        bitmap
+    } catch (e: Exception) {
+        Log.e("PDFRender", "Error renderizando PDF: ${e.message}")
+        null
+    }
+}
 
 
+fun openPdfWithExternalApp(context: Context, file: File) {
+    try {
+        // Obtener URI del archivo utilizando FileProvider
+        val pdfUri: Uri = FileProvider.getUriForFile(
+            context,
+            "${context.packageName}.provider", // Define tu authority en el Manifest
+            file
+        )
+
+        // Crear un Intent para abrir el archivo
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(pdfUri, "application/pdf")
+            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION // Otorgar permiso de lectura
+        }
+
+        // Lanzar el Intent
+        context.startActivity(intent)
+    } catch (e: Exception) {
+        Log.e("OpenPDF", "Error al abrir el archivo PDF: ${e.message}")
+        Toast.makeText(context, "No se pudo abrir el archivo PDF", Toast.LENGTH_SHORT).show()
+    }
+}
 

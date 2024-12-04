@@ -19,9 +19,7 @@ dependencyResolutionManagement {
         maven {
             url = uri("https://my.nutrient.io/maven")
         }
-        maven {
-            url = uri ("https://jitpack.io")
-        }
+
     }
 }
 

@@ -54,6 +54,9 @@ android {
 dependencies {
     implementation ("com.pspdfkit:pspdfkit:2024.5.0")
 
+    //pdf
+    implementation("com.github.barteksc:pdfium-android:1.8.2")
+
     implementation ("androidx.room:room-ktx:2.6.1")
     kapt ("androidx.room:room-compiler:2.6.1")
 
