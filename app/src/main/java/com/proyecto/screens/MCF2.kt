@@ -188,7 +188,7 @@ fun MCF2BodyContent(
         Log.d("MIRA AQUI", "exp3: ${exp3}")
     }
 
-
+    
     //prueba
     val atributos = remember {
         mutableStateListOf(
