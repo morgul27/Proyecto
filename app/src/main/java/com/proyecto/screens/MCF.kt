@@ -135,6 +135,7 @@ fun MDFBodyContent(navController: NavController, viewModel: MPViewModel, sharedV
     val maxChar = 5
     var expanded by remember { mutableStateOf(false) } // Para controlar si el menú está desplegado o no
     var selectedGen by remember { mutableStateOf("Selecciona una generación") } // Opción seleccionada
+    var selectedClan by remember { mutableStateOf("Selecciona un Clan") } // Opción seleccionada
 
     LaunchedEffect(state.clanVas) {
         idClan = viewModel.obtenerIdPorNombreClan(state.clanVas ?: "Nosferatu")
@@ -243,8 +244,62 @@ fun MDFBodyContent(navController: NavController, viewModel: MPViewModel, sharedV
                 }
             }
 
+            //prueba Clan
+            Text("Prueba Clan")
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 22.dp)
+                    .shadow(
+                        elevation = 6.dp, // Tamaño de la sombra
+                        shape = RoundedCornerShape(topStart = 5.dp, topEnd = 5.dp), // Esquinas redondeadas
+                        clip = false // La sombra no recorta el contenido
+                    )
+                    .background(
+                        color = Color(0xFFE8E6F8),
+                        shape = RoundedCornerShape(topStart = 5.dp, topEnd = 5.dp)
+                    ),
+                contentAlignment = Alignment.CenterStart // Alineación del contenido dentro del Box
+            ) {
+                // Botón que abre el menú desplegable
+                TextButton(
+                    onClick = { dropdownExpanded = true }, // Abrir menú
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(selectedClan,
+                        color = Color.Black,
+                        fontSize = 17.sp,
+                        fontFamily = ghoticFamily
+                    ) // Mostrar la opción seleccionada
+                }
+
+                // Menú desplegable
+                DropdownMenu(
+                    expanded = dropdownExpanded,
+                    onDismissRequest = { dropdownExpanded = false } // Cerrar el menú al hacer clic fuera
+                ) {
+                    // Opciones del menú
+                    state.nombreClanes.forEach { clan ->
+                        DropdownMenuItem(
+                            onClick = {
+                                selectedClan = clan.nombreClan
+                                viewModel.setClan(clan.nombreClan)
+                                dropdownExpanded = false
+                            },
+                            text = {
+                                Text(
+                                    clan.nombreClan,
+                                    color = Color.Black
+                                )
+                            }
+                        )
+                    }
+                }
+            }
 
 
+
+            //Generación
             Spacer(modifier = Modifier.height(25.dp))
             Text("Generación")
             TextField(
@@ -274,7 +329,8 @@ fun MDFBodyContent(navController: NavController, viewModel: MPViewModel, sharedV
                     .background(
                         color = Color(0xFFE8E6F8),
                         shape = RoundedCornerShape(topStart = 5.dp, topEnd = 5.dp)
-                    ),
+                    )
+                    .height(80.dp),
                 contentAlignment = Alignment.CenterStart // Alineación del contenido dentro del Box
             ) {
                 // Botón que abre el menú desplegable
