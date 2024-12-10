@@ -22,3 +22,7 @@ val AzulPursiano = Color(0xFF686E9E)
 val Borgoña  = Color(0xFF7B1334)
 val Rojo  = Color(0xFFB21135)
 
+//pruebas de color
+val Blanco1 = Color(0xFFE8E6F8)
+val Blanco2 = Color(0xFFF5E5F8)
+
