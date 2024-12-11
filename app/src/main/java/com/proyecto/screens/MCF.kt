@@ -258,7 +258,8 @@ fun MDFBodyContent(navController: NavController, viewModel: MPViewModel, sharedV
                     .background(
                         color = Color(0xFFE8E6F8),
                         shape = RoundedCornerShape(topStart = 5.dp, topEnd = 5.dp)
-                    ),
+                    )
+                    .height(65.dp),
                 contentAlignment = Alignment.CenterStart // Alineación del contenido dentro del Box
             ) {
                 // Botón que abre el menú desplegable
@@ -330,7 +331,7 @@ fun MDFBodyContent(navController: NavController, viewModel: MPViewModel, sharedV
                         color = Color(0xFFE8E6F8),
                         shape = RoundedCornerShape(topStart = 5.dp, topEnd = 5.dp)
                     )
-                    .height(80.dp),
+                    .height(65.dp),
                 contentAlignment = Alignment.CenterStart // Alineación del contenido dentro del Box
             ) {
                 // Botón que abre el menú desplegable
