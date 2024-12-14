@@ -316,7 +316,7 @@ fun MDFBodyContent(navController: NavController, viewModel: MPViewModel, sharedV
             )
 
 
-            //Prueba numeros
+            //Prueba de generacion
             Text("Gene2")
             Box(
                 modifier = Modifier
