@@ -85,7 +85,7 @@ class MainActivity : ComponentActivity() {
     }
 
 
-    // Método para manejar los cambios de configuración manualmente
+    // Metodo para manejar los cambios de configuración manualmente
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
     }

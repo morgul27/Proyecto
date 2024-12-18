@@ -257,7 +257,7 @@ fun MDFBodyContent(navController: NavController, viewModel: MPViewModel, sharedV
                     )
                     .background(
                         color = Color(0xFFE8E6F8),
-                        shape = RoundedCornerShape(topStart = 5.dp, topEnd = 5.dp)
+                        shape = RoundedCornerShape(topStart = 5.dp, topEnd = 5.dp, bottomStart = 1.dp, bottomEnd = 1.dp)
                     )
                     .height(65.dp),
                 contentAlignment = Alignment.CenterStart // Alineación del contenido dentro del Box
