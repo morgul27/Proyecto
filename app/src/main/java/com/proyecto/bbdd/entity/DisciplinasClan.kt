@@ -6,7 +6,8 @@ import androidx.room.PrimaryKey
 @Entity
 data class DisciplinasClan (
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = null
+    val id: Int? = null,
+    val nombre: String
 )
 
 

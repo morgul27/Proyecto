@@ -17,7 +17,8 @@ import kotlinx.coroutines.launch
 class MPViewModel(
     private  val usuRepository: UsuarioRepository,
     private  val vasRepository: VastagoRepository,
-    private  val clanRepository: ClanRepository
+    private  val clanRepository: ClanRepository,
+
 ) : ViewModel(){
     var state by mutableStateOf(MPState("", listOf(), nombreVas = "", clanVas = ""))
         private set
