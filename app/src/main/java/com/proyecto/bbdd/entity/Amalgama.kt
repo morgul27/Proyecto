@@ -25,6 +25,12 @@ import androidx.room.PrimaryKey
             parentColumns = ["id"],
             childColumns = ["fkvas_disciplina_secundaria"],
             onDelete = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = Poderes::class,
+            parentColumns = ["id"],
+            childColumns = ["requisito_poder"],
+            onDelete = ForeignKey.CASCADE
         )
     ],
     )
@@ -36,5 +42,6 @@ data class Amalgama(
     val fkvas_disciplina_principal: Int,
     val fkvas_disciplina_secundaria: Int? = null,
     val nivel_disciplina_principal: Int,
-    val nivel_disciplina_secundaria: Int? = null
+    val nivel_disciplina_secundaria: Int? = null,
+    val requisito_poder: Int? = null
 )
