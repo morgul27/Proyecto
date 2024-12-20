@@ -232,6 +232,7 @@ private suspend fun insertPoderes(dao: PoderesDao) {
 }
 
 private suspend fun insertInitialDataAmalgama(dao: AmalgamaDao) {
+    //Animalismo
     // sentir a la bestia
     dao.insertAmalgama(Amalgama(
         1,
@@ -256,61 +257,63 @@ private suspend fun insertInitialDataAmalgama(dao: AmalgamaDao) {
         nivel_disciplina_principal = 2
     ))
 
-    //
+    //colmena no-muerta
     dao.insertAmalgama(Amalgama(
-        1,
-        fkvas_poder = 1,
+        4,
+        fkvas_poder = 4,
         fkvas_disciplina_principal = 1,
-        fkvas_disciplina_secundaria = 1,
-        nivel_disciplina_principal = 1,
-        nivel_disciplina_secundaria = 1,
-        requisito_poder = 1
+        fkvas_disciplina_secundaria = 2, //Ofuscacion
+        nivel_disciplina_principal = 3,
+        nivel_disciplina_secundaria = 2
     ))
+
+    //reprimir a la bestia
     dao.insertAmalgama(Amalgama(
-        1,
-        fkvas_poder = 1,
+        5,
+        fkvas_poder = 5,
         fkvas_disciplina_principal = 1,
-        fkvas_disciplina_secundaria = 1,
-        nivel_disciplina_principal = 1,
-        nivel_disciplina_secundaria = 1,
-        requisito_poder = 1
+        nivel_disciplina_principal = 3
     ))
+
+    //suculencia animal
     dao.insertAmalgama(Amalgama(
-        1,
-        fkvas_poder = 1,
+        6,
+        fkvas_poder = 6,
         fkvas_disciplina_principal = 1,
-        fkvas_disciplina_secundaria = 1,
-        nivel_disciplina_principal = 1,
-        nivel_disciplina_secundaria = 1,
-        requisito_poder = 1
+        nivel_disciplina_principal = 3
     ))
+
+    //comunión de espíritus
     dao.insertAmalgama(Amalgama(
-        1,
-        fkvas_poder = 1,
+        7,
+        fkvas_poder = 7,
         fkvas_disciplina_principal = 1,
-        fkvas_disciplina_secundaria = 1,
-        nivel_disciplina_principal = 1,
-        nivel_disciplina_secundaria = 1,
-        requisito_poder = 1
+        nivel_disciplina_principal = 4
     ))
+
+    //control animal
     dao.insertAmalgama(Amalgama(
-        1,
-        fkvas_poder = 1,
+        8,
+        fkvas_poder = 8,
         fkvas_disciplina_principal = 1,
-        fkvas_disciplina_secundaria = 1,
-        nivel_disciplina_principal = 1,
-        nivel_disciplina_secundaria = 1,
-        requisito_poder = 1
+        nivel_disciplina_principal = 5
     ))
+
+    //expulsar a la bestia
     dao.insertAmalgama(Amalgama(
-        1,
-        fkvas_poder = 1,
+        9,
+        fkvas_poder = 9,
         fkvas_disciplina_principal = 1,
-        fkvas_disciplina_secundaria = 1,
-        nivel_disciplina_principal = 1,
-        nivel_disciplina_secundaria = 1,
-        requisito_poder = 1
+        nivel_disciplina_principal = 5,
     ))
+
+    //Ofuscación
+    //capa de sombras
+
+
+
+
+   // sin hacer
     dao.insertAmalgama(Amalgama(
         1,
         fkvas_poder = 1,
