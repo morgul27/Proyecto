@@ -225,6 +225,7 @@ private suspend fun insertInitialDataAmalgama(dao: AmalgamaDao) {
         nivel_disciplina_secundaria = 1,
         requisito_poder = 1
     ))
+
 }
 
 
