@@ -215,15 +215,31 @@ fun listPdfFilesInCustomDirectory(context: Context): List<File> {
 fun PdfListScreen(pdfFiles: List<File>, onPdfClick: (File) -> Unit) {
     val context = LocalContext.current
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 50.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        items(pdfFiles) { pdfFile ->
-            PdfItem(file = pdfFile, onClick = { openPdfWithExternalApp(context, pdfFile) })
+
+    if (pdfFiles.isEmpty()) {
+        // Mostrar un mensaje si no hay archivos PDF
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 50.dp, start = 25.dp, end = 25.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "No hay archivos PDF disponibles"
+            )
+        }
+    } else {
+        // Mostrar la lista de archivos PDF
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 50.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            items(pdfFiles) { pdfFile ->
+                PdfItem(file = pdfFile, onClick = { openPdfWithExternalApp(context, pdfFile) })
+            }
         }
     }
 }

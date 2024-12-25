@@ -186,6 +186,11 @@ fun SecondBodyContent(navController: NavController, viewModel: MPViewModel, shar
                 "Ver lista PDF"
             )
 
+            DefaultButton(
+                onClick = { navController.navigate(route = Screens.PruebaCF.route) },
+                "PruebaCF"
+            )
+
 
             //boton volver
             DefaultButton(

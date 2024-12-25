@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
     tableName = "PoderesVas",
     foreignKeys = [
         ForeignKey(
-            entity = Vastago::class,
+            entity = DisciplinasVas::class,
             parentColumns = ["id"],
             childColumns = ["fk_disciplinas"],
             onDelete = ForeignKey.CASCADE
@@ -20,5 +20,5 @@ data class PoderesVas (
     val id: Int? = null,
     val nombre: String,
     val nivel: Int,
-    val fk_disciplinas: Int? = null,
+    val fk_disciplinas: Int
 )

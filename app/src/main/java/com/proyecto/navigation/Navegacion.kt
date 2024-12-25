@@ -16,6 +16,7 @@ import com.proyecto.screens.MenuUsuario
 import com.proyecto.screens.MCF
 import com.proyecto.screens.MCF2
 import com.proyecto.screens.MejorarPersonaje
+import com.proyecto.screens.PruebaCF
 import com.proyecto.screens.mod_historia.InicioHist
 import com.proyecto.screens.mod_historia.brujah.P2Br
 import com.proyecto.screens.mod_historia.brujah.P31Br
@@ -194,6 +195,10 @@ fun Navegacion(viewModel: MPViewModel){
         }
         composable(route = Screens.P82Gangr.route) {
             P82Gangr(navController = navController, viewModel = viewModel, sharedViewModel = sharedViewModel)
+        }
+
+        composable(route = Screens.PruebaCF.route) {
+            PruebaCF(navController = navController, viewModel = viewModel, sharedViewModel = sharedViewModel)
         }
     }
 

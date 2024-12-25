@@ -36,4 +36,20 @@ interface VastagoDao {
     @Update
     suspend fun actualizarVastago(vastago: Vastago)
 
+    @Query("""
+        SELECT p.nombre AS poder
+        FROM Vastago v
+        INNER JOIN DisciplinasVas dv_principal ON dv_principal.fk_vas = v.id
+        INNER JOIN DisciplinasVas dv_secundaria ON dv_secundaria.fk_vas = v.id
+        INNER JOIN Amalgama a ON (
+            a.fkvas_disciplina_principal = dv_principal.fk_vas AND 
+            dv_principal.nivel >= a.nivel_disciplina_principal AND
+            a.fkvas_disciplina_secundaria = dv_secundaria.fk_vas AND 
+            dv_secundaria.nivel >= a.nivel_disciplina_secundaria
+        )
+        INNER JOIN Poderes p ON p.id = a.fkvas_poder
+        WHERE v.id = :vastagoId
+    """)
+    suspend fun getPoderes(vastagoId: Int): List<String>
+
 }

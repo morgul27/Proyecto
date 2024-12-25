@@ -19,5 +19,5 @@ data class DisciplinasVas (
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
     val nivel: Int? = null,
-    val fk_vas: Int? = null
+    val fk_vas: Int
 )

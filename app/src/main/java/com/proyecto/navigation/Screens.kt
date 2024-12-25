@@ -53,5 +53,7 @@ sealed class Screens(val route: String) {
 
     object PantallaPDF: Screens("Decima_screen")
     object VerArchivosPDF: Screens("PDFREADER_screen")
+    object PruebaCF: Screens("Prueba_screen")
+
 
 }
