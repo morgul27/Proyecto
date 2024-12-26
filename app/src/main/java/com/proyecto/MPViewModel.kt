@@ -181,6 +181,17 @@ class MPViewModel(
         state = state.copy(generacion = generacion)
     }
 
+     fun ObtenerPoderes(vastagoId: Int){
+        viewModelScope.launch {
+            state = state.copy(
+                listaPoderes =  vasRepository.getPoderes(vastagoId)
+            )
+
+        }
+    }
+
+
+
 
     //Clanes
     // Obtener la lista de clanes desde la base de datos
@@ -201,6 +212,7 @@ class MPViewModel(
     fun setFkvas_clan(fk: Int){
         state = state.copy(fkvas_clan = fk)
     }
+
 
 }
 

@@ -18,6 +18,7 @@ import com.proyecto.bbdd.UsuarioDatabase
 import com.proyecto.bbdd.entity.Amalgama
 import com.proyecto.bbdd.entity.Clan
 import com.proyecto.bbdd.entity.DisciplinasClan
+import com.proyecto.bbdd.entity.DisciplinasVas
 import com.proyecto.bbdd.entity.NNClanDisciplinas
 import com.proyecto.bbdd.entity.Poderes
 import com.proyecto.bbdd.entity.Usuario
@@ -69,12 +70,15 @@ class MainActivity : ComponentActivity() {
 
                             //llamo a los dao
                             val dao = db.dao
-                            val vasDao = db.vasDao
+
+                            val amalgamaDao = db.amalgamaDao
                             val clanDao = db.clanDao
                             val disciplinasClanDao = db.disciplinasClanDao
-                            val poderesDao = db.poderesDao
+                            val disciplinasVasDao = db.disciplinasVasDao
                             val NNClanDisciplinasDao = db.nnClanDisciplinasDao
-                            val amalgamaDao = db.amalgamaDao
+                            val poderesDao = db.poderesDao
+                            val poderesVas = db.poderesVasDao
+                            val vasDao = db.vasDao
 
                             //llamo a los repositorios
                             val usuRepository = UsuarioRepository(dao)
@@ -105,7 +109,15 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
 
-
+//                            lifecycleScope.launch {
+//                                disciplinasVasDao.insertDisciplinasVas(
+//                                    DisciplinasVas(
+//                                        idDisciplinasVas = 2,
+//                                        nivel = 5,
+//                                        fk_vas = 1
+//                                    )
+//                                )
+//                            }
                             Navegacion(viewModel)
 
                         }

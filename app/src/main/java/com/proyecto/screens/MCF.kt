@@ -136,13 +136,13 @@ fun MDFBodyContent(navController: NavController, viewModel: MPViewModel, sharedV
     var expanded by remember { mutableStateOf(false) } // Para controlar si el menú está desplegado o no
     var selectedGen by remember { mutableStateOf("Selecciona una generación") } // Opción seleccionada
     var selectedClan by remember { mutableStateOf("Selecciona un Clan") } // Opción seleccionada
+    var dropdownExpanded by remember { mutableStateOf(false) }
 
     LaunchedEffect(state.clanVas) {
         idClan = viewModel.obtenerIdPorNombreClan(state.clanVas ?: "Nosferatu")
     }
 
-    // Variable para controlar si el menú desplegable está expandido
-    var dropdownExpanded by remember { mutableStateOf(false) }
+
 
     LaunchedEffect(Unit) {
        viewModel.obtenerClanes()

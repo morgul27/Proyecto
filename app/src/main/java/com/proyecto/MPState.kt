@@ -9,6 +9,7 @@ data class MPState(
     val names: List<Usuario> = emptyList(),
     val nombresVas: List<Vastago> = emptyList(),
     val nombreClanes: List<Clan> = emptyList(),
+    val listaPoderes: List<String> = emptyList(),
     val isLoading: Boolean = false,
 
     //Creacion de Vastago

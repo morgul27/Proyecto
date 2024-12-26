@@ -42,7 +42,7 @@ import com.proyecto.bbdd.interfaces.VastagoDao
     abstract val disciplinasVasDao: DisciplinasVasDao
     abstract val nnClanDisciplinasDao: NNClanDisciplinasDao
     abstract val poderesDao: PoderesDao
-    abstract val poderesVAsDao: PoderesVasDao
+    abstract val poderesVasDao: PoderesVasDao
     abstract val dao: UsuarioDao
     abstract val vasDao: VastagoDao
 

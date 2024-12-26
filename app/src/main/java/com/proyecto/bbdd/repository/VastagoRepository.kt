@@ -32,4 +32,8 @@ class VastagoRepository(
     suspend fun actualizarVastago(vastago: Vastago) {
         vastagoDao.actualizarVastago(vastago)
     }
+
+    suspend fun getPoderes(vastagoId: Int): List<String> {
+        return vastagoDao.getPoderes(vastagoId)
+    }
 }
