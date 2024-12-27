@@ -397,37 +397,264 @@ class CreacionDatos {
              nivel_disciplina_principal = 2,
              nivel_disciplina_secundaria = 1
          ))
-         //seguir mirar lvl2
-
-
-
-
+         //dureza
          dao.insertAmalgama(Amalgama(
-             3,
-             fkvas_poder = 3,
+             31,
+             fkvas_poder = 31,
              fkvas_disciplina_principal = 4,
-             fkvas_disciplina_secundaria = 1,
-             nivel_disciplina_principal = 1,
-             nivel_disciplina_secundaria = 1,
-             requisito_poder = 1
+             nivel_disciplina_principal = 2
          ))
+
+        //desafiar prohibición
          dao.insertAmalgama(Amalgama(
-             3,
-             fkvas_poder = 3,
+             32,
+             fkvas_poder = 32,
              fkvas_disciplina_principal = 4,
-             fkvas_disciplina_secundaria = 1,
-             nivel_disciplina_principal = 1,
-             nivel_disciplina_secundaria = 1,
-             requisito_poder = 1
+             nivel_disciplina_principal = 3
          ))
+
+         // fortificar la fachada interior
          dao.insertAmalgama(Amalgama(
-             3,
-             fkvas_poder = 3,
+             33,
+             fkvas_poder = 33,
              fkvas_disciplina_principal = 4,
-             fkvas_disciplina_secundaria = 1,
-             nivel_disciplina_principal = 1,
-             nivel_disciplina_secundaria = 1,
-             requisito_poder = 1
+             nivel_disciplina_principal = 3
+         ))
+
+         //sorbo de aguante
+         dao.insertAmalgama(Amalgama(
+             34,
+             fkvas_poder = 34,
+             fkvas_disciplina_principal = 4,
+             nivel_disciplina_principal = 4
+         ))
+
+         //arrojo por el dolor
+         dao.insertAmalgama(Amalgama(
+             35,
+             fkvas_poder = 35,
+             fkvas_disciplina_principal = 4,
+             nivel_disciplina_principal = 5
+         ))
+
+         //carne de mármol
+         dao.insertAmalgama(Amalgama(
+             36,
+             fkvas_poder = 36,
+             fkvas_disciplina_principal = 4,
+             nivel_disciplina_principal = 5
+         ))
+
+         //Protean
+         //ojos de la bestia
+         dao.insertAmalgama(Amalgama(
+             37,
+             fkvas_poder = 37,
+             fkvas_disciplina_principal = 5,
+             nivel_disciplina_principal = 1
+         ))
+
+         // peso de la pluma
+         dao.insertAmalgama(Amalgama(
+             38,
+             fkvas_poder = 38,
+             fkvas_disciplina_principal = 5,
+             nivel_disciplina_principal = 1
+         ))
+
+         //armas salvajes
+         dao.insertAmalgama(Amalgama(
+             39,
+             fkvas_poder = 39,
+             fkvas_disciplina_principal = 5,
+             nivel_disciplina_principal = 2,
+         ))
+
+         //cambiar de forma
+         dao.insertAmalgama(Amalgama(
+             40,
+             fkvas_poder = 40,
+             fkvas_disciplina_principal = 5,
+             nivel_disciplina_principal = 3
+         ))
+
+         // fusión con la tierra
+         dao.insertAmalgama(Amalgama(
+             41,
+             fkvas_poder = 41,
+             fkvas_disciplina_principal = 5,
+             nivel_disciplina_principal = 3
+         ))
+
+         //metamorfosis
+         dao.insertAmalgama(Amalgama(
+             42,
+             fkvas_poder = 42,
+             fkvas_disciplina_principal = 5,
+             nivel_disciplina_principal = 4,
+             requisito_poder = 40
+         ))
+
+         //corazón liberado
+         dao.insertAmalgama(Amalgama(
+             43,
+             fkvas_poder = 43,
+             fkvas_disciplina_principal = 5,
+             nivel_disciplina_principal = 5
+         ))
+
+         // forma de niebla
+         dao.insertAmalgama(Amalgama(
+             44,
+             fkvas_poder = 44,
+             fkvas_disciplina_principal = 5,
+             nivel_disciplina_principal = 5
+         ))
+
+         //Celeridad
+         // gracia felina
+         dao.insertAmalgama(Amalgama(
+             45,
+             fkvas_poder = 45,
+             fkvas_disciplina_principal = 6,
+             nivel_disciplina_principal = 1
+         ))
+
+         // reflejos rápidos
+         dao.insertAmalgama(Amalgama(
+             46,
+             fkvas_poder = 46,
+             fkvas_disciplina_principal = 6,
+             nivel_disciplina_principal = 1
+         ))
+
+         //presteza
+         dao.insertAmalgama(Amalgama(
+             47,
+             fkvas_poder = 47,
+             fkvas_disciplina_principal = 6,
+             nivel_disciplina_principal = 2
+         ))
+
+         // pestañeo
+         dao.insertAmalgama(Amalgama(
+             48,
+             fkvas_poder = 48,
+             fkvas_disciplina_principal = 6,
+             nivel_disciplina_principal = 3
+         ))
+
+        // recorrido
+         dao.insertAmalgama(Amalgama(
+             49,
+             fkvas_poder = 49,
+             fkvas_disciplina_principal = 6,
+             nivel_disciplina_principal = 3
+         ))
+
+         //puntería certera
+         dao.insertAmalgama(Amalgama(
+             50,
+             fkvas_poder = 50,
+             fkvas_disciplina_principal = 6,
+             nivel_disciplina_principal = 4
+         ))
+
+         //sorbo de elegancia
+         dao.insertAmalgama(Amalgama(
+             51,
+             fkvas_poder = 51,
+             fkvas_disciplina_principal = 6,
+             nivel_disciplina_principal = 4
+         ))
+
+         //golpe relámpago
+         dao.insertAmalgama(Amalgama(
+             52,
+             fkvas_poder = 52,
+             fkvas_disciplina_principal = 6,
+             nivel_disciplina_principal = 5
+         ))
+
+         // segundo quebrado
+         dao.insertAmalgama(Amalgama(
+             53,
+             fkvas_poder = 53,
+             fkvas_disciplina_principal = 6,
+             nivel_disciplina_principal = 5
+         ))
+
+         //Presencia
+         //atemorizar
+         dao.insertAmalgama(Amalgama(
+             54,
+             fkvas_poder = 54,
+             fkvas_disciplina_principal = 7,
+             nivel_disciplina_principal = 1
+         ))
+
+         // fascinación
+         dao.insertAmalgama(Amalgama(
+             55,
+             fkvas_poder = 55,
+             fkvas_disciplina_principal = 7,
+             nivel_disciplina_principal = 1
+         ))
+
+         //beso persistente
+         dao.insertAmalgama(Amalgama(
+             56,
+             fkvas_poder = 56,
+             fkvas_disciplina_principal = 7,
+             nivel_disciplina_principal = 2
+         ))
+
+         //encantamiento
+         dao.insertAmalgama(Amalgama(
+             57,
+             fkvas_poder = 57,
+             fkvas_disciplina_principal = 7,
+             nivel_disciplina_principal = 3
+         ))
+
+         //mirada aterradora
+         dao.insertAmalgama(Amalgama(
+             58,
+             fkvas_poder = 58,
+             fkvas_disciplina_principal = 7,
+             nivel_disciplina_principal = 3
+         ))
+
+         //invocación
+         dao.insertAmalgama(Amalgama(
+             59,
+             fkvas_poder = 59,
+             fkvas_disciplina_principal = 7,
+             nivel_disciplina_principal = 4
+         ))
+
+         // voz irresistible
+         dao.insertAmalgama(Amalgama(
+             60,
+             fkvas_poder = 60,
+             fkvas_disciplina_principal = 7,
+             nivel_disciplina_principal = 4
+         ))
+
+         //magnetismo de estrella
+         dao.insertAmalgama(Amalgama(
+             61,
+             fkvas_poder = 61,
+             fkvas_disciplina_principal = 7,
+             nivel_disciplina_principal = 5,
+         ))
+
+         //majestad
+         dao.insertAmalgama(Amalgama(
+             62,
+             fkvas_poder = 62,
+             fkvas_disciplina_principal = 7,
+             nivel_disciplina_principal = 1
          ))
 
     }

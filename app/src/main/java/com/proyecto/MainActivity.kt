@@ -112,12 +112,13 @@ class MainActivity : ComponentActivity() {
 //                            lifecycleScope.launch {
 //                                disciplinasVasDao.insertDisciplinasVas(
 //                                    DisciplinasVas(
-//                                        idDisciplinasVas = 2,
+//                                        idDisciplinasVas = 4,
 //                                        nivel = 5,
 //                                        fk_vas = 1
 //                                    )
 //                                )
 //                            }
+
                             Navegacion(viewModel)
 
                         }
