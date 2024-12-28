@@ -112,7 +112,7 @@ class MainActivity : ComponentActivity() {
 //                            lifecycleScope.launch {
 //                                disciplinasVasDao.insertDisciplinasVas(
 //                                    DisciplinasVas(
-//                                        idDisciplinasVas = 4,
+//                                        idDisciplinasVas = 1,
 //                                        nivel = 5,
 //                                        fk_vas = 1
 //                                    )
@@ -136,110 +136,6 @@ class MainActivity : ComponentActivity() {
 }
 
 
-
-private suspend fun insertInitialDataAmalgama(dao: AmalgamaDao) {
-    //Animalismo
-    // sentir a la bestia
-    dao.insertAmalgama(Amalgama(
-        1,
-        fkvas_poder = 1,
-        fkvas_disciplina_principal = 1,
-        nivel_disciplina_principal = 1
-        ))
-
-    //vínculo con famulus
-    dao.insertAmalgama(Amalgama(
-        2,
-        fkvas_poder = 2,
-        fkvas_disciplina_principal = 1,
-        nivel_disciplina_principal = 1
-    ))
-
-    //susurros salvajes
-    dao.insertAmalgama(Amalgama(
-        3,
-        fkvas_poder = 3,
-        fkvas_disciplina_principal = 1,
-        nivel_disciplina_principal = 2
-    ))
-
-    //colmena no-muerta
-    dao.insertAmalgama(Amalgama(
-        4,
-        fkvas_poder = 4,
-        fkvas_disciplina_principal = 1,
-        fkvas_disciplina_secundaria = 2, //Ofuscacion
-        nivel_disciplina_principal = 3,
-        nivel_disciplina_secundaria = 2
-    ))
-
-    //reprimir a la bestia
-    dao.insertAmalgama(Amalgama(
-        5,
-        fkvas_poder = 5,
-        fkvas_disciplina_principal = 1,
-        nivel_disciplina_principal = 3
-    ))
-
-    //suculencia animal
-    dao.insertAmalgama(Amalgama(
-        6,
-        fkvas_poder = 6,
-        fkvas_disciplina_principal = 1,
-        nivel_disciplina_principal = 3
-    ))
-
-    //comunión de espíritus
-    dao.insertAmalgama(Amalgama(
-        7,
-        fkvas_poder = 7,
-        fkvas_disciplina_principal = 1,
-        nivel_disciplina_principal = 4
-    ))
-
-    //control animal
-    dao.insertAmalgama(Amalgama(
-        8,
-        fkvas_poder = 8,
-        fkvas_disciplina_principal = 1,
-        nivel_disciplina_principal = 5
-    ))
-
-    //expulsar a la bestia
-    dao.insertAmalgama(Amalgama(
-        9,
-        fkvas_poder = 9,
-        fkvas_disciplina_principal = 1,
-        nivel_disciplina_principal = 5,
-    ))
-
-    //Ofuscación
-    //capa de sombras
-
-
-
-
-   // sin hacer
-    dao.insertAmalgama(Amalgama(
-        1,
-        fkvas_poder = 1,
-        fkvas_disciplina_principal = 1,
-        fkvas_disciplina_secundaria = 1,
-        nivel_disciplina_principal = 1,
-        nivel_disciplina_secundaria = 1,
-        requisito_poder = 1
-    ))
-    dao.insertAmalgama(Amalgama(
-        1,
-        fkvas_poder = 1,
-        fkvas_disciplina_principal = 1,
-        fkvas_disciplina_secundaria = 1,
-        nivel_disciplina_principal = 1,
-        nivel_disciplina_secundaria = 1,
-        requisito_poder = 1
-    ))
-
-}
 
 
 @Preview(showBackground = true)

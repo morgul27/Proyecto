@@ -1,14 +1,18 @@
 package com.proyecto
 
 import com.proyecto.bbdd.entity.Clan
+import com.proyecto.bbdd.entity.DisciplinasVas
 import com.proyecto.bbdd.entity.Usuario
 import com.proyecto.bbdd.entity.Vastago
 
 data class MPState(
     var name: String,
+    //listas
     val names: List<Usuario> = emptyList(),
     val nombresVas: List<Vastago> = emptyList(),
     val nombreClanes: List<Clan> = emptyList(),
+    val listaDisciplinasPorVas: List<String> = emptyList(),
+    val listaDisciplinasPorClan: List<String> = emptyList(),
     val listaPoderes: List<String> = emptyList(),
     val isLoading: Boolean = false,
 

@@ -1,6 +1,5 @@
 package com.proyecto.bbdd.repository
 
-import com.proyecto.bbdd.entity.Usuario
 import com.proyecto.bbdd.entity.Vastago
 import com.proyecto.bbdd.interfaces.VastagoDao
 
@@ -35,5 +34,15 @@ class VastagoRepository(
 
     suspend fun getPoderes(vastagoId: Int): List<String> {
         return vastagoDao.getPoderes(vastagoId)
+    }
+
+    suspend fun getDisciplinasClanDeVas(vastagoId: Int): List<String> {
+        return vastagoDao.getDisciplinasClanDeVas(vastagoId)
+    }
+
+
+
+    suspend fun getDisciplinasPorClan(vastagoClan: Int): List<String> {
+        return vastagoDao.getDisciplinasPorClan(vastagoClan)
     }
 }

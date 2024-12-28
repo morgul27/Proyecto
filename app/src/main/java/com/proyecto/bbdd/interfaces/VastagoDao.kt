@@ -1,12 +1,10 @@
 package com.proyecto.bbdd.interfaces
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.proyecto.bbdd.entity.Usuario
 import com.proyecto.bbdd.entity.Vastago
 
 @Dao
@@ -36,6 +34,7 @@ interface VastagoDao {
     @Update
     suspend fun actualizarVastago(vastago: Vastago)
 
+    //ver que poderes puede desbloquear el vastago
     @Query("""
         SELECT DISTINCT p.nombre AS poder
         FROM Vastago v
@@ -53,5 +52,29 @@ interface VastagoDao {
         ORDER BY p.id
     """)
     suspend fun getPoderes(vastagoId: Int): List<String>
+
+
+    //ver las disciplina que le toca al vastago
+    @Query("""
+        SELECT dc.nombre 
+        FROM DisciplinasClan dc
+        INNER JOIN NNClanDisciplinas nnd ON dc.id = nnd.fk_disc
+        INNER JOIN Clan c ON nnd.fk_clan = c.id
+        INNER JOIN Vastago v ON v.fkvas_clan = c.id
+        WHERE v.id = :vastagoId
+    """)
+    suspend fun getDisciplinasClanDeVas(vastagoId: Int): List<String>
+
+
+    //ver las disciplina que le toca por clan
+    @Query("""
+        SELECT dc.nombre 
+        FROM DisciplinasClan dc
+        INNER JOIN NNClanDisciplinas nnd ON dc.id = nnd.fk_disc
+        INNER JOIN Clan c ON nnd.fk_clan = c.id
+        INNER JOIN Vastago v ON v.fkvas_clan = c.id
+        WHERE c.id = :vastagoClan
+    """)
+    suspend fun getDisciplinasPorClan(vastagoClan: Int): List<String>
 
 }

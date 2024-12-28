@@ -221,6 +221,7 @@ fun MCF2BodyContent(
     var exp2 by remember { mutableStateOf(exp) }
 
 
+    Log.e("lista2", "discipli: ${state.listaDisciplinasPorClan}")
     // Pantalla visualmente
     LazyColumn(
         modifier = Modifier

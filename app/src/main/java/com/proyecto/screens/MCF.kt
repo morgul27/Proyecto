@@ -1,11 +1,13 @@
 package com.proyecto.screens
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -52,7 +54,6 @@ import androidx.navigation.NavController
 import com.proyecto.MPViewModel
 import com.proyecto.R
 import com.proyecto.SharedViewModel
-import com.proyecto.bbdd.entity.Clan
 import com.proyecto.navigation.Screens
 import com.proyecto.ui.theme.Blanco
 import com.proyecto.ui.theme.Borgoña
@@ -132,10 +133,14 @@ fun MDFBodyContent(navController: NavController, viewModel: MPViewModel, sharedV
     val state = viewModel.state
     var nombreVas by remember { mutableStateOf(viewModel.state.nombreVas) }
     var idClan by remember { mutableStateOf(1) }
+    var idGClan: Int? = null
+
     val maxChar = 5
     var expanded by remember { mutableStateOf(false) } // Para controlar si el menú está desplegado o no
-    var selectedGen by remember { mutableStateOf("Selecciona una generación") } // Opción seleccionada
-    var selectedClan by remember { mutableStateOf("Selecciona un Clan") } // Opción seleccionada
+
+    var selectedGen = state.generacion?.let { "Generación $it" } ?: "Selecciona una generación"
+
+    var selectedClan by remember { mutableStateOf(state.clanVas?: "Selecciona un Clan") }
     var dropdownExpanded by remember { mutableStateOf(false) }
 
     LaunchedEffect(state.clanVas) {
@@ -259,7 +264,7 @@ fun MDFBodyContent(navController: NavController, viewModel: MPViewModel, sharedV
                         color = Color(0xFFE8E6F8),
                         shape = RoundedCornerShape(topStart = 5.dp, topEnd = 5.dp, bottomStart = 1.dp, bottomEnd = 1.dp)
                     )
-                    .height(65.dp),
+                    .height(70.dp),
                 contentAlignment = Alignment.CenterStart // Alineación del contenido dentro del Box
             ) {
                 // Botón que abre el menú desplegable
@@ -269,7 +274,7 @@ fun MDFBodyContent(navController: NavController, viewModel: MPViewModel, sharedV
                 ) {
                     Text(selectedClan,
                         color = Color.Black,
-                        fontSize = 17.sp,
+                        fontSize = 24.sp,
                         fontFamily = ghoticFamily
                     ) // Mostrar la opción seleccionada
                 }
@@ -331,42 +336,45 @@ fun MDFBodyContent(navController: NavController, viewModel: MPViewModel, sharedV
                         color = Color(0xFFE8E6F8),
                         shape = RoundedCornerShape(topStart = 5.dp, topEnd = 5.dp)
                     )
-                    .height(65.dp),
-                contentAlignment = Alignment.CenterStart // Alineación del contenido dentro del Box
+                    .height(70.dp), // Altura del Box
+                contentAlignment = Alignment.Center // Centrar el contenido dentro del Box
             ) {
-                // Botón que abre el menú desplegable
-                TextButton(
-                    onClick = { expanded = true }, // Abrir menú
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(selectedGen,
-                        color = Color.Black,
-                        fontSize = 17.sp,
-                        fontFamily = ghoticFamily
-                    ) // Mostrar la opción seleccionada
-                }
-
-                // Menú desplegable
-                DropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false } // Cerrar el menú al hacer clic fuera
-                ) {
-                    // Opciones del menú
-                    (1..13).forEach { number ->
-                        DropdownMenuItem(
-                            text = { Text("Generación $number",
-                                color = Color.Black,
-                                fontSize = 18.sp,
-                                fontFamily = ghoticFamily)
-                                   },
-                            onClick = {
-                                selectedGen = "Generación $number" // Actualizar selección
-                                viewModel.setGeneracion(
-                                    number
-                                )
-                                expanded = false // Cerrar el menú
-                            }
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    TextButton(
+                        onClick = { expanded = true }, // Abrir menú
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(
+                            text = selectedGen,
+                            color = Color.Black,
+                            fontSize = 24.sp,
+                            fontFamily = ghoticFamily,
+                            textAlign = TextAlign.Center // Centrar el texto dentro del Text
                         )
+                    }
+
+                    DropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false } // Cerrar el menú al hacer clic fuera
+                    ) {
+                        // Opciones del menú
+                        (1..13).forEach { number ->
+                            DropdownMenuItem(
+                                text = {
+                                    Text(
+                                        text = "Generación $number",
+                                        color = Color.Black,
+                                        fontSize = 18.sp,
+                                        fontFamily = ghoticFamily
+                                    )
+                                },
+                                onClick = {
+                                    selectedGen = "Generación $number" // Actualizar selección
+                                    viewModel.setGeneracion(number)
+                                    expanded = false // Cerrar el menú
+                                }
+                            )
+                        }
                     }
                 }
             }
@@ -378,6 +386,7 @@ fun MDFBodyContent(navController: NavController, viewModel: MPViewModel, sharedV
                 DefaultButton(onClick = {
                     viewModel.setFkvas_clan(idClan) // Ahora idClan se actualizará antes de ser utilizado
                     nombreVas?.let { viewModel.setNombreVas(it) }
+                    viewModel.getDisciplinasPorClan(idClan)
                     navController.navigate(route = Screens.MCF2.route)},
                     text ="Siguiente"
                 )

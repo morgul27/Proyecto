@@ -181,6 +181,24 @@ class MPViewModel(
         state = state.copy(generacion = generacion)
     }
 
+    //Obtener disciplinas por vastago
+    fun getDisciplinasClanDeVas(vastagoId: Int){
+        viewModelScope.launch {
+            state = state.copy(
+                listaDisciplinasPorVas =  vasRepository.getDisciplinasClanDeVas(vastagoId)
+            )
+        }
+    }
+
+    //Obtener disciplinas por Clan
+    fun getDisciplinasPorClan(vastagoClan: Int) {
+        viewModelScope.launch {
+            state = state.copy(
+                listaDisciplinasPorClan = vasRepository.getDisciplinasPorClan(vastagoClan)
+            )
+        }
+    }
+
      fun ObtenerPoderes(vastagoId: Int){
         viewModelScope.launch {
             state = state.copy(
@@ -189,6 +207,10 @@ class MPViewModel(
 
         }
     }
+
+
+
+
 
 
 

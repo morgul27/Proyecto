@@ -5,7 +5,7 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "TablaClanDisciplinas",
+    tableName = "NNClanDisciplinas",
     foreignKeys = [
         ForeignKey(
             entity = Clan::class,
