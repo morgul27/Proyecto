@@ -243,8 +243,8 @@ fun MDFABody(navController: NavController, viewModel: MPViewModel, sharedViewMod
                     // Llama a la función para actualizar el estado
                     updateState(atributo, puntos[index], viewModel)
                 }
-                state.fuerza_voluntad = state.resolucion?.let { state.compostura?.plus(it) }
-                state.salud = state.resistencia?.plus(3)
+                state.fuerza_voluntad = state.resolucion.let { state.compostura.plus(it) }
+                state.salud = state.resistencia.plus(3)
                 navController.navigate(route = Screens.MCFH.route)},
                 text = "Siguiente"
             )

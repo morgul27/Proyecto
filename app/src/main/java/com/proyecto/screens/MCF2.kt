@@ -319,8 +319,8 @@ fun MCF2BodyContent(
             Spacer(modifier = Modifier.height(25.dp))
 
             DefaultButton(onClick = {
-                state.fuerza_voluntad = state.resolucion?.let { state.compostura?.plus(it) }
-                state.salud = state.resistencia?.plus(3)
+                state.fuerza_voluntad = state.resolucion?.let { state.compostura?.plus(it) }!!
+                state.salud = state.resistencia?.plus(3)!!
                 viewModel.saveVastago()
                 navController.navigate(route = Screens.MenuPrincipal.route)},
                 text = "Guardar"

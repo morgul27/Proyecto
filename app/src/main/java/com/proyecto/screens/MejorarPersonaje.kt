@@ -383,8 +383,8 @@ fun MejorarPersonajeBodyContent(
         item {
             Spacer(modifier = Modifier.height(25.dp))
             DefaultButton(onClick = {
-                state.fuerza_voluntad = state.resolucion?.let { state.compostura?.plus(it) }
-                state.salud = state.resistencia?.plus(3)
+                state.fuerza_voluntad = state.resolucion?.let { state.compostura?.plus(it) }!!
+                state.salud = state.resistencia?.plus(3)!!
                 viewModel.UpdateVastago(sharedViewModel.vasId.value ?: 0)
                 navController.navigate(route = Screens.MenuPrincipal.route)
             },
