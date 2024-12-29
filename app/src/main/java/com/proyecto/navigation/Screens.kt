@@ -6,11 +6,18 @@ sealed class Screens(val route: String) {
     object MenuPrincipal: Screens("segundo_screen")
     object MCrearUsuario: Screens("tercero_screen") //Menu Crear Usuario
     object MenuFicha: Screens("cuarto_screen")
+
+    //creacion personaje
     object MCF: Screens("quinto_screen") //Menu Creacion Ficha
-    object MCF2: Screens("sexto_screen") //Menu Creacion Ficha 2º parte
+    object MCF2: Screens("sexto_screen") //Menu Creacion Ficha 2º parte final
+    object MCFA: Screens("MCFA_screen") //Menu Creacion Ficha Atributo
+    object MCFH: Screens("MCFH_screen") //Menu Creacion Ficha Habilidades
+    object MCFD: Screens("MCFD_screen") //Menu Creacion Ficha Disciplinas
     object MejorarPersonaje: Screens("Septima_screen") //Menu para mejorar al vastago seleccionado
+
+
+    //Modo Historia
     object InicioHist: Screens("Historia_screen") //prueba
-   // object Inicio2: Screens("Octava_screen") //prueba
 
     //Pantallas Nosferatu
     object P2Nosf: Screens("P2Nosf_screen")

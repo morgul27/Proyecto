@@ -413,6 +413,26 @@ fun MDFBodyContent(navController: NavController, viewModel: MPViewModel, sharedV
                 text = "Leyenda"
             )
             Spacer(modifier = Modifier.height(25.dp))
+
+
+            //pruebas
+            if(state.generacion != null && state.nombreVas != null && state.clanVas != null){
+                DefaultButton(onClick = {
+                    viewModel.setFkvas_clan(idClan) // Ahora idClan se actualizará antes de ser utilizado
+                    nombreVas?.let { viewModel.setNombreVas(it) }
+                    viewModel.getDisciplinasPorClan(idClan)
+                    navController.navigate(route = Screens.MCFA.route)},
+                    text ="Siguiente parte prueba"
+                )
+            }
+            else{
+                DefaultButton(onClick = {
+                    viewModel.setFkvas_clan(idClan) // Ahora idClan se actualizará antes de ser utilizado
+                    nombreVas?.let { viewModel.setNombreVas(it) }},
+                    text ="Rellena el resto de campos",
+                    containerColor = Borgoña.copy(alpha = 0.5f)
+                )
+            }
         }
     }
 }

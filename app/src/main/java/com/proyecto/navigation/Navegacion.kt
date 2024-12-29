@@ -15,6 +15,9 @@ import com.proyecto.screens.MenuPrincipal
 import com.proyecto.screens.MenuUsuario
 import com.proyecto.screens.MCF
 import com.proyecto.screens.MCF2
+import com.proyecto.screens.MCFA
+import com.proyecto.screens.MCFD
+import com.proyecto.screens.MCFH
 import com.proyecto.screens.MejorarPersonaje
 import com.proyecto.screens.PruebaCF
 import com.proyecto.screens.mod_historia.InicioHist
@@ -61,39 +64,54 @@ fun Navegacion(viewModel: MPViewModel){
 
     // Definir el contenido del NavHost
     NavHost(navController = navController, startDestination = Screens.MenuUsuario.route) {
-        // Definir las rutas y composables
+        // Menu usuarios
         composable(route = Screens.MenuUsuario.route) {
             MenuUsuario(navController = navController, viewModel = viewModel, sharedViewModel = sharedViewModel)
-        }
-        composable(route = Screens.MenuPrincipal.route) {
-            MenuPrincipal(navController = navController, viewModel = viewModel, sharedViewModel = sharedViewModel)
         }
         composable(route = Screens.MCrearUsuario.route) {
             MCrearUsuario(navController = navController, viewModel = viewModel, sharedViewModel = sharedViewModel)
         }
+        composable(route = Screens.BorrarUsuario.route) {
+            BorrarUsuario(navController = navController, viewModel = viewModel, sharedViewModel = sharedViewModel)
+        }
+        //menus principal
+        composable(route = Screens.MenuPrincipal.route) {
+            MenuPrincipal(navController = navController, viewModel = viewModel, sharedViewModel = sharedViewModel)
+        }
         composable(route = Screens.MenuFicha.route) {
             MenuFicha(navController = navController, viewModel = viewModel, sharedViewModel = sharedViewModel)
         }
+        composable(route = Screens.PantallaPDF.route) {
+            PantallaPDF(navController = navController, sharedViewModel = sharedViewModel)
+        }
+        composable(route = Screens.VerArchivosPDF.route) {
+            VerArchivosPDF(navController = navController, viewModel = viewModel, sharedViewModel = sharedViewModel)
+        }
+
+        //Creacion de personajes
         composable(route = Screens.MCF.route) {
             MCF(navController = navController, viewModel = viewModel, sharedViewModel = sharedViewModel)
         }
         composable(route = Screens.MCF2.route) {
             MCF2(navController = navController, viewModel = viewModel, sharedViewModel = sharedViewModel)
         }
+        composable(route = Screens.MCFA.route) {
+            MCFA(navController = navController, viewModel = viewModel, sharedViewModel = sharedViewModel)
+        }
+        composable(route = Screens.MCFH.route) {
+            MCFH(navController = navController, viewModel = viewModel, sharedViewModel = sharedViewModel)
+        }
+        composable(route = Screens.MCFD.route) {
+            MCFD(navController = navController, viewModel = viewModel, sharedViewModel = sharedViewModel)
+        }
+
         composable(route = Screens.MejorarPersonaje.route) {
             MejorarPersonaje(navController = navController, viewModel = viewModel, sharedViewModel = sharedViewModel)
         }
+
+        //historia
         composable(route = Screens.InicioHist.route) {
             InicioHist(navController = navController, viewModel = viewModel, sharedViewModel = sharedViewModel)
-        }
-        composable(route = Screens.PantallaPDF.route) {
-            PantallaPDF(navController = navController, sharedViewModel = sharedViewModel)
-        }
-        composable(route = Screens.BorrarUsuario.route) {
-            BorrarUsuario(navController = navController, viewModel = viewModel, sharedViewModel = sharedViewModel)
-        }
-        composable(route = Screens.VerArchivosPDF.route) {
-            VerArchivosPDF(navController = navController, viewModel = viewModel, sharedViewModel = sharedViewModel)
         }
 
 
