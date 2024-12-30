@@ -11,12 +11,17 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -42,7 +47,12 @@ import androidx.navigation.NavController
 import com.proyecto.MPViewModel
 import com.proyecto.R
 import com.proyecto.SharedViewModel
+import com.proyecto.bbdd.entity.DisciplinasVas
+import com.proyecto.dialog.explicacion
+import com.proyecto.navigation.Screens
+import com.proyecto.ui.theme.Blanco
 import com.proyecto.ui.theme.Borgoña
+import com.proyecto.ui.theme.DefaultButton
 import com.proyecto.ui.theme.ProyectoTheme
 import com.proyecto.ui.theme.Typography
 import com.proyecto.ui.theme.ghoticFamily
@@ -119,129 +129,119 @@ fun MDFDBody(navController: NavController, viewModel: MPViewModel, sharedViewMod
     Log.d("Habilidad1", "armasfuego: ${state.armas_de_fuego}")
     Log.d("Habilidad2", "tecnologia: ${state.tecnologia}")
 
-    val habilidades = remember {
+    var puntosT = remember { mutableStateOf(29) }
+
+    state.fkvas_clan?.let { viewModel.getDisciplinasPorClan(it) }
+
+
+    //state.listaDisciplinasPorClan[0]
+
+    Log.d("Disciplina", "1: ${state.listaDisciplinasPorClan[0]}")
+    Log.d("Disciplina", "2: ${state.listaDisciplinasPorClan[1]}")
+    Log.d("Disciplina", "3: ${state.listaDisciplinasPorClan[2]}")
+    Log.d("fkvas_clan", "clan: ${state.fkvas_clan}")
+
+    var puntos = remember {
         mutableStateListOf(
-            "Fuerza", "Destreza", "Resistencia", "Carisma",
-            "Manipulación", "Compostura", "Inteligencia",
-            "Astucia", "Resolución", "Percepción",
-            "Sigilo", "Supervivencia", "Tecnología",
-            "Atletismo", "Empatía", "Ciencia", "Liderazgo", "Subterfugio", "Medicina"
+            0, 0, 0
         )
     }
-    val niveles =
-        remember { mutableStateListOf<Int>().apply { repeat(habilidades.size) { add(0) } } }
-
-    // Estados para las reglas
-    val nivel3Asignado = remember { mutableStateOf(false) }
-    val nivel2Asignados = remember { mutableStateOf(0) }
-    val maxNivel2 = 8
-
-    // UI
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = 10.dp)
             .padding(top = 50.dp),
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Espacio adicional
         item {
-            Text("Distribución Polifacético")
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(25.dp))
+            Text("Puntos totales: ${puntosT.value}")
+            Spacer(modifier = Modifier.height(25.dp))
+        }
 
-            // Lista de habilidades con interacción
-            habilidades.forEachIndexed { index, habilidad ->
+        //Botones
+        puntos.forEachIndexed { index, _ ->
+            item {
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    Text(habilidad, modifier = Modifier.weight(1f))
-                    Text("Nivel: ${niveles[index]}", modifier = Modifier.padding(horizontal = 8.dp))
-
-                    // Botón para subir nivel, respetando las reglas
-                    Button(
-                        onClick = {
-                            when (niveles[index]) {
-                                0 -> {
-                                    if (!nivel3Asignado.value) {
-                                        niveles[index] = 3
-                                        nivel3Asignado.value = true
-                                    } else if (nivel2Asignados.value < maxNivel2) {
-                                        niveles[index] = 2
-                                        nivel2Asignados.value++
-                                    }
-                                }
-
-                                2 -> {
-                                    niveles[index] = 3
-                                    nivel2Asignados.value--
-                                    nivel3Asignado.value = true
-                                }
-
-                                3 -> {
-                                    niveles[index] = 0
-                                    nivel3Asignado.value = false
-                                }
-                            }
-                        },
-                        enabled = niveles[index] < 3
+                    Box(Modifier
+                        .width(200.dp)
+                        .heightIn(min = 45.dp, max = 80.dp)
                     ) {
-                        Text("+")
+                        explicacion(
+                            texto = state.listaDisciplinasPorClan[index],
+                            textoT = "abilidades[index]",
+                            textoExpl = "textoExplicacion[index]",
+                            Modifier.align(Alignment.CenterStart),
+                            fontSize = 20.sp,
+                        )
                     }
-
-                    // Botón para bajar nivel
-                    Button(
-                        onClick = {
-                            when (niveles[index]) {
-                                3 -> {
-                                    niveles[index] = 0
-                                    nivel3Asignado.value = false
+                    //Modifier
+                    Box(Modifier.size(180.dp, 45.dp)) {
+                        Button(
+                            onClick = {
+                                if (puntos[index] > 0) {
+                                    puntos[index] -= 1
+                                    puntosT.value += 1
                                 }
+                            },
+                            Modifier.align(Alignment.CenterStart),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Borgoña,
+                                contentColor = Blanco
+                            ),
+                            shape = RoundedCornerShape(50, 6, 6, 50)
+                        ) {
+                            Text("-")
+                        }
 
-                                2 -> {
-                                    niveles[index] = 0
-                                    nivel2Asignados.value--
+                        Text(
+                            text = "${puntos[index]}",
+                            Modifier.align(Alignment.Center)
+                        )
+
+                        Button(
+                            onClick = {
+                                if (puntos[index] < 6 && puntosT.value > 0) {
+                                    puntos[index] += 1
+                                    puntosT.value -= 1
                                 }
-                            }
-                        },
-                        enabled = niveles[index] > 0
-                    ) {
-                        Text("-")
+                            },
+                            Modifier.align(Alignment.CenterEnd),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Borgoña,
+                                contentColor = Blanco
+                            ),
+                            shape = RoundedCornerShape(6, 50, 50, 6)
+                        ) {
+                            Text("+")
+                        }
                     }
+                    Spacer(modifier = Modifier.height(55.dp))
                 }
             }
+        }
+        // Espacio adicional
+        item {
+            Spacer(modifier = Modifier.height(25.dp))
 
-            Spacer(modifier = Modifier.height(16.dp))
+            //botones
+            DefaultButton(
+                onClick = {
+                    navController.navigate(route = Screens.MenuPrincipal.route)
+                },
+                text = "Guardar"
+            )
 
-            // Mensaje de ayuda
-            Text("Habilidad a nivel 3: ${if (nivel3Asignado.value) "Asignada" else "Pendiente"}")
-            Text("Habilidades a nivel 2: ${nivel2Asignados.value}/$maxNivel2")
-
-            // Botón para confirmar
-            Button(
-                onClick = { confirmarDistribucion(niveles, habilidades) },
-                enabled = nivel3Asignado.value && nivel2Asignados.value == maxNivel2
-            ) {
-                Text("Confirmar")
-            }
+            DefaultButton(
+                onClick = { navController.popBackStack() },
+                text = "Volver"
+            )
         }
     }
 }
-
-// Verifica si se puede subir el nivel según las reglas
-fun puedeSubirNivel(nivelActual: Int, puntosRestantes: Int): Boolean {
-    return when {
-        nivelActual == 0 -> puntosRestantes >= 1 // Nivel 1 cuesta 1 punto
-        nivelActual == 1 -> puntosRestantes >= 1 // Nivel 2 cuesta 1 punto
-        nivelActual == 2 -> puntosRestantes >= 1 // Nivel 3 cuesta 1 punto
-        else -> false
-    }
-}
-
-// Confirmar la distribución
-fun confirmarDistribucion(niveles: List<Int>, habilidades: List<String>) {
-    habilidades.forEachIndexed { index, habilidad ->
-        Log.d("Polifacético", "Habilidad: $habilidad, Nivel: ${niveles[index]}")
-    }
-}
-

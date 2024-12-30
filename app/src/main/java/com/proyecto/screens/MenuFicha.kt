@@ -127,6 +127,7 @@ fun MenuFicha(navController: NavController, viewModel: MPViewModel, sharedViewMo
                     state.astucia = 0
                     state.resolucion = 0
                     state.experiencia = 0
+                    state.listaDisciplinasPorClan = emptyList()
 
                     BodyFicha(navController, viewModel, sharedViewModel)
                 }

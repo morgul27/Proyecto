@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -227,8 +229,10 @@ fun MDFHBody(navController: NavController, viewModel: MPViewModel, sharedViewMod
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-
-                    Box(Modifier.size(200.dp, 45.dp)) {
+                    Box(Modifier
+                        .width(200.dp)
+                        .heightIn(min = 45.dp, max = 80.dp)
+                    ) {
                         explicacion(
                             texto = habilidades[index],
                             textoT = habilidades[index],
@@ -278,7 +282,7 @@ fun MDFHBody(navController: NavController, viewModel: MPViewModel, sharedViewMod
                             Text("+")
                         }
                     }
-
+                    Spacer(modifier = Modifier.height(55.dp))
                 }
             }
         }
@@ -294,7 +298,6 @@ fun MDFHBody(navController: NavController, viewModel: MPViewModel, sharedViewMod
                         // Llama a la función para actualizar el estado
                         updateHabilidades(habilidad, puntos[index], viewModel)
                     }
-
                     navController.navigate(route = Screens.MCFD.route)
                 },
                 text = "Guardar"

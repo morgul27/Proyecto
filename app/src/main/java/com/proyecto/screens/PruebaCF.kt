@@ -125,7 +125,7 @@ fun CFBody(navController: NavController, viewModel: MPViewModel, sharedViewModel
 
 
     LaunchedEffect(Unit) {
-        viewModel.ObtenerPoderes(1)
+        viewModel.ObtenerPoderes(2)
     }
 
     LazyColumn(

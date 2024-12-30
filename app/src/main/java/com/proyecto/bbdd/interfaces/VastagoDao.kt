@@ -68,7 +68,7 @@ interface VastagoDao {
 
     //ver las disciplina que le toca por clan
     @Query("""
-        SELECT dc.nombre 
+        SELECT DISTINCT dc.nombre 
         FROM DisciplinasClan dc
         INNER JOIN NNClanDisciplinas nnd ON dc.id = nnd.fk_disc
         INNER JOIN Clan c ON nnd.fk_clan = c.id

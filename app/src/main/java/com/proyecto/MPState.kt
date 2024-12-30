@@ -12,7 +12,8 @@ data class MPState(
     val nombresVas: List<Vastago> = emptyList(),
     val nombreClanes: List<Clan> = emptyList(),
     val listaDisciplinasPorVas: List<String> = emptyList(),
-    val listaDisciplinasPorClan: List<String> = emptyList(),
+    var listaDisciplinasPorClan: List<String> = emptyList(),
+    var listaNivelDisciplinas: List<String> = emptyList(), //para guardar el nivel de las disciplinas del vastago
     val listaPoderes: List<String> = emptyList(),
     val isLoading: Boolean = false,
 

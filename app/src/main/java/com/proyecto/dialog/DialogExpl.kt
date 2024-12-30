@@ -42,6 +42,7 @@ fun explicacion(
     modifier: Modifier = Modifier,
     fontSize: TextUnit = 14.sp,
     textColor: Color = Blanco, // Color del texto
+    lineHeight: TextUnit = 20.sp
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
@@ -53,6 +54,7 @@ fun explicacion(
         Text(
             text = texto,
             fontSize = fontSize,
+            lineHeight = lineHeight,
             color = textColor // Cambia el color del texto
         )
 
