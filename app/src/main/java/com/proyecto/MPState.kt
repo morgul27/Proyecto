@@ -35,21 +35,27 @@ data class MPState(
     var salud: Int = 0,
     var fuerza_voluntad: Int = 0,
     //habilidades
+    //columna 1
     var armas_de_fuego: Int? = 0,
     var artesania: Int? = 0,
     var atletismo: Int? = 0,
     var conducir: Int? = 0,
+    var latrocinio: Int? = 0,
     var pelea: Int? = 0,
     var pelea_con_armas: Int = 0,
+    var sigilo: Int = 0,
     var superviviencia: Int? = 0,
+    //columna 2
     var callejeo: Int? = 0,
     var etiqueta: Int? = 0,
     var interpretacion: Int? = 0,
+    var intimidacion: Int? = 0,
     var liderazgo: Int? = 0,
     var perspicacia: Int? = 0,
     var persuasion: Int? = 0,
     var subterfugio: Int? = 0,
     var trato_con_animales: Int? = 0,
+    //columna 3
     var academicismo: Int? = 0,
     var ciencias: Int? = 0,
     var consciencia: Int? = 0,

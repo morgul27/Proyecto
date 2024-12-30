@@ -12,7 +12,7 @@ import com.proyecto.bbdd.interfaces.NNClanDisciplinasDao
 import com.proyecto.bbdd.interfaces.PoderesDao
 
 class CreacionDatos {
-
+//resumen de creacion de personajes 139
     // Función para insertar datos iniciales
      suspend fun insertInitialDataClan(dao: ClanDao) {
         // Insertar los datos

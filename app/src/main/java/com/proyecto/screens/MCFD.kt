@@ -114,6 +114,10 @@ fun MCFD(navController: NavController, viewModel: MPViewModel, sharedViewModel: 
 
 @Composable
 fun MDFDBody(navController: NavController, viewModel: MPViewModel, sharedViewModel: SharedViewModel) {
+    val state = viewModel.state
+
+    Log.d("Habilidad1", "armasfuego: ${state.armas_de_fuego}")
+    Log.d("Habilidad2", "tecnologia: ${state.tecnologia}")
 
     val habilidades = remember {
         mutableStateListOf(
@@ -133,7 +137,6 @@ fun MDFDBody(navController: NavController, viewModel: MPViewModel, sharedViewMod
     val maxNivel2 = 8
 
     // UI
-
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()

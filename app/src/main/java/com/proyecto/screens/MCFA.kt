@@ -241,7 +241,7 @@ fun MDFABody(navController: NavController, viewModel: MPViewModel, sharedViewMod
 
                 atributos.forEachIndexed { index, atributo ->
                     // Llama a la función para actualizar el estado
-                    updateState(atributo, puntos[index], viewModel)
+                    updateAtributos(atributo, puntos[index], viewModel)
                 }
                 state.fuerza_voluntad = state.resolucion.let { state.compostura.plus(it) }
                 state.salud = state.resistencia.plus(3)
@@ -257,7 +257,7 @@ fun MDFABody(navController: NavController, viewModel: MPViewModel, sharedViewMod
 }
 
 // Función para actualizar los valores de los atributos en el estado
-fun updateState(atributo: String, nuevoValor: Int, viewModel: MPViewModel,) {
+fun updateAtributos(atributo: String, nuevoValor: Int, viewModel: MPViewModel,) {
     Log.d("MIRA AQUI", "atributo: ${atributo}")
     when (atributo) {
         "Fuerza" -> viewModel.state.fuerza = nuevoValor
@@ -269,6 +269,6 @@ fun updateState(atributo: String, nuevoValor: Int, viewModel: MPViewModel,) {
         "Inteligencia" -> viewModel.state.inteligencia = nuevoValor
         "Astucia" -> viewModel.state.astucia = nuevoValor
         "Resolución" -> viewModel.state.resolucion = nuevoValor
-        else -> Log.e("MDF2BodyContent", "Atributo desconocido: $atributo")
+        else -> Log.e("MCFABody", "Atributo desconocido: $atributo")
     }
 }
