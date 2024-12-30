@@ -130,7 +130,7 @@ fun MDFHBody(navController: NavController, viewModel: MPViewModel, sharedViewMod
             "Compostura",
             "Inteligencia",
             "Astucia",
-            "resolución"
+            "Resolución"
         )
     }
 
@@ -144,7 +144,7 @@ fun MDFHBody(navController: NavController, viewModel: MPViewModel, sharedViewMod
             "Compostura",
             "Inteligencia",
             "Astucia",
-            "resolución"
+            "Resolución"
         )
     }
 

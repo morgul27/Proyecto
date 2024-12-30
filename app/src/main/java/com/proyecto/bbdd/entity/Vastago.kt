@@ -26,6 +26,7 @@ data class Vastago(
     val nombreVas: String,
     val clan: String,
     var experiencia: Int,
+    //Atributos
     var generacion: Int,
     var fuerza: Int,
     var destreza: Int,
@@ -38,6 +39,32 @@ data class Vastago(
     var resolucion: Int,
     var salud: Int,
     var fuerza_voluntad: Int,
+    //Habilidades
+    var armas_de_fuego: Int,
+    var artesania: Int,
+    var atletismo: Int,
+    var conducir: Int,
+    var pelea: Int,
+    var pelea_con_armas: Int,
+    var superviviencia: Int,
+    var callejeo: Int,
+    var etiqueta: Int,
+    var interpretacion: Int,
+    var liderazgo: Int,
+    var perspicacia: Int,
+    var persuasion: Int,
+    var subterfugio: Int,
+    var trato_con_animales: Int,
+    var academicismo: Int,
+    var ciencias: Int,
+    var consciencia: Int,
+    var finanzas: Int,
+    var investigacion: Int,
+    var medicina: Int,
+    var ocultismo: Int,
+    var politica: Int,
+    var tecnologia: Int,
+    //FKs
     val fkvas_usu: Int, // Clave foránea que hace referencia al ID del Usuario
     val fkvas_clan: Int// Clave foránea que hace referencia al ID del Clan
 )

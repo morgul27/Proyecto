@@ -132,7 +132,7 @@ fun MDFABody(navController: NavController, viewModel: MPViewModel, sharedViewMod
             "Compostura",
             "Inteligencia",
             "Astucia",
-            "resolución"
+            "Resolución"
         )
     }
 
@@ -146,7 +146,7 @@ fun MDFABody(navController: NavController, viewModel: MPViewModel, sharedViewMod
             "Compostura",
             "Inteligencia",
             "Astucia",
-            "resolución"
+            "Resolución"
         )
     }
 
@@ -268,7 +268,7 @@ fun updateState(atributo: String, nuevoValor: Int, viewModel: MPViewModel,) {
         "Compostura" -> viewModel.state.compostura = nuevoValor
         "Inteligencia" -> viewModel.state.inteligencia = nuevoValor
         "Astucia" -> viewModel.state.astucia = nuevoValor
-        "resolución" -> viewModel.state.resolucion = nuevoValor
+        "Resolución" -> viewModel.state.resolucion = nuevoValor
         else -> Log.e("MDF2BodyContent", "Atributo desconocido: $atributo")
     }
 }

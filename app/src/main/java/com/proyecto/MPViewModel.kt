@@ -125,6 +125,7 @@ class MPViewModel(
             clan = state.clanVas ?: "Nosferatu",
             experiencia = state.experiencia ?: 0,
             generacion = state.generacion ?: 0,
+            //Atributos
             fuerza = state.fuerza ?: 0,
             destreza = state.destreza ?: 0,
             resistencia = state.resistencia ?: 0,
@@ -136,8 +137,34 @@ class MPViewModel(
             resolucion = state.resolucion ?: 0,
             salud = state.salud ?: 0,
             fuerza_voluntad = state.fuerza_voluntad ?: 0,
+            //FKs
             fkvas_usu = state.fkvas_usu ?: 1,
-            fkvas_clan = state.fkvas_clan ?: 1
+            fkvas_clan = state.fkvas_clan ?: 1,
+            //Habilidades
+            armas_de_fuego = state.armas_de_fuego?:0,
+            artesania = state.artesania?:0,
+            atletismo = state.atletismo?:0,
+            conducir = state.conducir?:0,
+            pelea = state.pelea?:0,
+            pelea_con_armas = state.pelea_con_armas?:0,
+            superviviencia = state.superviviencia?:0,
+            callejeo = state.callejeo?:0,
+            etiqueta = state.etiqueta?:0,
+            interpretacion = state.interpretacion?:0,
+            liderazgo = state.liderazgo?:0,
+            perspicacia = state.perspicacia?:0,
+            persuasion = state.persuasion?:0,
+            subterfugio = state.subterfugio?:0,
+            trato_con_animales = state.trato_con_animales?:0,
+            academicismo = state.academicismo?:0,
+            ciencias = state.ciencias?:0,
+            consciencia = state.consciencia?:0,
+            finanzas = state.finanzas?:0,
+            investigacion = state.investigacion?:0,
+            medicina = state.medicina?:0,
+            ocultismo = state.ocultismo?:0,
+            politica = state.politica?:0,
+            tecnologia = state.tecnologia?:0
         )
         viewModelScope.launch {
             vasRepository.insertVastago(vastago)
@@ -145,11 +172,12 @@ class MPViewModel(
     }
     fun UpdateVastago(idAct: Int){
         val vastago = Vastago(
-            id = idAct,
+            id = state.id,
             nombreVas = state.nombreVas ?: "Cain",
             clan = state.clanVas ?: "Nosferatu",
             experiencia = state.experiencia ?: 0,
             generacion = state.generacion ?: 0,
+            //Atributos
             fuerza = state.fuerza ?: 0,
             destreza = state.destreza ?: 0,
             resistencia = state.resistencia ?: 0,
@@ -161,8 +189,34 @@ class MPViewModel(
             resolucion = state.resolucion ?: 0,
             salud = state.salud ?: 0,
             fuerza_voluntad = state.fuerza_voluntad ?: 0,
+            //FKs
             fkvas_usu = state.fkvas_usu ?: 1,
-            fkvas_clan = state.fkvas_clan ?: 1
+            fkvas_clan = state.fkvas_clan ?: 1,
+            //Habilidades
+            armas_de_fuego = state.armas_de_fuego?:0,
+            artesania = state.artesania?:0,
+            atletismo = state.atletismo?:0,
+            conducir = state.conducir?:0,
+            pelea = state.pelea?:0,
+            pelea_con_armas = state.pelea_con_armas?:0,
+            superviviencia = state.superviviencia?:0,
+            callejeo = state.callejeo?:0,
+            etiqueta = state.etiqueta?:0,
+            interpretacion = state.interpretacion?:0,
+            liderazgo = state.liderazgo?:0,
+            perspicacia = state.perspicacia?:0,
+            persuasion = state.persuasion?:0,
+            subterfugio = state.subterfugio?:0,
+            trato_con_animales = state.trato_con_animales?:0,
+            academicismo = state.academicismo?:0,
+            ciencias = state.ciencias?:0,
+            consciencia = state.consciencia?:0,
+            finanzas = state.finanzas?:0,
+            investigacion = state.investigacion?:0,
+            medicina = state.medicina?:0,
+            ocultismo = state.ocultismo?:0,
+            politica = state.politica?:0,
+            tecnologia = state.tecnologia?:0
         )
         viewModelScope.launch {
             vasRepository.insertVastago(vastago)
