@@ -131,8 +131,9 @@ fun MDFDBody(navController: NavController, viewModel: MPViewModel, sharedViewMod
 
     var puntosT = remember { mutableStateOf(29) }
 
+    //obtener lista de disciplina y su id
     state.fkvas_clan?.let { viewModel.getDisciplinasPorClan(it) }
-
+    state.fkvas_clan?.let { viewModel.getIdDisciplinasPorClan(it) }
 
     //state.listaDisciplinasPorClan[0]
 
@@ -233,7 +234,12 @@ fun MDFDBody(navController: NavController, viewModel: MPViewModel, sharedViewMod
             //botones
             DefaultButton(
                 onClick = {
-                    navController.navigate(route = Screens.MenuPrincipal.route)
+                    viewModel.guardarVastagoConDisciplinas(
+                        puntos = puntos,
+                        listaIdDisciplinas = state.listaIdDisciplinas
+                    ) {
+                        navController.navigate(route = Screens.MenuPrincipal.route)
+                    }
                 },
                 text = "Guardar"
             )

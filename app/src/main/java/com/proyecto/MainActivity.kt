@@ -30,6 +30,7 @@ import com.proyecto.bbdd.interfaces.PoderesDao
 import com.proyecto.bbdd.repository.AmalgamaRepository
 import com.proyecto.bbdd.repository.ClanRepository
 import com.proyecto.bbdd.repository.DisciplinasClanRepository
+import com.proyecto.bbdd.repository.DisciplinasVasRepository
 import com.proyecto.bbdd.repository.NNClanDisciplinasRepository
 import com.proyecto.bbdd.repository.PoderesRepository
 import com.proyecto.bbdd.repository.UsuarioRepository
@@ -85,13 +86,14 @@ class MainActivity : ComponentActivity() {
                             val vasRepository = VastagoRepository(vasDao)
                             val clanRepository = ClanRepository(clanDao)
                             val disciplinasClanRepository = DisciplinasClanRepository(disciplinasClanDao)
+                            val disciplinasVasRepository = DisciplinasVasRepository(disciplinasVasDao)
                             val poderesRepository = PoderesRepository(poderesDao)
                             val NNClanDisciplinasRepository = NNClanDisciplinasRepository(NNClanDisciplinasDao)
                             val AmalgamaRepository = AmalgamaRepository(amalgamaDao)
 
                             //creo la variable del ViewModel
                             val viewModel =
-                                MPViewModel(usuRepository, vasRepository, clanRepository)
+                                MPViewModel(usuRepository, vasRepository, clanRepository, disciplinasVasRepository)
 
                             // Inicializo la clase CreacionDatos
                             creacionDatos = CreacionDatos()

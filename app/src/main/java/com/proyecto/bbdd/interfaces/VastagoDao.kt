@@ -13,7 +13,7 @@ interface VastagoDao {
     //lo que esta entre parentesis funciona como un metodo update
     //(onConflict = OnConflictStrategy.REPLACE)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertVastago(vastago: Vastago)
+    suspend fun insertVastago(vastago: Vastago): Long
 
     @Query("SELECT * FROM Vastago")
     suspend fun getVastagos(): List<Vastago>
@@ -72,9 +72,21 @@ interface VastagoDao {
         FROM DisciplinasClan dc
         INNER JOIN NNClanDisciplinas nnd ON dc.id = nnd.fk_disc
         INNER JOIN Clan c ON nnd.fk_clan = c.id
-        INNER JOIN Vastago v ON v.fkvas_clan = c.id
         WHERE c.id = :vastagoClan
     """)
     suspend fun getDisciplinasPorClan(vastagoClan: Int): List<String>
 
+    @Query("""
+        SELECT DISTINCT dc.id
+        FROM DisciplinasClan dc
+        INNER JOIN NNClanDisciplinas nnd ON dc.id = nnd.fk_disc
+        INNER JOIN Clan c ON nnd.fk_clan = c.id
+        WHERE c.id = :vastagoClan
+    """)
+    suspend fun getIdDisciplinasPorClan(vastagoClan: Int): List<Int>
+
+
+    //coger la id del ultimo vastago creado
+    @Query("""SELECT id FROM Vastago ORDER BY id DESC LIMIT 1""")
+    suspend fun getUltIdVas(): Int
 }

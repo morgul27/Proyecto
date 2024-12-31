@@ -7,8 +7,8 @@ import com.proyecto.bbdd.interfaces.VastagoDao
 class VastagoRepository(
     private val vastagoDao: VastagoDao
 ) {
-    suspend fun insertVastago(vastago: Vastago) {
-        vastagoDao.insertVastago(vastago)
+    suspend fun insertVastago(vastago: Vastago): Long {
+        return vastagoDao.insertVastago(vastago)
     }
 
     suspend fun getVastagos(): List<Vastago> {
@@ -41,8 +41,16 @@ class VastagoRepository(
     }
 
 
-
     suspend fun getDisciplinasPorClan(vastagoClan: Int): List<String> {
         return vastagoDao.getDisciplinasPorClan(vastagoClan)
+    }
+
+    suspend fun getIdDisciplinasPorClan(vastagoClan: Int): List<Int> {
+        return vastagoDao.getIdDisciplinasPorClan(vastagoClan)
+    }
+
+    //sacar el id del vastago
+    suspend fun getUltIdVas():Int {
+        return vastagoDao.getUltIdVas()
     }
 }

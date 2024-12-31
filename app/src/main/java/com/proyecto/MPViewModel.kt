@@ -6,9 +6,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.proyecto.bbdd.entity.DisciplinasVas
 import com.proyecto.bbdd.entity.Usuario
 import com.proyecto.bbdd.entity.Vastago
 import com.proyecto.bbdd.repository.ClanRepository
+import com.proyecto.bbdd.repository.DisciplinasVasRepository
 import com.proyecto.bbdd.repository.UsuarioRepository
 import com.proyecto.bbdd.repository.VastagoRepository
 import kotlinx.coroutines.launch
@@ -18,6 +20,8 @@ class MPViewModel(
     private  val usuRepository: UsuarioRepository,
     private  val vasRepository: VastagoRepository,
     private  val clanRepository: ClanRepository,
+    private  val disciplinasVasRepository : DisciplinasVasRepository,
+
 
 ) : ViewModel(){
     var state by mutableStateOf(MPState("", listOf(), nombreVas = "", clanVas = ""))
@@ -252,6 +256,14 @@ class MPViewModel(
             )
         }
     }
+    //obtener la id de la disciplinas del clan
+    fun getIdDisciplinasPorClan(vastagoClan: Int) {
+        viewModelScope.launch {
+            state = state.copy(
+                listaIdDisciplinas = vasRepository.getIdDisciplinasPorClan(vastagoClan)
+            )
+        }
+    }
 
      fun ObtenerPoderes(vastagoId: Int){
         viewModelScope.launch {
@@ -262,8 +274,117 @@ class MPViewModel(
         }
     }
 
+     //sacar al ultimo vastago creado
+     fun UltimoVas(){
+        viewModelScope.launch {
+            state = state.copy(
+                fk_vas = vasRepository.getUltIdVas()
+            )
+        }
+    }
 
 
+    //disciplinas
+    fun saveDisciplinaVas(idDicplinas: Int, nivel: Int){
+        val disciplinasVas =  DisciplinasVas(
+            idDisciplinasVas = idDicplinas,
+            nivel = nivel,
+            fk_vas = state.fk_vas,
+        )
+        viewModelScope.launch {
+            disciplinasVasRepository.saveDisciplinasVas(disciplinasVas)
+        }
+    }
+
+    //guardar vastago y sus disciplinas
+    fun saveVastagoYDisciplinas(puntos: List<Int>, listaIdDisciplinas: List<Int>, onSuccess: () -> Unit) {
+        viewModelScope.launch {
+            // Guarda el vástago y espera a que se complete
+            saveVastago()
+
+            // Obtén el último vástago
+            val ultimoVastago = UltimoVas()
+
+            // Guarda las disciplinas asociadas al último vástago
+            if (ultimoVastago != null) {
+                listaIdDisciplinas.forEachIndexed { index, disciplinaId ->
+                    saveDisciplinaVas(disciplinaId, puntos[index])
+                }
+            }
+
+            // Navega después de completar todo
+            onSuccess()
+        }
+    }
+    fun guardarVastagoConDisciplinas(puntos: List<Int>, listaIdDisciplinas: List<Int>, onComplete: () -> Unit) {
+        viewModelScope.launch {
+            // 1. Guardar el vástago y obtener su ID
+            val vastagoId: Long = vasRepository.insertVastago(
+                Vastago(
+                    nombreVas = state.nombreVas ?: "Cain",
+                    clan = state.clanVas ?: "Nosferatu",
+                    experiencia = state.experiencia ?: 0,
+                    generacion = state.generacion ?: 0,
+                    // Atributos
+                    fuerza = state.fuerza ?: 0,
+                    destreza = state.destreza ?: 0,
+                    resistencia = state.resistencia ?: 0,
+                    carisma = state.carisma ?: 0,
+                    manipulacion = state.manipulacion ?: 0,
+                    compostura = state.compostura ?: 0,
+                    inteligencia = state.inteligencia ?: 0,
+                    astucia = state.astucia ?: 0,
+                    resolucion = state.resolucion ?: 0,
+                    salud = state.salud ?: 0,
+                    fuerza_voluntad = state.fuerza_voluntad ?: 0,
+                    fkvas_usu = state.fkvas_usu ?: 1,
+                    fkvas_clan = state.fkvas_clan ?: 1,
+                    // Habilidades
+                    armas_de_fuego = state.armas_de_fuego ?: 0,
+                    artesania = state.artesania ?: 0,
+                    atletismo = state.atletismo ?: 0,
+                    conducir = state.conducir ?: 0,
+                    pelea = state.pelea ?: 0,
+                    pelea_con_armas = state.pelea_con_armas ?: 0,
+                    superviviencia = state.superviviencia ?: 0,
+                    callejeo = state.callejeo ?: 0,
+                    etiqueta = state.etiqueta ?: 0,
+                    interpretacion = state.interpretacion ?: 0,
+                    liderazgo = state.liderazgo ?: 0,
+                    perspicacia = state.perspicacia ?: 0,
+                    persuasion = state.persuasion ?: 0,
+                    subterfugio = state.subterfugio ?: 0,
+                    trato_con_animales = state.trato_con_animales ?: 0,
+                    academicismo = state.academicismo ?: 0,
+                    ciencias = state.ciencias ?: 0,
+                    consciencia = state.consciencia ?: 0,
+                    finanzas = state.finanzas ?: 0,
+                    investigacion = state.investigacion ?: 0,
+                    medicina = state.medicina ?: 0,
+                    ocultismo = state.ocultismo ?: 0,
+                    politica = state.politica ?: 0,
+                    tecnologia = state.tecnologia ?: 0
+                )
+            ) // El valor 'vastagoId' es de tipo Long
+
+            // 2. Asegúrate de convertir el 'vastagoId' de Long a Int de manera segura
+            val vastagoIdInt = vastagoId.toInt() // Convierte el ID de Long a Int
+
+            // 3. Guardar las disciplinas asociadas al vástago recién insertado
+            listaIdDisciplinas.forEachIndexed { index, disciplinaId ->
+                disciplinasVasRepository.saveDisciplinasVas(
+                    DisciplinasVas(
+                        idDisciplinasVas = disciplinaId,
+                        nivel = puntos[index],
+                        fk_vas = vastagoIdInt // Usamos el ID convertido a Int
+                    )
+                )
+            }
+
+            // 4. Llamar a la función final cuando _todo esté completo
+            onComplete()
+        }
+    }
 
 
 
