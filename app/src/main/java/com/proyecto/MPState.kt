@@ -19,7 +19,7 @@ data class MPState(
     val isLoading: Boolean = false,
 
     //Creacion de Vastago
-    val id: Int? = null,
+    var id: Int? = null,
     var nombreVas: String? = null,
     var clanVas: String? = null,
     var experiencia: Int? = null,

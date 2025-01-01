@@ -32,8 +32,8 @@ class VastagoRepository(
         vastagoDao.actualizarVastago(vastago)
     }
 
-    suspend fun getPoderes(vastagoId: Int): List<String> {
-        return vastagoDao.getPoderes(vastagoId)
+    suspend fun getPoderes(vastagoId: Int, idDisciplina: Int): List<String> {
+        return vastagoDao.getPoderes(vastagoId, idDisciplina)
     }
 
     suspend fun getDisciplinasClanDeVas(vastagoId: Int): List<String> {

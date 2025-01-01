@@ -39,6 +39,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -168,6 +169,10 @@ fun MCFUBody(
     val poderesPorDisciplina = List(puntosPorDisciplina) { "" }
     Log.i("nivel disc 1", "${state.listaNivelDisciplinas[0]}")
 
+    LaunchedEffect(Unit) {
+        val poderes = viewModel.ObtenerPoderes(2, 1)
+    }
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -185,7 +190,7 @@ fun MCFUBody(
                 Text(text = "Poderes de ${state.listaDisciplinasPorClan[index]}")
                 Spacer(modifier = Modifier.height(5.dp))
                 for (i in 1..state.listaNivelDisciplinas[index]) {
-                    DropdownMPoder(index + 1,)
+                    DropdownMPoder(index + 1, viewModel, state.listaIdDisciplinas[index])
                     Spacer(modifier = Modifier.height(15.dp))
                 }
                 Spacer(modifier = Modifier.height(35.dp))
@@ -195,11 +200,18 @@ fun MCFUBody(
 }
 
 @Composable
-fun DropdownMPoder(numero: Int) {
+fun DropdownMPoder(numero: Int, viewModel: MPViewModel, idDisciplina: Int) {
+    val state = viewModel.state
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf("Seleccionar Poder $numero") } // Texto inicial del menú
     val opciones = listOf("Poder A", "Poder B", "Poder C") // Opciones del menú
+    //pruebas
+    var listaPoderes by remember { mutableStateOf<List<String>>(emptyList()) }
 
+    LaunchedEffect(Unit) {
+        listaPoderes = state.id?.let { viewModel.ObtenerPoderes(it, idDisciplina) }!!
+    }
+    //pruebas
 
     Column {
         Text(
@@ -210,7 +222,7 @@ fun DropdownMPoder(numero: Int) {
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
-            opciones.forEach { opcion ->
+            listaPoderes.forEach { opcion ->
                 DropdownMenuItem(
                     text = {
                         Text(

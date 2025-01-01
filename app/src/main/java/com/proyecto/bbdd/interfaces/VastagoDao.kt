@@ -48,10 +48,10 @@ interface VastagoDao {
                 dv_secundaria.nivel >= a.nivel_disciplina_secundaria))
         )
         INNER JOIN Poderes p ON p.id = a.fkvas_poder
-        WHERE v.id = :vastagoId
+        WHERE v.id = :vastagoId AND fkvas_disciplina_principal = :idDisciplina
         ORDER BY p.id
     """)
-    suspend fun getPoderes(vastagoId: Int): List<String>
+    suspend fun getPoderes(vastagoId: Int, idDisciplina: Int): List<String>
 
 
     //ver las disciplina que le toca al vastago

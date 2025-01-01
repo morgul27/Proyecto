@@ -121,11 +121,11 @@ fun CFBody(navController: NavController, viewModel: MPViewModel, sharedViewModel
     val state = viewModel.state
     var dropdownExpanded by remember { mutableStateOf(false) }
     var seleccPoder by remember { mutableStateOf("Selecciona un Poder") }
-
+    var poderes by remember { mutableStateOf<List<String>>(emptyList()) }
 
 
     LaunchedEffect(Unit) {
-        viewModel.ObtenerPoderes(2)
+        poderes = viewModel.ObtenerPoderes(1, 3)
     }
 
     LazyColumn(
@@ -187,7 +187,7 @@ fun CFBody(navController: NavController, viewModel: MPViewModel, sharedViewModel
                     } // Cerrar el menú al hacer clic fuera
                 ) {
                     // Opciones del menú
-                    state.listaPoderes.forEach { poderes ->
+                    poderes.forEach { poderes ->
                         DropdownMenuItem(
                             onClick = {
                                 seleccPoder = poderes

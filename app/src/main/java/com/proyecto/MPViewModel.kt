@@ -265,13 +265,10 @@ class MPViewModel(
         }
     }
 
-     fun ObtenerPoderes(vastagoId: Int){
-        viewModelScope.launch {
-            state = state.copy(
-                listaPoderes =  vasRepository.getPoderes(vastagoId)
-            )
-
-        }
+    suspend fun ObtenerPoderes(vastagoId: Int, idDisciplina: Int): List<String> {
+        val poderes = vasRepository.getPoderes(vastagoId, idDisciplina)
+        state = state.copy(listaPoderes = poderes)
+        return poderes
     }
 
      //sacar al ultimo vastago creado
@@ -369,7 +366,7 @@ class MPViewModel(
 
             // 2. Asegúrate de convertir el 'vastagoId' de Long a Int de manera segura
             val vastagoIdInt = vastagoId.toInt() // Convierte el ID de Long a Int
-
+            state.id = vastagoIdInt
             // 3. Guardar las disciplinas asociadas al vástago recién insertado
             listaIdDisciplinas.forEachIndexed { index, disciplinaId ->
                 disciplinasVasRepository.saveDisciplinasVas(
