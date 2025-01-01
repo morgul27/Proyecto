@@ -300,7 +300,7 @@ fun MDFHBody(navController: NavController, viewModel: MPViewModel, sharedViewMod
                     }
                     navController.navigate(route = Screens.MCFD.route)
                 },
-                text = "Guardar"
+                text = "Siguiente"
             )
 
             DefaultButton(

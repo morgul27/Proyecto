@@ -1,8 +1,11 @@
 package com.proyecto.screens
 
 import android.annotation.SuppressLint
+import android.icu.text.ListFormatter
+import android.text.style.BackgroundColorSpan
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,7 +14,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -20,34 +22,47 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.proyecto.MPViewModel
 import com.proyecto.R
 import com.proyecto.SharedViewModel
-import com.proyecto.bbdd.entity.DisciplinasVas
 import com.proyecto.dialog.explicacion
 import com.proyecto.navigation.Screens
 import com.proyecto.ui.theme.Blanco
@@ -60,7 +75,8 @@ import com.proyecto.ui.theme.ghoticFamily
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MCFD(navController: NavController, viewModel: MPViewModel, sharedViewModel: SharedViewModel){
+fun MCFU(navController: NavController, viewModel: MPViewModel, sharedViewModel: SharedViewModel) {
+    var exp by remember { mutableStateOf(0) }
     val image = painterResource(R.drawable.marmol)
     ProyectoTheme {
         MaterialTheme(
@@ -108,13 +124,31 @@ fun MCFD(navController: NavController, viewModel: MPViewModel, sharedViewModel: 
                             modifier = Modifier.alpha(0.6F)
                         )
                     }
-                    if (viewModel.showSecondMenu.value) {
-                        MDFSecondBodyContent(navController, viewModel, sharedViewModel)
+                    val state = viewModel.state
+                    val listExp =
+                        remember { mutableStateListOf(0, 9, 8, 7, 6, 5, 4, 4, 3, 3, 2, 2, 1, 1) }
+                    var expGeneracion by remember {
+                        mutableStateOf(state.generacion?.let { it1 -> listExp.getOrElse(it1) { 0 } })
+                    }
+                    //este es el calculo de N * 15 + 5 * (N - 1)
+                    val expCalculo = remember {
+                        mutableStateOf(
+                            (expGeneracion?.times(15) ?: 0) + 5 * (expGeneracion?.minus(1) ?: 0)
+                        )
+                    }
+                    if (expCalculo.value < 0) {
+                        expCalculo.value = 0
+                    }
 
-                    } else {
-                        // Mostrar el menú principal
-                        MDFDBody(navController, viewModel, sharedViewModel)
 
+                    // Actualizar el estado de exp cuando cambie expCalculo
+                    exp = expCalculo.value
+                    state.experiencia = exp
+
+
+                    //llamada a MCF2Body
+                    exp.let { it1 ->
+                        MCFUBody(navController, viewModel, sharedViewModel, it1)
                     }
                 }
             }
@@ -123,130 +157,91 @@ fun MCFD(navController: NavController, viewModel: MPViewModel, sharedViewModel: 
 }
 
 @Composable
-fun MDFDBody(navController: NavController, viewModel: MPViewModel, sharedViewModel: SharedViewModel) {
+fun MCFUBody(
+    navController: NavController,
+    viewModel: MPViewModel,
+    sharedViewModel: SharedViewModel,
+    exp: Int
+) {
     val state = viewModel.state
+    var puntosPorDisciplina by remember { mutableStateOf(0) }
+    val poderesPorDisciplina = List(puntosPorDisciplina) { "" }
+    Log.i("nivel disc 1", "${state.listaNivelDisciplinas[0]}")
 
-    Log.d("Habilidad1", "armasfuego: ${state.armas_de_fuego}")
-    Log.d("Habilidad2", "tecnologia: ${state.tecnologia}")
-
-    var puntosT = remember { mutableStateOf(3) }
-
-    //obtener lista de disciplina y su id
-    state.fkvas_clan?.let { viewModel.getDisciplinasPorClan(it) }
-    state.fkvas_clan?.let { viewModel.getIdDisciplinasPorClan(it) }
-
-    //state.listaDisciplinasPorClan[0]
-
-    Log.d("Disciplina", "1: ${state.listaDisciplinasPorClan[0]}")
-    Log.d("Disciplina", "2: ${state.listaDisciplinasPorClan[1]}")
-    Log.d("Disciplina", "3: ${state.listaDisciplinasPorClan[2]}")
-    Log.d("fkvas_clan", "clan: ${state.fkvas_clan}")
-
-    var puntos = remember {
-        mutableStateListOf(
-            0, 0, 0
-        )
-    }
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 10.dp)
             .padding(top = 50.dp),
         verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Espacio adicional
         item {
-            Spacer(modifier = Modifier.height(25.dp))
-            Text("Puntos totales: ${puntosT.value}")
-            Spacer(modifier = Modifier.height(25.dp))
-        }
+            //espacio para no agobiar
+            Spacer(modifier = Modifier.height(45.dp))
 
-        //Botones
-        puntos.forEachIndexed { index, _ ->
-            item {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    Box(Modifier
-                        .width(200.dp)
-                        .heightIn(min = 45.dp, max = 80.dp)
-                    ) {
-                        explicacion(
-                            texto = state.listaDisciplinasPorClan[index],
-                            textoT = "abilidades[index]",
-                            textoExpl = "textoExplicacion[index]",
-                            Modifier.align(Alignment.CenterStart),
-                            fontSize = 20.sp,
-                        )
-                    }
-                    //Modifier
-                    Box(Modifier.size(180.dp, 45.dp)) {
-                        Button(
-                            onClick = {
-                                if (puntos[index] > 0) {
-                                    puntos[index] -= 1
-                                    puntosT.value += 1
-                                }
-                            },
-                            Modifier.align(Alignment.CenterStart),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Borgoña,
-                                contentColor = Blanco
-                            ),
-                            shape = RoundedCornerShape(50, 6, 6, 50)
-                        ) {
-                            Text("-")
-                        }
 
-                        Text(
-                            text = "${puntos[index]}",
-                            Modifier.align(Alignment.Center)
-                        )
-
-                        Button(
-                            onClick = {
-                                if (puntos[index] < 6 && puntosT.value > 0) {
-                                    puntos[index] += 1
-                                    puntosT.value -= 1
-                                }
-                            },
-                            Modifier.align(Alignment.CenterEnd),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Borgoña,
-                                contentColor = Blanco
-                            ),
-                            shape = RoundedCornerShape(6, 50, 50, 6)
-                        ) {
-                            Text("+")
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(55.dp))
+            //prueba
+            state.listaNivelDisciplinas.forEachIndexed { index, _ ->
+                Text(text = "Poderes de ${state.listaDisciplinasPorClan[index]}")
+                Spacer(modifier = Modifier.height(5.dp))
+                for (i in 1..state.listaNivelDisciplinas[index]) {
+                    DropdownMPoder(index + 1,)
+                    Spacer(modifier = Modifier.height(15.dp))
                 }
+                Spacer(modifier = Modifier.height(35.dp))
             }
-        }
-        item {
-            Spacer(modifier = Modifier.height(25.dp))
-            //botones
-            DefaultButton(
-                onClick = {
-                    state.listaNivelDisciplinas = puntos
-                    viewModel.guardarVastagoConDisciplinas(
-                        puntos = puntos,
-                        listaIdDisciplinas = state.listaIdDisciplinas
-                    ) {
-                        navController.navigate(route = Screens.MCFU.route)
-                    }
-                },
-                text = "Siguiente y guardar vastago"
-            )
-
-            DefaultButton(
-                onClick = { navController.popBackStack() },
-                text = "Volver"
-            )
         }
     }
 }
+
+@Composable
+fun DropdownMPoder(numero: Int) {
+    var expanded by remember { mutableStateOf(false) }
+    var selectedText by remember { mutableStateOf("Seleccionar Poder $numero") } // Texto inicial del menú
+    val opciones = listOf("Poder A", "Poder B", "Poder C") // Opciones del menú
+
+
+    Column {
+        Text(
+            text = selectedText, // Mostramos el texto seleccionado
+            modifier = Modifier.clickable { expanded = true }
+        )
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            opciones.forEach { opcion ->
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = opcion,
+                            color = Color.Black,
+                            fontSize = 15.sp,
+                            fontFamily = ghoticFamily
+                        )
+                    },
+                    onClick = {
+                        selectedText = opcion // Actualizamos el texto con la opción seleccionada
+                        expanded = false // Cerramos el menú desplegable
+                    }
+                )
+            }
+        }
+    }
+}
+
+
+//Calcular la experiencia
+private fun calculo(valorAnt: Int): Int {
+    var cal: Int
+    cal = valorAnt * 5
+    return cal
+}
+
+
+
+
+
+
+
+

@@ -60,7 +60,7 @@ interface VastagoDao {
         FROM DisciplinasClan dc
         INNER JOIN NNClanDisciplinas nnd ON dc.id = nnd.fk_disc
         INNER JOIN Clan c ON nnd.fk_clan = c.id
-        INNER JOIN Vastago v ON v.fkvas_clan = c.id
+        INNER JOIN Vastago v ON c.id = v.fkvas_clan
         WHERE v.id = :vastagoId
     """)
     suspend fun getDisciplinasClanDeVas(vastagoId: Int): List<String>
@@ -76,6 +76,7 @@ interface VastagoDao {
     """)
     suspend fun getDisciplinasPorClan(vastagoClan: Int): List<String>
 
+    //sacar la id de las disciplinas
     @Query("""
         SELECT DISTINCT dc.id
         FROM DisciplinasClan dc

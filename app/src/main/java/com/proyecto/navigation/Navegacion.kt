@@ -18,6 +18,7 @@ import com.proyecto.screens.MCF2
 import com.proyecto.screens.MCFA
 import com.proyecto.screens.MCFD
 import com.proyecto.screens.MCFH
+import com.proyecto.screens.MCFU
 import com.proyecto.screens.MejorarPersonaje
 import com.proyecto.screens.PruebaCF
 import com.proyecto.screens.mod_historia.InicioHist
@@ -103,6 +104,9 @@ fun Navegacion(viewModel: MPViewModel){
         }
         composable(route = Screens.MCFD.route) {
             MCFD(navController = navController, viewModel = viewModel, sharedViewModel = sharedViewModel)
+        }
+        composable(route = Screens.MCFU.route) {
+            MCFU(navController = navController, viewModel = viewModel, sharedViewModel = sharedViewModel)
         }
 
         composable(route = Screens.MejorarPersonaje.route) {

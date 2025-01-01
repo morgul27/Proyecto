@@ -13,6 +13,7 @@ sealed class Screens(val route: String) {
     object MCFA: Screens("MCFA_screen") //Menu Creacion Ficha Atributo
     object MCFH: Screens("MCFH_screen") //Menu Creacion Ficha Habilidades
     object MCFD: Screens("MCFD_screen") //Menu Creacion Ficha Disciplinas
+    object MCFU: Screens("MCFU_screen") //Menu Creacion Ficha Última
     object MejorarPersonaje: Screens("Septima_screen") //Menu para mejorar al vastago seleccionado
 
 
