@@ -18,7 +18,7 @@ import androidx.room.PrimaryKey
 data class DisciplinasVas (
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
-    val idDisciplinasVas: Int? = null,
+    val fkDisciplinasVas: Int? = null,
     val nivel: Int? = null,
     val fk_vas: Int
 )

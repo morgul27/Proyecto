@@ -42,6 +42,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -64,6 +65,7 @@ import androidx.navigation.NavController
 import com.proyecto.MPViewModel
 import com.proyecto.R
 import com.proyecto.SharedViewModel
+import com.proyecto.bbdd.entity.DisciplinasVas
 import com.proyecto.dialog.explicacion
 import com.proyecto.navigation.Screens
 import com.proyecto.ui.theme.Blanco
@@ -169,6 +171,9 @@ fun MCFUBody(
     val poderesPorDisciplina = List(puntosPorDisciplina) { "" }
     Log.i("nivel disc 1", "${state.listaNivelDisciplinas[0]}")
 
+    //prueba
+    val poderesSeleccionados = remember { mutableStateMapOf<Int, String>() }
+
     LaunchedEffect(Unit) {
         val poderes = viewModel.ObtenerPoderes(2, 1)
     }
@@ -184,38 +189,57 @@ fun MCFUBody(
             //espacio para no agobiar
             Spacer(modifier = Modifier.height(45.dp))
 
-
-            //prueba
             state.listaNivelDisciplinas.forEachIndexed { index, _ ->
                 Text(text = "Poderes de ${state.listaDisciplinasPorClan[index]}")
                 Spacer(modifier = Modifier.height(5.dp))
                 for (i in 1..state.listaNivelDisciplinas[index]) {
-                    DropdownMPoder(index + 1, viewModel, state.listaIdDisciplinas[index])
+                    DropdownMPoder(
+                        index + 1,
+                        viewModel,
+                        state.listaIdDisciplinas[index],
+                        poderesSeleccionados
+                    )
                     Spacer(modifier = Modifier.height(15.dp))
                 }
                 Spacer(modifier = Modifier.height(35.dp))
             }
         }
+        item {
+            DefaultButton(
+                onClick = {
+                    // Llamar al metodo para guardar los poderes seleccionados
+                    poderesSeleccionados.forEach { (fkDisciplinas, nombre) ->
+                        viewModel.guardarPoderes(nombre, fkDisciplinas)
+                    }
+                        navController.navigate(route = Screens.MenuPrincipal.route)
+                },
+                text = "GUARDAR"
+            )
+        }
     }
 }
 
 @Composable
-fun DropdownMPoder(numero: Int, viewModel: MPViewModel, idDisciplina: Int) {
+fun DropdownMPoder(numero: Int,
+                   viewModel: MPViewModel,
+                   idDisciplina: Int,
+                   poderesSeleccionados: MutableMap<Int, String>
+) {
     val state = viewModel.state
     var expanded by remember { mutableStateOf(false) }
-    var selectedText by remember { mutableStateOf("Seleccionar Poder $numero") } // Texto inicial del menú
-    val opciones = listOf("Poder A", "Poder B", "Poder C") // Opciones del menú
-    //pruebas
+    var selectedText by remember { mutableStateOf("Seleccionar Poder $numero") }
+
+    var idTablaDisc by remember { mutableStateOf(0) }
     var listaPoderes by remember { mutableStateOf<List<String>>(emptyList()) }
 
     LaunchedEffect(Unit) {
         listaPoderes = state.id?.let { viewModel.ObtenerPoderes(it, idDisciplina) }!!
+        idTablaDisc = viewModel.obteneridDisciplina(idDisciplina, state.id!!)
     }
-    //pruebas
 
     Column {
         Text(
-            text = selectedText, // Mostramos el texto seleccionado
+            text = selectedText,
             modifier = Modifier.clickable { expanded = true }
         )
         DropdownMenu(
@@ -233,8 +257,11 @@ fun DropdownMPoder(numero: Int, viewModel: MPViewModel, idDisciplina: Int) {
                         )
                     },
                     onClick = {
-                        selectedText = opcion // Actualizamos el texto con la opción seleccionada
-                        expanded = false // Cerramos el menú desplegable
+                        selectedText = opcion
+                        expanded = false
+
+                        // Guardar la selección en el estado temporal
+                        poderesSeleccionados[idTablaDisc] = opcion
                     }
                 )
             }

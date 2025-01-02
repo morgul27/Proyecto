@@ -33,6 +33,7 @@ import com.proyecto.bbdd.repository.DisciplinasClanRepository
 import com.proyecto.bbdd.repository.DisciplinasVasRepository
 import com.proyecto.bbdd.repository.NNClanDisciplinasRepository
 import com.proyecto.bbdd.repository.PoderesRepository
+import com.proyecto.bbdd.repository.PoderesVasRepository
 import com.proyecto.bbdd.repository.UsuarioRepository
 import com.proyecto.bbdd.repository.VastagoRepository
 import com.proyecto.navigation.Navegacion
@@ -78,7 +79,7 @@ class MainActivity : ComponentActivity() {
                             val disciplinasVasDao = db.disciplinasVasDao
                             val NNClanDisciplinasDao = db.nnClanDisciplinasDao
                             val poderesDao = db.poderesDao
-                            val poderesVas = db.poderesVasDao
+                            val poderesVasDao = db.poderesVasDao
                             val vasDao = db.vasDao
 
                             //llamo a los repositorios
@@ -88,12 +89,13 @@ class MainActivity : ComponentActivity() {
                             val disciplinasClanRepository = DisciplinasClanRepository(disciplinasClanDao)
                             val disciplinasVasRepository = DisciplinasVasRepository(disciplinasVasDao)
                             val poderesRepository = PoderesRepository(poderesDao)
+                            val poderesVasRepository = PoderesVasRepository(poderesVasDao)
                             val NNClanDisciplinasRepository = NNClanDisciplinasRepository(NNClanDisciplinasDao)
                             val AmalgamaRepository = AmalgamaRepository(amalgamaDao)
 
                             //creo la variable del ViewModel
                             val viewModel =
-                                MPViewModel(usuRepository, vasRepository, clanRepository, disciplinasVasRepository)
+                                MPViewModel(usuRepository, vasRepository, clanRepository, disciplinasVasRepository, poderesVasRepository)
 
                             // Inicializo la clase CreacionDatos
                             creacionDatos = CreacionDatos()

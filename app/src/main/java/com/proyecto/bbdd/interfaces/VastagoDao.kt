@@ -41,10 +41,10 @@ interface VastagoDao {
         INNER JOIN DisciplinasVas dv_principal ON dv_principal.fk_vas = v.id
         LEFT JOIN DisciplinasVas dv_secundaria ON dv_secundaria.fk_vas = v.id
         LEFT JOIN Amalgama a ON (
-                a.fkvas_disciplina_principal = dv_principal.idDisciplinasVas AND 
+                a.fkvas_disciplina_principal = dv_principal.fkDisciplinasVas AND 
                 dv_principal.nivel >= a.nivel_disciplina_principal AND
                 (a.fkvas_disciplina_secundaria IS NULL OR
-                (a.fkvas_disciplina_secundaria = dv_secundaria.idDisciplinasVas AND 
+                (a.fkvas_disciplina_secundaria = dv_secundaria.fkDisciplinasVas AND 
                 dv_secundaria.nivel >= a.nivel_disciplina_secundaria))
         )
         INNER JOIN Poderes p ON p.id = a.fkvas_poder

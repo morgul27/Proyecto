@@ -19,6 +19,5 @@ data class PoderesVas (
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
     val nombre: String,
-    val nivel: Int,
     val fk_disciplinas: Int
 )

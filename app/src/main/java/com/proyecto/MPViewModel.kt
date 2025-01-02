@@ -7,10 +7,12 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.proyecto.bbdd.entity.DisciplinasVas
+import com.proyecto.bbdd.entity.PoderesVas
 import com.proyecto.bbdd.entity.Usuario
 import com.proyecto.bbdd.entity.Vastago
 import com.proyecto.bbdd.repository.ClanRepository
 import com.proyecto.bbdd.repository.DisciplinasVasRepository
+import com.proyecto.bbdd.repository.PoderesVasRepository
 import com.proyecto.bbdd.repository.UsuarioRepository
 import com.proyecto.bbdd.repository.VastagoRepository
 import kotlinx.coroutines.launch
@@ -21,9 +23,10 @@ class MPViewModel(
     private  val vasRepository: VastagoRepository,
     private  val clanRepository: ClanRepository,
     private  val disciplinasVasRepository : DisciplinasVasRepository,
+    private  val PoderesVasRepository : PoderesVasRepository,
 
 
-) : ViewModel(){
+    ) : ViewModel(){
     var state by mutableStateOf(MPState("", listOf(), nombreVas = "", clanVas = ""))
         private set
 
@@ -284,13 +287,18 @@ class MPViewModel(
     //disciplinas
     fun saveDisciplinaVas(idDicplinas: Int, nivel: Int){
         val disciplinasVas =  DisciplinasVas(
-            idDisciplinasVas = idDicplinas,
+            fkDisciplinasVas = idDicplinas,
             nivel = nivel,
             fk_vas = state.fk_vas,
         )
         viewModelScope.launch {
             disciplinasVasRepository.saveDisciplinasVas(disciplinasVas)
         }
+    }
+
+    //obtener disciplinas
+    suspend fun obteneridDisciplina(idDisciplina: Int, fkVas: Int): Int{
+        return disciplinasVasRepository.obtenerIdDisciplina(idDisciplina, fkVas)
     }
 
     //guardar vastago y sus disciplinas
@@ -371,7 +379,7 @@ class MPViewModel(
             listaIdDisciplinas.forEachIndexed { index, disciplinaId ->
                 disciplinasVasRepository.saveDisciplinasVas(
                     DisciplinasVas(
-                        idDisciplinasVas = disciplinaId,
+                        fkDisciplinasVas = disciplinaId,
                         nivel = puntos[index],
                         fk_vas = vastagoIdInt // Usamos el ID convertido a Int
                     )
@@ -405,6 +413,24 @@ class MPViewModel(
 
     fun setFkvas_clan(fk: Int){
         state = state.copy(fkvas_clan = fk)
+    }
+
+    //poderes
+    fun guardarPoderes(nombre: String, fkDisciplinas: Int) {
+        viewModelScope.launch {
+            val poderExistente = PoderesVasRepository.obtenerPoder(fkDisciplinas, nombre)
+
+            val poder = PoderesVas(
+                nombre = nombre,
+                fk_disciplinas = fkDisciplinas
+            )
+            if (poderExistente == null) {
+                PoderesVasRepository.insertPoderesVas(poder) // Asume que tienes un repositorio configurado
+            }else {
+                // Actualizar si ya existe (opcional)
+                PoderesVasRepository.actualizarPoder(poderExistente.copy(nombre = nombre))
+            }
+        }
     }
 
 

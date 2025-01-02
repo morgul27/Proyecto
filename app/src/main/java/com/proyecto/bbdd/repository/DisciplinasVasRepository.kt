@@ -10,4 +10,9 @@ class DisciplinasVasRepository (
     suspend fun saveDisciplinasVas(disciplinasVas: DisciplinasVas) {
         disciplinasVasDao.insertDisciplinasVas(disciplinasVas)
     }
+
+    suspend fun obtenerIdDisciplina(idDisciplina: Int, fkVas: Int): Int{
+        return disciplinasVasDao.obteneridDisciplina(idDisciplina, fkVas)
+    }
+
 }
