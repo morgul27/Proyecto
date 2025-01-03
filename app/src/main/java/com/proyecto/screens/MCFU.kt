@@ -174,10 +174,6 @@ fun MCFUBody(
     //prueba
     val poderesSeleccionados = remember { mutableStateMapOf<Int, String>() }
 
-    LaunchedEffect(Unit) {
-        val poderes = viewModel.ObtenerPoderes(2, 1)
-    }
-
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
