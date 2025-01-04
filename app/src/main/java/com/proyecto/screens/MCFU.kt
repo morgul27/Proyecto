@@ -167,12 +167,39 @@ fun MCFUBody(
     exp: Int
 ) {
     val state = viewModel.state
-    var puntosPorDisciplina by remember { mutableStateOf(0) }
-    val poderesPorDisciplina = List(puntosPorDisciplina) { "" }
     Log.i("nivel disc 1", "${state.listaNivelDisciplinas[0]}")
-
-    //prueba
+    //variable de poderes
     val poderesSeleccionados = remember { mutableStateMapOf<Int, String>() }
+
+    //variables para mejoras
+    val atributos = remember {
+        mutableStateListOf(
+            "Fuerza",
+            "Destreza",
+            "Resistencia",
+            "Carisma",
+            "Manipulación",
+            "Compostura",
+            "Inteligencia",
+            "Astucia",
+            "Resolución"
+        )
+    }
+    val textoExplicacion = remember {
+        mutableStateListOf(
+            "Fuerza",
+            "Destreza",
+            "Resistencia",
+            "Carisma",
+            "Manipulación",
+            "Compostura",
+            "Inteligencia",
+            "Astucia",
+            "Resolución"
+        )
+    }
+    var puntos = remember { mutableStateListOf(0, 0, 0, 0, 0, 0, 0, 0, 0) }
+    var exp2 by remember { mutableStateOf(exp) }
 
     LazyColumn(
         modifier = Modifier
@@ -181,10 +208,12 @@ fun MCFUBody(
             .padding(top = 50.dp),
         verticalArrangement = Arrangement.Top,
     ) {
-        item {
+        item{
             //espacio para no agobiar
             Spacer(modifier = Modifier.height(45.dp))
-
+        }
+        item {
+            Spacer(modifier = Modifier.height(25.dp))
             state.listaNivelDisciplinas.forEachIndexed { index, _ ->
                 Text(text = "Poderes de ${state.listaDisciplinasPorClan[index]}")
                 Spacer(modifier = Modifier.height(5.dp))
