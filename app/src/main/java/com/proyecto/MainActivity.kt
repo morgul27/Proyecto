@@ -97,6 +97,9 @@ class MainActivity : ComponentActivity() {
                             val viewModel =
                                 MPViewModel(usuRepository, vasRepository, clanRepository, disciplinasVasRepository, poderesVasRepository)
 
+                            val sharedViewModel =
+                                SharedViewModel(disciplinasVasRepository, vasRepository)
+
                             // Inicializo la clase CreacionDatos
                             creacionDatos = CreacionDatos()
 
@@ -123,7 +126,7 @@ class MainActivity : ComponentActivity() {
 //                                )
 //                            }
 
-                            Navegacion(viewModel)
+                            Navegacion(viewModel, sharedViewModel)
 
                         }
                     }

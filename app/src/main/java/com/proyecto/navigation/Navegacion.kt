@@ -57,8 +57,7 @@ import com.proyecto.screens.pdf.PantallaPDF
 import com.proyecto.screens.pdf.VerArchivosPDF
 
 @Composable
-fun Navegacion(viewModel: MPViewModel){
-    val sharedViewModel = remember { SharedViewModel() }
+fun Navegacion(viewModel: MPViewModel, sharedViewModel: SharedViewModel){
 
     // Iniciar el NavHostController
     val navController = rememberNavController()
