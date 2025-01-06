@@ -212,6 +212,9 @@ fun MCFUBody(
             //espacio para no agobiar
             Spacer(modifier = Modifier.height(45.dp))
         }
+        item{
+
+        }
         item {
             Spacer(modifier = Modifier.height(25.dp))
             state.listaNivelDisciplinas.forEachIndexed { index, _ ->

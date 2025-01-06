@@ -252,7 +252,12 @@ fun CFBody(navController: NavController, viewModel: MPViewModel, sharedViewModel
             DefaultButton(onClick = {
                 state.fuerza_voluntad = state.resolucion?.let { state.compostura?.plus(it) }!!
                 state.salud = state.resistencia?.plus(3)!!
-                viewModel.saveVastago()
+                sharedViewModel.guardarVastagoConDisciplinas(
+                    puntos = puntos,
+                    listaIdDisciplinas = state.listaIdDisciplinas,
+                ){
+                    navController.navigate(route = Screens.MCFU.route)
+                }
                 navController.navigate(route = Screens.MenuPrincipal.route)},
                 text = "Guardar"
             )

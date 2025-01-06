@@ -200,21 +200,27 @@ class MPViewModel(
             fkvas_usu = state.fkvas_usu ?: 1,
             fkvas_clan = state.fkvas_clan ?: 1,
             //Habilidades
+            // columna 1
             armas_de_fuego = state.armas_de_fuego?:0,
             artesania = state.artesania?:0,
             atletismo = state.atletismo?:0,
             conducir = state.conducir?:0,
+            latrocinio = state.latrocinio ?: 0,
             pelea = state.pelea?:0,
             pelea_con_armas = state.pelea_con_armas?:0,
+            sigilo = state.sigilo ?: 0,
             superviviencia = state.superviviencia?:0,
+            // columna 2
             callejeo = state.callejeo?:0,
             etiqueta = state.etiqueta?:0,
             interpretacion = state.interpretacion?:0,
+            intimidacion = state.intimidacion ?: 0,
             liderazgo = state.liderazgo?:0,
             perspicacia = state.perspicacia?:0,
             persuasion = state.persuasion?:0,
             subterfugio = state.subterfugio?:0,
             trato_con_animales = state.trato_con_animales?:0,
+            // columna 3
             academicismo = state.academicismo?:0,
             ciencias = state.ciencias?:0,
             consciencia = state.consciencia?:0,

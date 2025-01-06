@@ -32,8 +32,6 @@ class SharedViewModel(
     val vasSalud = mutableStateOf<Int?>(null)
     val vasVoluntad = mutableStateOf<Int?>(null)
     val vasExp = mutableStateOf<Int?>(null)
-    val fkUsuario = mutableStateOf<Int?>(null)
-    val fkClan = mutableStateOf<Int?>(null)
     //habilidades
     //columna 1
     var armas_de_fuego = mutableStateOf<Int?>(null)
@@ -65,6 +63,9 @@ class SharedViewModel(
     var ocultismo = mutableStateOf<Int?>(null)
     var politica = mutableStateOf<Int?>(null)
     var tecnologia = mutableStateOf<Int?>(null)
+    //FKs
+    var fkUsu = mutableStateOf<Int?>(null)
+    var fkClan = mutableStateOf<Int?>(null)
 
     fun setUserName(name: String) {
         userName.value = name
@@ -84,6 +85,7 @@ class SharedViewModel(
         name: String,
         clan: String,
         generacion: Int,
+        //Atributos
         fuerza: Int,
         destreza: Int,
         resistencia: Int,
@@ -96,12 +98,46 @@ class SharedViewModel(
         salud: Int,
         voluntad: Int,
         experiencia: Int,
+        //Habilidades
+        //columna 1
+        armas_de_fuego: Int,
+        artesania: Int,
+        atletismo: Int,
+        conducir: Int,
+        latrocinio: Int,
+        pelea: Int,
+        pelea_con_armas: Int,
+        sigilo: Int,
+        superviviencia: Int,
+        //columna 2
+        callejeo: Int,
+        etiqueta: Int,
+        interpretacion: Int,
+        intimidacion: Int,
+        liderazgo: Int,
+        perspicacia: Int,
+        persuasion: Int,
+        subterfugio: Int,
+        trato_con_animales: Int,
+        //columna 3
+        academicismo: Int,
+        ciencias: Int,
+        consciencia: Int,
+        finanzas: Int,
+        investigacion: Int,
+        medicina: Int,
+        ocultismo: Int,
+        politica: Int,
+        tecnologia: Int,
+        //FKs
+        fkUsuario: Int,
         fkvasClan: Int
     ) {
         vasId.value = id
         vasName.value = name
         vasClan.value = clan
         vasGeneracion.value = generacion
+        //Atributos
         vasFuerza.value = fuerza
         vasDestr.value = destreza
         vasResist.value = resistencia
@@ -114,6 +150,39 @@ class SharedViewModel(
         vasSalud.value = salud
         vasVoluntad.value = voluntad
         vasExp.value = experiencia
+        //Habilidades
+        //columna 1
+        this.armas_de_fuego.value = armas_de_fuego
+        this.artesania.value = artesania
+        this.atletismo.value = atletismo
+        this.conducir.value = conducir
+        this.latrocinio.value = latrocinio
+        this.pelea.value = pelea
+        this.pelea_con_armas.value = pelea_con_armas
+        this.sigilo.value = sigilo
+        this.superviviencia.value = superviviencia
+        //columna 2
+        this.callejeo.value = callejeo
+        this.etiqueta.value = etiqueta
+        this.interpretacion.value = interpretacion
+        this.intimidacion.value = intimidacion
+        this.liderazgo.value = liderazgo
+        this.perspicacia.value = perspicacia
+        this.persuasion.value = persuasion
+        this.subterfugio.value = subterfugio
+        this.trato_con_animales.value = trato_con_animales
+        //columna 3
+        this.academicismo.value =academicismo
+        this.ciencias.value = ciencias
+        this.consciencia.value = consciencia
+        this.finanzas.value = finanzas
+        this.investigacion.value = investigacion
+        this.medicina.value = medicina
+        this.ocultismo.value = ocultismo
+        this.politica.value = politica
+        this.tecnologia.value = tecnologia
+        //FKs
+        fkUsu.value = fkUsuario
         fkClan.value = fkvasClan
 
     }
@@ -145,24 +214,30 @@ class SharedViewModel(
                     resolucion = vasResolucion.value ?: 0,
                     salud = vasSalud.value ?: 0,
                     fuerza_voluntad = vasVoluntad.value ?: 0,
-                    fkvas_usu = fkUsuario.value ?: 1,
+                    fkvas_usu = fkUsu.value ?: 1,
                     fkvas_clan = fkClan.value ?: 1,
                     // Habilidades
+                    // columna 1
                     armas_de_fuego = armas_de_fuego.value ?: 0,
                     artesania = artesania.value ?: 0,
                     atletismo = atletismo.value ?: 0,
                     conducir = conducir.value ?: 0,
+                    latrocinio = latrocinio.value ?: 0,
                     pelea = pelea.value ?: 0,
                     pelea_con_armas = pelea_con_armas.value ?: 0,
+                    sigilo = sigilo.value ?: 0,
                     superviviencia = superviviencia.value ?: 0,
+                    // columna 2
                     callejeo = callejeo.value ?: 0,
                     etiqueta = etiqueta.value ?: 0,
                     interpretacion = interpretacion.value ?: 0,
+                    intimidacion = intimidacion.value ?: 0,
                     liderazgo = liderazgo.value ?: 0,
                     perspicacia = perspicacia.value ?: 0,
                     persuasion = persuasion.value ?: 0,
                     subterfugio = subterfugio.value ?: 0,
                     trato_con_animales = trato_con_animales.value ?: 0,
+                    // columna 3
                     academicismo = academicismo.value ?: 0,
                     ciencias = ciencias.value ?: 0,
                     consciencia = consciencia.value ?: 0,
@@ -173,9 +248,8 @@ class SharedViewModel(
                     politica = politica.value ?: 0,
                     tecnologia = tecnologia.value ?: 0
                 )
-            ) // El valor 'vastagoId' es de tipo Long
+            )
 
-            // 3. Guardar las disciplinas asociadas al vástago recién insertado
             listaIdDisciplinas.forEachIndexed { index, disciplinaId ->
                 vasId.value?.let {
                     DisciplinasVas(

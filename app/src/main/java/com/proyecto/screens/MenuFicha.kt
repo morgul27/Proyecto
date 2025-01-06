@@ -195,6 +195,7 @@ fun BodyFicha(navController: NavController, viewModel: MPViewModel, sharedViewMo
                                             user.nombreVas,
                                             user.clan,
                                             user.generacion,
+                                            //Atributos
                                             user.fuerza,
                                             user.destreza,
                                             user.resistencia,
@@ -207,6 +208,39 @@ fun BodyFicha(navController: NavController, viewModel: MPViewModel, sharedViewMo
                                             user.salud,
                                             user.fuerza_voluntad,
                                             user.experiencia,
+                                            //Habilidades
+                                            //Columna 1
+                                            user.armas_de_fuego,
+                                            user.artesania,
+                                            user.atletismo,
+                                            user.conducir,
+                                            user.latrocinio,
+                                            user.pelea,
+                                            user.pelea_con_armas,
+                                            user.sigilo,
+                                            user.superviviencia,
+                                            //columna 2
+                                            user.callejeo,
+                                            user.etiqueta,
+                                            user.interpretacion,
+                                            user.intimidacion,
+                                            user.liderazgo,
+                                            user.perspicacia,
+                                            user.persuasion,
+                                            user.subterfugio,
+                                            user.trato_con_animales,
+                                            //Columna 3
+                                            user.academicismo,
+                                            user.ciencias,
+                                            user.consciencia,
+                                            user.finanzas,
+                                            user.investigacion,
+                                            user.medicina,
+                                            user.ocultismo,
+                                            user.politica,
+                                            user.tecnologia,
+                                            //FKs
+                                            user.fkvas_usu,
                                             user.fkvas_clan
                                         )
                                     }
