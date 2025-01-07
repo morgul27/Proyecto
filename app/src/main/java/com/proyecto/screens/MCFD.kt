@@ -154,7 +154,8 @@ fun MDFDBody(navController: NavController, viewModel: MPViewModel, sharedViewMod
     Log.d("Habilidad1", "armasfuego: ${state.armas_de_fuego}")
     Log.d("Habilidad2", "tecnologia: ${state.tecnologia}")
 
-    var puntosT = remember { mutableStateOf(3) }
+    //Son 3 puntos en realidad, ahora estoy de pruebas
+    var puntosT = remember { mutableStateOf(99) }
 
     //obtener lista de disciplina y su id
     state.fkvas_clan?.let { viewModel.getDisciplinasPorClan(it) }

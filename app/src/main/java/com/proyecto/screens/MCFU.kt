@@ -5,6 +5,8 @@ import android.icu.text.ListFormatter
 import android.text.style.BackgroundColorSpan
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,6 +22,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -577,14 +581,34 @@ fun MCFUBody(
             state.listaNivelDisciplinas.forEachIndexed { index, _ ->
                 Text(text = "Poderes de ${state.listaDisciplinasPorClan[index]}")
                 Spacer(modifier = Modifier.height(5.dp))
-                for (i in 1..state.listaNivelDisciplinas[index]) {
-                    DropdownMPoder(
-                        index + 1,
-                        viewModel,
-                        state.listaIdDisciplinas[index],
-                        poderesSeleccionados
-                    )
-                    Spacer(modifier = Modifier.height(15.dp))
+
+                // Crear una columna (Column) para cada disciplina
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    // Iterar sobre los niveles de disciplinas (puedes tener más de una celda por disciplina)
+                    for (i in 1..state.listaNivelDisciplinas[index]) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(60.dp)
+                                .padding(4.dp)
+                                .border(1.dp, Color.Black)
+                                .background(Borgoña)
+                                .padding(8.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            DropdownMPoder(
+                                index + 1,
+                                viewModel,
+                                state.listaIdDisciplinas[index],
+                                poderesSeleccionados
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(5.dp))  // Espacio entre las celdas
+                    }
                 }
                 Spacer(modifier = Modifier.height(35.dp))
             }
@@ -629,6 +653,7 @@ fun MCFUBody(
             )
         }
     }
+
 }
 
 @Composable
