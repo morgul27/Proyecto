@@ -130,30 +130,13 @@ fun MCFU(navController: NavController, viewModel: MPViewModel, sharedViewModel: 
                         )
                     }
                     val state = viewModel.state
-                    val listExp =
-                        remember { mutableStateListOf(0, 9, 8, 7, 6, 5, 4, 4, 3, 3, 2, 2, 1, 1) }
-                    var expGeneracion by remember {
-                        mutableStateOf(state.generacion?.let { it1 -> listExp.getOrElse(it1) { 0 } })
-                    }
-                    //este es el calculo de N * 15 + 5 * (N - 1)
-                    val expCalculo = remember {
-                        mutableStateOf(
-                            (expGeneracion?.times(15) ?: 0) + 5 * (expGeneracion?.minus(1) ?: 0)
-                        )
-                    }
-                    if (expCalculo.value < 0) {
-                        expCalculo.value = 0
-                    }
-
-
-                    // Actualizar el estado de exp cuando cambie expCalculo
-                    exp = expCalculo.value
-                    state.experiencia = exp
-
+                    val exp = state.experiencia
 
                     //llamada a MCF2Body
                     exp.let { it1 ->
-                        MCFUBody(navController, viewModel, sharedViewModel, it1)
+                        if (it1 != null) {
+                            MCFUBody(navController, viewModel, sharedViewModel, it1)
+                        }
                     }
                 }
             }
@@ -356,7 +339,7 @@ fun MCFUBody(
                 modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = "Atributos")
+                Text(text = "ATRIBUTOS")
             }
             //Botones
             puntosA.forEachIndexed { index, _ ->
@@ -430,7 +413,7 @@ fun MCFUBody(
                 modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = "Habilidades")
+                Text(text = "HABILIDADES")
             }
             //lista Habilidades
             //Botones
@@ -508,7 +491,7 @@ fun MCFUBody(
                 modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = "Disciplinas")
+                Text(text = "DISCIPLINAS")
             }
         }
         state.listaDisciplinasPorClan.forEachIndexed { index, _ ->
@@ -579,6 +562,16 @@ fun MCFUBody(
         }
 
         //ultima lista PODERES DISCIPLINAS
+        //texto
+        item {
+            Spacer(modifier = Modifier.height(25.dp))
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "PODERES DISCIPLINAS")
+            }
+        }
         item {
             Spacer(modifier = Modifier.height(25.dp))
             state.listaNivelDisciplinas.forEachIndexed { index, _ ->
@@ -601,11 +594,30 @@ fun MCFUBody(
         item {
             DefaultButton(
                 onClick = {
-                    Log.i("fuerza:","${state.fuerza}")
-
                     state.listaNivelDisciplinas.clear()
                     state.listaNivelDisciplinas.addAll(listaNivel)
                     Log.i("lista1:","${state.listaNivelDisciplinas[0]}")
+                    state.experiencia = exp2
+                    Log.i("exp state:","${state.experiencia}")
+                    //prueba 1 atributos
+                    atributos.forEachIndexed { index, atributo ->
+                        // Llama a la función para actualizar el estado
+                        updateAtributos(atributo, puntosA[index], viewModel)
+                    }
+                    //actualizar Habilidades
+                    habilidades.forEachIndexed { index, habilidad ->
+                        // Llama a la función para actualizar el estado
+                        updateHabilidades(habilidad, puntosH[index], viewModel)
+                    }
+                    state.fuerza_voluntad = state.resolucion.let { state.compostura.plus(it) }
+                    state.salud = state.resistencia.plus(3)
+
+
+                    //LLamada a actualizacion de vastago
+                    viewModel.ActualizarVastagoConDisciplinas(
+                        puntos = listaNivel,
+                        listaIdDisciplinas = state.listaIdDisciplinas
+                    ) {}
 
                     // Llamar al metodo para guardar los poderes seleccionados
                     poderesSeleccionados.forEach { (fkDisciplinas, nombre) ->

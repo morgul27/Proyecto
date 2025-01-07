@@ -307,7 +307,6 @@ fun MDFHBody(navController: NavController, viewModel: MPViewModel, sharedViewMod
             //botones
             DefaultButton(
                 onClick = {
-
                     habilidades.forEachIndexed { index, habilidad ->
                         // Llama a la función para actualizar el estado
                         updateHabilidades(habilidad, puntos[index], viewModel)
@@ -328,7 +327,7 @@ fun MDFHBody(navController: NavController, viewModel: MPViewModel, sharedViewMod
 
 // Función para actualizar los valores de los atributos en el estado
 fun updateHabilidades(habilidades: String, nuevoValor: Int, viewModel: MPViewModel,) {
-    Log.d("habilidades", "habilidades: ${habilidades}")
+    Log.d("habilidades", "habilidades: ${habilidades}, nivel: ${nuevoValor}")
     when (habilidades) {
         "Armas de Fuego" -> viewModel.state.armas_de_fuego = nuevoValor
         "Artesanía" -> viewModel.state.artesania = nuevoValor

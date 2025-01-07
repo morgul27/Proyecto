@@ -32,9 +32,11 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -61,6 +63,8 @@ import com.proyecto.ui.theme.ghoticFamily
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MCFD(navController: NavController, viewModel: MPViewModel, sharedViewModel: SharedViewModel){
+    var exp by remember { mutableStateOf(0) }
+    val state = viewModel.state
     val image = painterResource(R.drawable.marmol)
     ProyectoTheme {
         MaterialTheme(
@@ -108,6 +112,27 @@ fun MCFD(navController: NavController, viewModel: MPViewModel, sharedViewModel: 
                             modifier = Modifier.alpha(0.6F)
                         )
                     }
+
+                    val listExp =
+                        remember { mutableStateListOf(0, 9, 8, 7, 6, 5, 4, 4, 3, 3, 2, 2, 1, 1) }
+                    var expGeneracion by remember {
+                        mutableStateOf(state.generacion?.let { it1 -> listExp.getOrElse(it1) { 0 } })
+                    }
+                    //este es el calculo de N * 15 + 5 * (N - 1)
+                    val expCalculo = remember {
+                        mutableStateOf(
+                            (expGeneracion?.times(15) ?: 0) + 5 * (expGeneracion?.minus(1) ?: 0)
+                        )
+                    }
+                    if (expCalculo.value < 0) {
+                        expCalculo.value = 0
+                    }
+
+
+                    // Actualizar el estado de exp cuando cambie expCalculo
+                    exp = expCalculo.value
+                    state.experiencia = exp
+
                     if (viewModel.showSecondMenu.value) {
                         MDFSecondBodyContent(navController, viewModel, sharedViewModel)
 

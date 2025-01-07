@@ -27,7 +27,7 @@ class VastagoRepository(
         vastagoDao.eliminarVastagoPorFkvasUsu(fkvas_usu)
     }
 
-    //eliminar si no hace falta
+
     suspend fun actualizarVastago(vastago: Vastago) {
         vastagoDao.actualizarVastago(vastago)
     }

@@ -257,7 +257,7 @@ fun MDFABody(navController: NavController, viewModel: MPViewModel, sharedViewMod
 
 // Función para actualizar los valores de los atributos en el estado
 fun updateAtributos(atributo: String, nuevoValor: Int, viewModel: MPViewModel,) {
-    Log.d("MIRA AQUI", "atributo: ${atributo}")
+    Log.d("Atributos", "atributo: ${atributo}, nivel: ${nuevoValor}")
     when (atributo) {
         "Fuerza" -> viewModel.state.fuerza = nuevoValor
         "Destreza" -> viewModel.state.destreza = nuevoValor

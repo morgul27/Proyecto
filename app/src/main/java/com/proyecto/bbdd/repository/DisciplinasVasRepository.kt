@@ -15,4 +15,9 @@ class DisciplinasVasRepository (
         return disciplinasVasDao.obteneridDisciplina(idDisciplina, fkVas)
     }
 
+
+    suspend fun actualizarDisciplinasVas(disciplinasVas: DisciplinasVas) {
+        disciplinasVasDao.actDisciplinasVas(disciplinasVas)
+    }
+
 }
