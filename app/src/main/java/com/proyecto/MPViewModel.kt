@@ -232,7 +232,7 @@ class MPViewModel(
             tecnologia = state.tecnologia?:0
         )
         viewModelScope.launch {
-            vasRepository.insertVastago(vastago)
+            vasRepository.actualizarVastago(vastago)
         }
     }
 

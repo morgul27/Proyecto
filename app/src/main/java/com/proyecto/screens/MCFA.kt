@@ -238,7 +238,6 @@ fun MDFABody(navController: NavController, viewModel: MPViewModel, sharedViewMod
 
             //botones
             DefaultButton(onClick = {
-
                 atributos.forEachIndexed { index, atributo ->
                     // Llama a la función para actualizar el estado
                     updateAtributos(atributo, puntos[index], viewModel)

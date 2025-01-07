@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -40,6 +41,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
@@ -170,8 +172,14 @@ fun MCFUBody(
     Log.i("nivel disc 1", "${state.listaNivelDisciplinas[0]}")
     //variable de poderes
     val poderesSeleccionados = remember { mutableStateMapOf<Int, String>() }
+    var exp2 by remember { mutableStateOf(exp) }
+    val numerosMult = listOf(5, 3)
 
-    //variables para mejoras
+    //lista disciplinas
+    val listaNivel = remember { mutableStateListOf(*state.listaNivelDisciplinas.toTypedArray()) }
+
+
+    //variables para mejoras de Atributos
     val atributos = remember {
         mutableStateListOf(
             "Fuerza",
@@ -185,7 +193,7 @@ fun MCFUBody(
             "Resolución"
         )
     }
-    val textoExplicacion = remember {
+    val textoExplicacionA = remember {
         mutableStateListOf(
             "Fuerza",
             "Destreza",
@@ -198,23 +206,379 @@ fun MCFUBody(
             "Resolución"
         )
     }
-    var puntos = remember { mutableStateListOf(0, 0, 0, 0, 0, 0, 0, 0, 0) }
-    var exp2 by remember { mutableStateOf(exp) }
+    var puntosA = remember { mutableStateListOf(
+        state.fuerza,
+        state.destreza,
+        state.resistencia,
+        state.carisma,
+        state.manipulacion,
+        state.compostura,
+        state.inteligencia,
+        state.astucia,
+        state.resolucion
+    ) }
+
+    //Mejoras para las Habilidades
+    val habilidades = remember {
+        mutableStateListOf(
+            //columna 1
+            "Armas de Fuego",
+            "Artesanía",
+            "Atletismo",
+            "Conducir",
+            "Latrocinio",
+            "Pelea",
+            "Pelea con Armas",
+            "Sigilo",
+            "Superviviencia",
+            //columna 2
+            "Callejeo",
+            "Etiqueta",
+            "Interpretación",
+            "Intimidación",
+            "Liderazgo",
+            "Perspicacia",
+            "Persuasion",
+            "Subterfugio",
+            "Trato con animales",
+            //columna 3
+            "Academicismo",
+            "Ciencias",
+            "Consciencia",
+            "Finanzas",
+            "Investigacion",
+            "Medicina",
+            "Ocultismo",
+            "Politica",
+            "Tecnología",
+        )
+    }
+
+    val textoExplicacionH = remember {
+        mutableStateListOf(
+            //columna 1
+            "Armas de Fuego",
+            "Artesanía",
+            "Atletismo",
+            "Conducir",
+            "Latrocinio",
+            "Pelea",
+            "Pelea con Armas",
+            "Sigilo",
+            "Superviviencia",
+            //columna 2
+            "Callejeo",
+            "Etiqueta",
+            "Interpretación",
+            "Intimidación",
+            "Liderazgo",
+            "Perspicacia",
+            "Persuasion",
+            "Subterfugio",
+            "Trato con animales",
+            //columna 3
+            "Academicismo",
+            "Ciencias",
+            "Consciencia",
+            "Finanzas",
+            "Investigacion",
+            "Medicina",
+            "Ocultismo",
+            "Politica",
+            "Tecnología",
+        )
+    }
+    var puntosH = remember { mutableStateListOf(
+        //columna 1
+        state.armas_de_fuego,
+        state.artesania,
+        state.atletismo,
+        state.conducir,
+        state.latrocinio,
+        state.pelea,
+        state.pelea_con_armas,
+        state.sigilo,
+        state.superviviencia,
+        //columna 2
+        state.callejeo,
+        state.etiqueta,
+        state.interpretacion,
+        state.intimidacion,
+        state.liderazgo,
+        state.perspicacia,
+        state.persuasion,
+        state.subterfugio,
+        state.trato_con_animales,
+        //columna 3
+        state.academicismo,
+        state.ciencias,
+        state.consciencia,
+        state.finanzas,
+        state.investigacion,
+        state.medicina,
+        state.ocultismo,
+        state.politica,
+        state.tecnologia
+    ) }
+
+
+
+
+    //interfaz de usuario
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 10.dp)
+            .padding(top = 25.dp),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        Spacer(modifier = Modifier.height(25.dp))
+        Text("Exp: ${exp2}")
+        Spacer(modifier = Modifier.height(25.dp))
+    }
 
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 10.dp)
-            .padding(top = 50.dp),
+            .padding(top = 75.dp),
         verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item{
             //espacio para no agobiar
             Spacer(modifier = Modifier.height(45.dp))
         }
+        //MEJORA ATRIBUTOS
         item{
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "Atributos")
+            }
+            //Botones
+            puntosA.forEachIndexed { index, _ ->
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
 
+                    Box(Modifier.size(200.dp, 45.dp)) {
+                        explicacion(
+                            texto = atributos[index],
+                            textoT = atributos[index],
+                            textoExpl = textoExplicacionA[index],
+                            Modifier.align(Alignment.CenterStart),
+                            fontSize = 20.sp,
+                        )
+                    }
+                    //Modifier
+                    Box(Modifier.size(180.dp, 45.dp)) {
+                        Button(
+                            onClick = {
+                                val expCalculada = exp2 + calculo(puntosA[index], numerosMult[0])
+                                if (puntosA[index] > 0) {
+                                    puntosA[index] -= 1
+                                    exp2 = expCalculada
+                                }
+                            },
+                            Modifier.align(Alignment.CenterStart),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Borgoña,
+                                contentColor = Blanco
+                            ),
+                            shape = RoundedCornerShape(50, 6, 6, 50)
+                        ) {
+                            Text("-")
+                        }
+
+                        Text(
+                            text = "${puntosA[index]}",
+                            Modifier.align(Alignment.Center)
+                        )
+
+                        Button(
+                            onClick = {
+                                val resto = calculo(puntosA[index] + 1, numerosMult[0])
+                                val expCalculada = exp2 - calculo(puntosA[index] + 1, numerosMult[0])
+                                if (puntosA[index] < 6 && resto <= exp2) {
+                                    puntosA[index] += 1
+                                    exp2 = expCalculada
+                                }
+                            },
+                            Modifier.align(Alignment.CenterEnd),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Borgoña,
+                                contentColor = Blanco
+                            ),
+                            shape = RoundedCornerShape(6, 50, 50, 6)
+                        ) {
+                            Text("+")
+                        }
+                    }
+
+                }
+            }
         }
+        //MEJORAS HABILIDADES
+        item {
+            Spacer(modifier = Modifier.height(25.dp))
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "Habilidades")
+            }
+            //lista Habilidades
+            //Botones
+            puntosH.forEachIndexed { index, _ ->
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    Box(
+                        Modifier
+                            .width(200.dp)
+                            .heightIn(min = 45.dp, max = 80.dp)
+                    ) {
+                        explicacion(
+                            texto = habilidades[index],
+                            textoT = habilidades[index],
+                            textoExpl = textoExplicacionH[index],
+                            Modifier.align(Alignment.CenterStart),
+                            fontSize = 20.sp,
+                        )
+                    }
+                    Box(Modifier.size(180.dp, 45.dp)) {
+                        Button(
+                            onClick = {
+                                val expCalculada = exp2 + calculo(puntosH[index], numerosMult[1])
+                                if (puntosH[index] > 0) {
+                                    puntosH[index] -= 1
+                                    exp2 = expCalculada
+                                }
+                            },
+                            Modifier.align(Alignment.CenterStart),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Borgoña,
+                                contentColor = Blanco
+                            ),
+                            shape = RoundedCornerShape(50, 6, 6, 50)
+                        ) {
+                            Text("-")
+                        }
+
+                        Text(
+                            text = "${puntosH[index]}",
+                            Modifier.align(Alignment.Center)
+                        )
+
+                        Button(
+                            onClick = {
+                                val resto = calculo(puntosH[index] + 1, numerosMult[1])
+                                val expCalculada = exp2 - calculo(puntosH[index] + 1, numerosMult[1])
+                                if (puntosH[index] < 6 && resto <= exp2) {
+                                    puntosH[index] += 1
+                                    exp2 = expCalculada
+                                }
+                            },
+                            Modifier.align(Alignment.CenterEnd),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Borgoña,
+                                contentColor = Blanco
+                            ),
+                            shape = RoundedCornerShape(6, 50, 50, 6)
+                        ) {
+                            Text("+")
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(55.dp))
+                }
+            }
+        }
+        //MEJORA DE DISCIPLINAS
+        //texto
+        item {
+            Spacer(modifier = Modifier.height(25.dp))
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "Disciplinas")
+            }
+        }
+        state.listaDisciplinasPorClan.forEachIndexed { index, _ ->
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    Box(Modifier
+                        .width(200.dp)
+                        .heightIn(min = 45.dp, max = 80.dp)
+                    ) {
+                        explicacion(
+                            texto = state.listaDisciplinasPorClan[index],
+                            textoT = "Disciplinas[index]",
+                            textoExpl = "textoExplicacion[index]",
+                            Modifier.align(Alignment.CenterStart),
+                            fontSize = 20.sp,
+                        )
+                    }
+                    Box(Modifier.size(180.dp, 45.dp)) {
+                        Button(
+                            onClick = {
+                                val expCalculada = exp2 + calculo(listaNivel[index], numerosMult[0])
+                                if (listaNivel[index] > 0) {
+                                    listaNivel[index] -= 1
+                                    exp2 = expCalculada
+                                }
+                            },
+                            Modifier.align(Alignment.CenterStart),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Borgoña,
+                                contentColor = Blanco
+                            ),
+                            shape = RoundedCornerShape(50, 6, 6, 50)
+                        ) {
+                            Text("-")
+                        }
+
+                        Text(
+                            text = "${listaNivel[index]}",
+                            Modifier.align(Alignment.Center)
+                        )
+
+                        Button(
+                            onClick = {
+                                val resto = calculo(listaNivel[index] + 1, numerosMult[0])
+                                val expCalculada = exp2 - calculo(listaNivel[index] + 1, numerosMult[0])
+                                if (listaNivel[index] < 6 && resto <= exp2) {
+                                    listaNivel[index] += 1
+                                    exp2 = expCalculada
+                                }
+                            },
+                            Modifier.align(Alignment.CenterEnd),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Borgoña,
+                                contentColor = Blanco
+                            ),
+                            shape = RoundedCornerShape(6, 50, 50, 6)
+                        ) {
+                            Text("+")
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(55.dp))
+                }
+            }
+        }
+
+        //ultima lista PODERES DISCIPLINAS
         item {
             Spacer(modifier = Modifier.height(25.dp))
             state.listaNivelDisciplinas.forEachIndexed { index, _ ->
@@ -232,9 +596,17 @@ fun MCFUBody(
                 Spacer(modifier = Modifier.height(35.dp))
             }
         }
+
+        //Boton para salir
         item {
             DefaultButton(
                 onClick = {
+                    Log.i("fuerza:","${state.fuerza}")
+
+                    state.listaNivelDisciplinas.clear()
+                    state.listaNivelDisciplinas.addAll(listaNivel)
+                    Log.i("lista1:","${state.listaNivelDisciplinas[0]}")
+
                     // Llamar al metodo para guardar los poderes seleccionados
                     poderesSeleccionados.forEach { (fkDisciplinas, nombre) ->
                         viewModel.guardarPoderes(nombre, fkDisciplinas)
@@ -299,11 +671,12 @@ fun DropdownMPoder(numero: Int,
 
 
 //Calcular la experiencia
-private fun calculo(valorAnt: Int): Int {
+private fun calculo(valorAnt: Int, mult: Int): Int {
     var cal: Int
-    cal = valorAnt * 5
+    cal = valorAnt * mult
     return cal
 }
+
 
 
 
