@@ -46,7 +46,7 @@ class MPViewModel(
         showSecondMenuHist.value = !showSecondMenuHist.value
     }
 
-    fun cambiarND(dados: MutableState<Int?>){
+    fun cambiarND(dados: MutableState<Int>){
         nDados = dados.value ?: 0
     }
     fun cambiarNDInt(dados:Int?){
@@ -305,6 +305,11 @@ class MPViewModel(
     //obtener disciplinas
     suspend fun obteneridDisciplina(idDisciplina: Int, fkVas: Int): Int{
         return disciplinasVasRepository.obtenerIdDisciplina(idDisciplina, fkVas)
+    }
+
+    //obtener niveles de disciplinas
+    suspend fun obtenernivelesDisciplinas(fkVas: Int): List<Int> {
+        return disciplinasVasRepository.obtenernivelesDisciplinas(fkVas)
     }
 
     //guardar vastago y sus disciplinas

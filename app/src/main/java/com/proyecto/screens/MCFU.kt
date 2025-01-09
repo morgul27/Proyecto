@@ -345,7 +345,7 @@ fun MCFUBody(
             ) {
                 Text(text = "ATRIBUTOS")
             }
-            //Botones
+            //Botones Atributos
             puntosA.forEachIndexed { index, _ ->
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -623,7 +623,7 @@ fun MCFUBody(
                     Log.i("lista1:","${state.listaNivelDisciplinas[0]}")
                     state.experiencia = exp2
                     Log.i("exp state:","${state.experiencia}")
-                    //prueba 1 atributos
+                    //actualizar 1 atributos
                     atributos.forEachIndexed { index, atributo ->
                         // Llama a la función para actualizar el estado
                         updateAtributos(atributo, puntosA[index], viewModel)

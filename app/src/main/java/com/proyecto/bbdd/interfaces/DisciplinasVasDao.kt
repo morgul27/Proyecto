@@ -19,4 +19,8 @@ interface DisciplinasVasDao {
 
     @Update
     suspend fun actDisciplinasVas(disciplinasVas: DisciplinasVas)
+
+    //obtener niveles
+    @Query("SELECT dv.nivel FROM DisciplinasVas dv WHERE fk_vas = :fkVas")
+    suspend fun obtenernivelesDisciplinas(fkVas: Int): List <Int>
 }

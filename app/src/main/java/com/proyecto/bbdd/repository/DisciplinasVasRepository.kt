@@ -20,4 +20,8 @@ class DisciplinasVasRepository (
         disciplinasVasDao.actDisciplinasVas(disciplinasVas)
     }
 
+    suspend fun obtenernivelesDisciplinas(fkVas: Int): List<Int> {
+        return disciplinasVasDao.obtenernivelesDisciplinas(fkVas)
+    }
+
 }
