@@ -113,8 +113,14 @@ fun PruebaCF(navController: NavController, viewModel: MPViewModel, sharedViewMod
                         )
                     }
 
-                    sharedViewModel.fkClan.value?.let { viewModel.getDisciplinasPorClan(it) }
-                    sharedViewModel.fkClan.value?.let { viewModel.getIdDisciplinasPorClan(it) }
+                    sharedViewModel.fkClan.value.let { viewModel.getDisciplinasPorClan(it) }
+                    sharedViewModel.fkClan.value.let { viewModel.getIdDisciplinasPorClan(it) }
+
+                    LaunchedEffect(Unit) {
+                        viewModel.state.listaNivelDisciplinas =
+                            viewModel.obtenernivelesDisciplinas(
+                                sharedViewModel.vasId.value ?: 1) as MutableList
+                    }
 
                     var exp = sharedViewModel.vasExp.value ?: 1111
                     CFBody(navController, viewModel, sharedViewModel, exp)
@@ -130,16 +136,18 @@ fun CFBody(navController: NavController, viewModel: MPViewModel, shared: SharedV
     val state = viewModel.state
     Log.i("listaDisc","${state.listaDisciplinasPorClan}")
     Log.i("listaNivel","${state.listaNivelDisciplinas}")
+    val listDisc = state.listaDisciplinasPorClan
+
     var list = mutableListOf(0, 0, 0)
-    LaunchedEffect(Unit) {
-        list = viewModel.obtenernivelesDisciplinas(shared.vasId.value ?: 1) as MutableList
-    }
+
 
     var exp2 by remember { mutableStateOf(exp) }
     val listaNivel = remember { mutableStateListOf(*list.toTypedArray()) }
+
+    var listaNivel2 =  remember { mutableStateListOf(state.listaNivelDisciplinas) }
     val numerosMult = listOf(5, 3)
 
-    Log.i("lista N 2","${listaNivel[0]}")
+    Log.i("lista N 2","${listaNivel2[0]}")
     val nombreVas = shared.vasName.value ?: ""
     val id = shared.vasId.value ?: 0
     val clan = shared.vasClan.value ?: ""
@@ -523,7 +531,7 @@ fun CFBody(navController: NavController, viewModel: MPViewModel, shared: SharedV
                 Text(text = "DISCIPLINAS")
             }
         }
-        state.listaDisciplinasPorClan.forEachIndexed { index, _ ->
+        listDisc.forEachIndexed { index, _ ->
             item {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -535,7 +543,7 @@ fun CFBody(navController: NavController, viewModel: MPViewModel, shared: SharedV
                         .heightIn(min = 45.dp, max = 80.dp)
                     ) {
                         explicacion(
-                            texto = state.listaDisciplinasPorClan[index],
+                            texto = listDisc[index],
                             textoT = "Disciplinas[index]",
                             textoExpl = "textoExplicacion[index]",
                             Modifier.align(Alignment.CenterStart),
