@@ -86,7 +86,6 @@ fun MenuFicha(navController: NavController, viewModel: MPViewModel, sharedViewMo
                                         contentDescription = "Arrow back"
                                     )
                                 }
-                                
                             },
                             title = {
                                 Text(
