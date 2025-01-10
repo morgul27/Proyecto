@@ -247,7 +247,7 @@ fun BodyFicha(navController: NavController, viewModel: MPViewModel, sharedViewMo
                                     if (viewModel.direccionPDF.value == true) {
                                         navController.navigate(route = Screens.PantallaPDF.route)
                                     } else if (viewModel.direccionHist.value == false) {
-                                        navController.navigate(route = Screens.MejorarPersonaje.route)
+                                        navController.navigate(route = Screens.PruebaCF.route)
                                     } else {
                                         navController.navigate(route = Screens.InicioHist.route)
                                     }

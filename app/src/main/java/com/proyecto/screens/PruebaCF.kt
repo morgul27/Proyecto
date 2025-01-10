@@ -46,6 +46,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.proyecto.MPViewModel
 import com.proyecto.R
@@ -58,6 +59,7 @@ import com.proyecto.ui.theme.DefaultButton
 import com.proyecto.ui.theme.ProyectoTheme
 import com.proyecto.ui.theme.Typography
 import com.proyecto.ui.theme.ghoticFamily
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -91,7 +93,7 @@ fun PruebaCF(navController: NavController, viewModel: MPViewModel, sharedViewMod
                                 )
                             },
                             navigationIcon = {
-                                IconButton(onClick = { navController.popBackStack() }) {
+                                IconButton(onClick = { navController.navigate(route = Screens.MenuFicha.route) }) {
                                     Icon(
                                         imageVector = Icons.Default.ArrowBack,
                                         contentDescription = "Arrow back"
@@ -114,21 +116,8 @@ fun PruebaCF(navController: NavController, viewModel: MPViewModel, sharedViewMod
                     sharedViewModel.fkClan.value?.let { viewModel.getDisciplinasPorClan(it) }
                     sharedViewModel.fkClan.value?.let { viewModel.getIdDisciplinasPorClan(it) }
 
-                    var isListLoaded by remember { mutableStateOf(false) }
-                    var list = mutableListOf(0, 0, 0)
-                    LaunchedEffect(Unit) {
-                        list =
-                            viewModel.obtenernivelesDisciplinas(sharedViewModel.vasId.value ?: 1) as MutableList
-                        isListLoaded = list.isNotEmpty()
-                    }
-
                     var exp = sharedViewModel.vasExp.value ?: 1111
-                    if (isListLoaded) {
-                        CFBody(navController, viewModel, sharedViewModel, exp, list)
-                    } else {
-                        // Mostrar un indicador de carga o algún otro componente mientras se espera
-                        CircularProgressIndicator()  // Este es solo un ejemplo
-                    }
+                    CFBody(navController, viewModel, sharedViewModel, exp)
                 }
             }
         )
@@ -137,24 +126,38 @@ fun PruebaCF(navController: NavController, viewModel: MPViewModel, sharedViewMod
 
 
 @Composable
-fun CFBody(navController: NavController, viewModel: MPViewModel, shared: SharedViewModel, exp: Int, listLevel: MutableList<Int>) {
+fun CFBody(navController: NavController, viewModel: MPViewModel, shared: SharedViewModel, exp: Int) {
     val state = viewModel.state
     Log.i("listaDisc","${state.listaDisciplinasPorClan}")
     Log.i("listaNivel","${state.listaNivelDisciplinas}")
+    var list = mutableListOf(0, 0, 0)
+    LaunchedEffect(Unit) {
+        list = viewModel.obtenernivelesDisciplinas(shared.vasId.value ?: 1) as MutableList
+    }
 
     var exp2 by remember { mutableStateOf(exp) }
-    val listaNivel = remember { mutableStateListOf(*listLevel.toTypedArray()) }
+    val listaNivel = remember { mutableStateListOf(*list.toTypedArray()) }
     val numerosMult = listOf(5, 3)
 
-    Log.i("lista N 2","${listaNivel}")
+    Log.i("lista N 2","${listaNivel[0]}")
     val nombreVas = shared.vasName.value ?: ""
     val id = shared.vasId.value ?: 0
     val clan = shared.vasClan.value ?: ""
     val generacion = shared.vasGeneracion.value
 
     //variables para mejoras de Atributos
-    val atributos = remember {
-        mutableStateListOf(
+    val atributos = listOf(
+        "Fuerza",
+        "Destreza",
+        "Resistencia",
+        "Carisma",
+        "Manipulación",
+        "Compostura",
+        "Inteligencia",
+        "Astucia",
+        "Resolución"
+    )
+    val textoExplicacionA = listOf(
             "Fuerza",
             "Destreza",
             "Resistencia",
@@ -165,20 +168,6 @@ fun CFBody(navController: NavController, viewModel: MPViewModel, shared: SharedV
             "Astucia",
             "Resolución"
         )
-    }
-    val textoExplicacionA = remember {
-        mutableStateListOf(
-            "Fuerza",
-            "Destreza",
-            "Resistencia",
-            "Carisma",
-            "Manipulación",
-            "Compostura",
-            "Inteligencia",
-            "Astucia",
-            "Resolución"
-        )
-    }
     val puntosA = remember { mutableStateListOf(
         shared.vasFuerza.value,
         shared.vasDestr.value,
@@ -192,8 +181,7 @@ fun CFBody(navController: NavController, viewModel: MPViewModel, shared: SharedV
     }
 
     //Mejoras para las Habilidades
-    val habilidades = remember {
-        mutableStateListOf(
+    val habilidades = listOf(
             //columna 1
             "Armas de Fuego",
             "Artesanía",
@@ -225,10 +213,8 @@ fun CFBody(navController: NavController, viewModel: MPViewModel, shared: SharedV
             "Politica",
             "Tecnología",
         )
-    }
 
-    val textoExplicacionH = remember {
-        mutableStateListOf(
+    val textoExplicacionH = listOf(
             //columna 1
             "Armas de Fuego",
             "Artesanía",
@@ -258,9 +244,9 @@ fun CFBody(navController: NavController, viewModel: MPViewModel, shared: SharedV
             "Medicina",
             "Ocultismo",
             "Politica",
-            "Tecnología",
+            "Tecnología"
         )
-    }
+
     val puntosH = remember { mutableStateListOf(
         //columna 1
         shared.armas_de_fuego.value,
@@ -637,13 +623,13 @@ fun CFBody(navController: NavController, viewModel: MPViewModel, shared: SharedV
 
         // Botón de volver
         item {
-            DefaultButton(onClick = { navController.popBackStack() },
+            DefaultButton(onClick = { navController.navigate(route = Screens.MenuFicha.route) },
                 text = ("Volver")
             )
             Spacer(modifier = Modifier.height(20.dp))
             DefaultButton(onClick = {
-                navController.popBackStack()
                 shared.vasId.value?.let { viewModel.eliminarVasPorId(it) }
+                navController.navigate(route = Screens.MenuFicha.route)
             },
                 text = ("Borrar vastago")
             )

@@ -1,8 +1,10 @@
 package com.proyecto.navigation
 
+import android.app.Activity
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -61,6 +63,8 @@ fun Navegacion(viewModel: MPViewModel, sharedViewModel: SharedViewModel){
 
     // Iniciar el NavHostController
     val navController = rememberNavController()
+    val context = LocalContext.current
+    val activity = context as? Activity
 
     // Definir el contenido del NavHost
     NavHost(navController = navController, startDestination = Screens.MenuUsuario.route) {
@@ -226,7 +230,7 @@ fun Navegacion(viewModel: MPViewModel, sharedViewModel: SharedViewModel){
     // Manejar el botón de retroceso
     BackHandler {
         if (navController.currentBackStackEntry?.destination?.route == Screens.MenuUsuario.route) {
-
+            activity?.finish()
         }
         else if(navController.currentBackStackEntry?.destination?.route == Screens.MenuPrincipal.route) {
             // Si estamos en MenuPrincipal, navegar a MenuUsuario en lugar de hacer retroceder

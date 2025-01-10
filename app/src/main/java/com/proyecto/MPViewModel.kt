@@ -308,8 +308,12 @@ class MPViewModel(
     }
 
     //obtener niveles de disciplinas
-    suspend fun obtenernivelesDisciplinas(fkVas: Int): List<Int> {
-        return disciplinasVasRepository.obtenernivelesDisciplinas(fkVas)
+    fun obtenernivelesDisciplinas(fkVas: Int): List<Int> {
+        var list = mutableListOf(0, 0, 0)
+        viewModelScope.launch {
+            list = disciplinasVasRepository.obtenernivelesDisciplinas(fkVas) as MutableList<Int>
+        }
+        return list
     }
 
     //guardar vastago y sus disciplinas
