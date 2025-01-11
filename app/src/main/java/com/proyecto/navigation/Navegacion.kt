@@ -22,6 +22,7 @@ import com.proyecto.screens.MCFD
 import com.proyecto.screens.MCFH
 import com.proyecto.screens.MCFU
 import com.proyecto.screens.MejorarPersonaje
+import com.proyecto.screens.MejorarPersonaje2
 import com.proyecto.screens.PruebaCF
 import com.proyecto.screens.mod_historia.InicioHist
 import com.proyecto.screens.mod_historia.brujah.P2Br
@@ -115,6 +116,11 @@ fun Navegacion(viewModel: MPViewModel, sharedViewModel: SharedViewModel){
         composable(route = Screens.MejorarPersonaje.route) {
             MejorarPersonaje(navController = navController, viewModel = viewModel, sharedViewModel = sharedViewModel)
         }
+        composable(route = Screens.MejorarPersonaje2.route) {
+            MejorarPersonaje2(navController = navController, viewModel = viewModel, sharedViewModel = sharedViewModel)
+        }
+
+
 
         //historia
         composable(route = Screens.InicioHist.route) {

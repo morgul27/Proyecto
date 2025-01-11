@@ -59,6 +59,7 @@ import com.proyecto.ui.theme.DefaultButton
 import com.proyecto.ui.theme.ProyectoTheme
 import com.proyecto.ui.theme.Typography
 import com.proyecto.ui.theme.ghoticFamily
+import com.pspdfkit.ui.note.AlignedAnnotationHinterDrawable.VerticalAlignment
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -134,20 +135,9 @@ fun PruebaCF(navController: NavController, viewModel: MPViewModel, sharedViewMod
 @Composable
 fun CFBody(navController: NavController, viewModel: MPViewModel, shared: SharedViewModel, exp: Int) {
     val state = viewModel.state
-    Log.i("listaDisc","${state.listaDisciplinasPorClan}")
-    Log.i("listaNivel","${state.listaNivelDisciplinas}")
-    val listDisc = state.listaDisciplinasPorClan
-
-    var list = mutableListOf(0, 0, 0)
-
 
     var exp2 by remember { mutableStateOf(exp) }
-    val listaNivel = remember { mutableStateListOf(*list.toTypedArray()) }
-
-    var listaNivel2 =  remember { mutableStateListOf(state.listaNivelDisciplinas) }
     val numerosMult = listOf(5, 3)
-
-    Log.i("lista N 2","${listaNivel2[0]}")
     val nombreVas = shared.vasName.value ?: ""
     val id = shared.vasId.value ?: 0
     val clan = shared.vasClan.value ?: ""
@@ -289,14 +279,26 @@ fun CFBody(navController: NavController, viewModel: MPViewModel, shared: SharedV
     ) }
 
 
-
+    //interfaz de usuario
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 10.dp)
+            .padding(top = 25.dp),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        Spacer(modifier = Modifier.height(25.dp))
+        Text("Exp: ${exp2}")
+        Spacer(modifier = Modifier.height(25.dp))
+    }
 
     // Pantalla visualmente
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 10.dp)
-            .padding(top = 50.dp),
+            .padding(top = 75.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -520,83 +522,6 @@ fun CFBody(navController: NavController, viewModel: MPViewModel, shared: SharedV
                 }
             }
         }
-        //MEJORA DE DISCIPLINAS
-        //texto
-        item {
-            Spacer(modifier = Modifier.height(25.dp))
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = "DISCIPLINAS")
-            }
-        }
-        listDisc.forEachIndexed { index, _ ->
-            item {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    Box(Modifier
-                        .width(200.dp)
-                        .heightIn(min = 45.dp, max = 80.dp)
-                    ) {
-                        explicacion(
-                            texto = listDisc[index],
-                            textoT = "Disciplinas[index]",
-                            textoExpl = "textoExplicacion[index]",
-                            Modifier.align(Alignment.CenterStart),
-                            fontSize = 20.sp,
-                        )
-                    }
-                    Box(Modifier.size(180.dp, 45.dp)) {
-                        Button(
-                            onClick = {
-                                val expCalculada = exp2 + calculo(listaNivel[index], numerosMult[0])
-                                if (listaNivel[index] > 0) {
-                                    listaNivel[index] -= 1
-                                    exp2 = expCalculada
-                                }
-                            },
-                            Modifier.align(Alignment.CenterStart),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Borgoña,
-                                contentColor = Blanco
-                            ),
-                            shape = RoundedCornerShape(50, 6, 6, 50)
-                        ) {
-                            Text("-")
-                        }
-
-                        Text(
-                            text = "${listaNivel[index]}",
-                            Modifier.align(Alignment.Center)
-                        )
-
-                        Button(
-                            onClick = {
-                                val resto = calculo(listaNivel[index] + 1, numerosMult[0])
-                                val expCalculada = exp2 - calculo(listaNivel[index] + 1, numerosMult[0])
-                                if (listaNivel[index] < 6 && resto <= exp2) {
-                                    listaNivel[index] += 1
-                                    exp2 = expCalculada
-                                }
-                            },
-                            Modifier.align(Alignment.CenterEnd),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Borgoña,
-                                contentColor = Blanco
-                            ),
-                            shape = RoundedCornerShape(6, 50, 50, 6)
-                        ) {
-                            Text("+")
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(55.dp))
-                }
-            }
-        }
 
 
         //FIN
@@ -605,9 +530,6 @@ fun CFBody(navController: NavController, viewModel: MPViewModel, shared: SharedV
         item {
             Spacer(modifier = Modifier.height(25.dp))
             DefaultButton(onClick = {
-//                state.listaNivelDisciplinas.clear()
-//                state.listaNivelDisciplinas.addAll(listaNivel)
-                Log.i("lista1:","${state.listaNivelDisciplinas[0]}")
                 state.experiencia = exp2
                 Log.i("exp state:","${state.experiencia}")
                 shared.vasExp.value = exp2
@@ -623,14 +545,17 @@ fun CFBody(navController: NavController, viewModel: MPViewModel, shared: SharedV
                     updateHabilidades(habilidad, puntosH[index], viewModel)
                 }
 
-                navController.navigate(route = Screens.MenuPrincipal.route)
+                navController.navigate(route = Screens.MejorarPersonaje2.route)
             },
-                text = ("Guardar")
+                text = ("Guardar y SIguiente")
             )
         }
 
         // Botón de volver
         item {
+            DefaultButton(onClick = { navController.navigate(route = Screens.MejorarPersonaje2.route) },
+                text = ("Siguiente")
+            )
             DefaultButton(onClick = { navController.navigate(route = Screens.MenuFicha.route) },
                 text = ("Volver")
             )

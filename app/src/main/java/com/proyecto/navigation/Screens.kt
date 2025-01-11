@@ -15,6 +15,7 @@ sealed class Screens(val route: String) {
     object MCFD: Screens("MCFD_screen") //Menu Creacion Ficha Disciplinas
     object MCFU: Screens("MCFU_screen") //Menu Creacion Ficha Última
     object MejorarPersonaje: Screens("Septima_screen") //Menu para mejorar al vastago seleccionado
+    object MejorarPersonaje2: Screens("MejorarPersonaje2_screen")  //Segundo menu para mejorar al vastago seleccionado
 
 
     //Modo Historia
@@ -62,6 +63,7 @@ sealed class Screens(val route: String) {
     object PantallaPDF: Screens("Decima_screen")
     object VerArchivosPDF: Screens("PDFREADER_screen")
     object PruebaCF: Screens("Prueba_screen")
+
 
 
 }

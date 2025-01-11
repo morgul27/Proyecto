@@ -80,7 +80,7 @@ fun MenuFicha(navController: NavController, viewModel: MPViewModel, sharedViewMo
                                 navigationIconContentColor = Borgoña
                             ),
                             navigationIcon = {
-                                IconButton(onClick = { navController.popBackStack() }) {
+                                IconButton(onClick = { navController.navigate(route = Screens.MenuPrincipal.route) }) {
                                     Icon(
                                         imageVector = Icons.Default.ArrowBack,
                                         contentDescription = "Arrow back"
@@ -127,7 +127,6 @@ fun MenuFicha(navController: NavController, viewModel: MPViewModel, sharedViewMo
                     state.astucia = 0
                     state.resolucion = 0
                     state.experiencia = 0
-                    state.listaDisciplinasPorClan = emptyList()
 
                     BodyFicha(navController, viewModel, sharedViewModel)
                 }

@@ -312,6 +312,7 @@ fun MCFUBody(
 
 
     //interfaz de usuario
+    //experiencia en pantalla
     Column(
         modifier = Modifier
             .fillMaxSize()
