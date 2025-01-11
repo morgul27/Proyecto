@@ -1,5 +1,7 @@
 package com.proyecto.bbdd.repository
 
+import androidx.compose.runtime.mutableStateMapOf
+import com.proyecto.bbdd.PoderView
 import com.proyecto.bbdd.entity.Vastago
 import com.proyecto.bbdd.interfaces.VastagoDao
 
@@ -7,6 +9,7 @@ import com.proyecto.bbdd.interfaces.VastagoDao
 class VastagoRepository(
     private val vastagoDao: VastagoDao
 ) {
+
     suspend fun insertVastago(vastago: Vastago): Long {
         return vastagoDao.insertVastago(vastago)
     }
@@ -40,6 +43,9 @@ class VastagoRepository(
         return vastagoDao.getDisciplinasClanDeVas(vastagoId)
     }
 
+    suspend fun obtenerPoderesDeVastago(vastagoId: Int?):  List<PoderView> {
+        return vastagoDao.obtenerPoderesPorVastago(vastagoId)
+    }
 
     suspend fun getDisciplinasPorClan(vastagoClan: Int): List<String> {
         return vastagoDao.getDisciplinasPorClan(vastagoClan)

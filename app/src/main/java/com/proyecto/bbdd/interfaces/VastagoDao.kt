@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.proyecto.bbdd.PoderView
 import com.proyecto.bbdd.entity.Vastago
 
 @Dao
@@ -52,6 +53,15 @@ interface VastagoDao {
         ORDER BY p.id
     """)
     suspend fun getPoderes(vastagoId: Int, idDisciplina: Int): List<String>
+
+    //obtenerPoderesPorVastago
+    @Query("""
+    SELECT pv.id, pv.nombre 
+    FROM PoderesVas pv
+    INNER JOIN DisciplinasVas dv ON pv.fk_disciplinas = dv.id
+    WHERE dv.fk_vas = :vastagoId
+    """)
+    suspend fun obtenerPoderesPorVastago(vastagoId: Int?): List<PoderView>
 
 
     //ver las disciplina que le toca al vastago

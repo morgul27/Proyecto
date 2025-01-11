@@ -3,6 +3,9 @@ package com.proyecto.screens
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +25,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -31,8 +36,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -134,9 +141,16 @@ fun MejorarPersonajeBody(
     val listDisc = state.listaDisciplinasPorClan
     var exp2 by remember { mutableStateOf(exp) }
     val numerosMult = listOf(5, 3)
+    state.id = shared.vasId.value
 
     Log.i("lista Niveles","${state.listaDisciplinasPorClan}")
     Log.i("listDisc","[${listDisc[0]}, ${listDisc[1]}, ${listDisc[2]}]")
+
+    val poderesSeleccionados = remember { mutableStateMapOf<Int, String>() }
+
+    LaunchedEffect(shared.vasId) {
+        viewModel.cargarPoderes(shared.vasId.value)
+    }
 
 
     //interfaz de usuario
@@ -239,6 +253,62 @@ fun MejorarPersonajeBody(
                 }
             }
         }
+
+
+        //ultima lista PODERES DISCIPLINAS
+        //texto
+        item {
+            Spacer(modifier = Modifier.height(25.dp))
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "PODERES DISCIPLINAS")
+            }
+        }
+        item {
+            Spacer(modifier = Modifier.height(25.dp))
+            state.listaNivelDisciplinas.forEachIndexed { index, _ ->
+                Text(text = "Poderes de ${state.listaDisciplinasPorClan[index]}")
+                Spacer(modifier = Modifier.height(5.dp))
+
+                // Crear una columna (Column) para cada disciplina
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    // Iterar sobre los niveles de disciplinas (puedes tener más de una celda por disciplina)
+                    for (i in 1..state.listaNivelDisciplinas[index]) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(60.dp)
+                                .padding(4.dp)
+                                .border(1.dp, Color.Black)
+                                .background(Borgoña)
+                                .padding(8.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            DropdownMPoder(
+                                index + 1,
+                                viewModel,
+                                state.listaIdDisciplinas[index],
+                                poderesSeleccionados
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(5.dp))  // Espacio entre las celdas
+                    }
+                }
+                Spacer(modifier = Modifier.height(35.dp))
+            }
+        }
+
+
+
+
+
+
         // Botón de guardar
         item {
             Spacer(modifier = Modifier.height(25.dp))
@@ -266,4 +336,55 @@ private fun calculo(valorAnt: Int, mult: Int): Int {
     var cal: Int
     cal = valorAnt * mult
     return cal
+}
+
+@Composable
+private fun DropdownMPoder(
+    numero: Int,
+    viewModel: MPViewModel,
+    idDisciplina: Int,
+    poderesSeleccionados: MutableMap<Int, String>
+) {
+    val state = viewModel.state
+    var expanded by remember { mutableStateOf(false) }
+    var selectedText by remember { mutableStateOf("Seleccionar Poder $numero") }
+
+    var idTablaDisc by remember { mutableStateOf(0) }
+    var listaPoderes by remember { mutableStateOf<List<String>>(emptyList()) }
+
+    LaunchedEffect(Unit) {
+        listaPoderes = state.id?.let { viewModel.ObtenerPoderes(it, idDisciplina) }!!
+        idTablaDisc = viewModel.obteneridDisciplina(idDisciplina, state.id!!)
+    }
+
+    Column {
+        Text(
+            text = selectedText,
+            modifier = Modifier.clickable { expanded = true }
+        )
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            listaPoderes.forEach { opcion ->
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = opcion,
+                            color = Color.Black,
+                            fontSize = 15.sp,
+                            fontFamily = ghoticFamily
+                        )
+                    },
+                    onClick = {
+                        selectedText = opcion
+                        expanded = false
+
+                        // Guardar la selección en el estado temporal
+                        poderesSeleccionados[idTablaDisc] = opcion
+                    }
+                )
+            }
+        }
+    }
 }

@@ -658,7 +658,7 @@ fun MCFUBody(
 }
 
 @Composable
-fun DropdownMPoder(numero: Int,
+private fun DropdownMPoder(numero: Int,
                    viewModel: MPViewModel,
                    idDisciplina: Int,
                    poderesSeleccionados: MutableMap<Int, String>

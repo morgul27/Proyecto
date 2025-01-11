@@ -2,10 +2,12 @@ package com.proyecto
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.proyecto.bbdd.PoderView
 import com.proyecto.bbdd.entity.DisciplinasVas
 import com.proyecto.bbdd.entity.PoderesVas
 import com.proyecto.bbdd.entity.Usuario
@@ -30,6 +32,9 @@ class MPViewModel(
     var state by mutableStateOf(MPState("", listOf(), nombreVas = "", clanVas = ""))
         private set
 
+    private val _poderesSeleccionados = mutableStateMapOf<Int, String>()
+    val poderesSeleccionados: MutableMap<Int, String> get() = _poderesSeleccionados
+
     val showSecondMenu = mutableStateOf(false)
     val showSecondMenuHist = mutableStateOf(false)
     val direccionHist = mutableStateOf(false)
@@ -38,6 +43,9 @@ class MPViewModel(
     var nDados = 0 //dados que tiene el usuario de caracteristica
     var dificult = mutableListOf(1, 3, 6) //dificultad de tirada
     var movDif = 0 //mover la dificultad
+
+
+
 
     fun toggleSecondMenu() {
         showSecondMenu.value = !showSecondMenu.value
@@ -279,6 +287,18 @@ class MPViewModel(
         state = state.copy(listaPoderes = poderes)
         return poderes
     }
+
+
+    fun cargarPoderes(vastagoId: Int?) {
+        viewModelScope.launch {
+            val poderes = vasRepository.obtenerPoderesDeVastago(vastagoId)
+            _poderesSeleccionados.clear()
+            poderes.forEach { (id, nombre) ->
+                _poderesSeleccionados[id] = nombre
+            }
+        }
+    }
+
 
      //sacar al ultimo vastago creado
      fun UltimoVas(){
