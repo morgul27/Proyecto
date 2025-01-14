@@ -1,5 +1,6 @@
 package com.proyecto
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
@@ -32,8 +33,10 @@ class MPViewModel(
     var state by mutableStateOf(MPState("", listOf(), nombreVas = "", clanVas = ""))
         private set
 
-    private val _poderesSeleccionados = mutableStateMapOf<Int, String>()
-    val poderesSeleccionados: MutableMap<Int, String> get() = _poderesSeleccionados
+    val poderesObtenidos = mutableStateMapOf<Int, String>()
+    var poderesObtenidos2: List<PoderView> = emptyList()
+    var listaIdPoder: MutableList<Int> = mutableListOf()
+    var listaFKDiscVas: MutableList<Int> = mutableListOf()
 
     val showSecondMenu = mutableStateOf(false)
     val showSecondMenuHist = mutableStateOf(false)
@@ -292,10 +295,19 @@ class MPViewModel(
     fun cargarPoderes(vastagoId: Int?) {
         viewModelScope.launch {
             val poderes = vasRepository.obtenerPoderesDeVastago(vastagoId)
-            _poderesSeleccionados.clear()
-            poderes.forEach { (id, nombre) ->
-                _poderesSeleccionados[id] = nombre
+            var i = 0
+            poderesObtenidos2 = poderes
+            poderesObtenidos.clear()
+            poderes.forEach { (id, nombre, fk) ->
+                Log.e("ver numero","id: ${id}")
+                listaIdPoder.add(id)
+                poderesObtenidos[id] = nombre
+                Log.e("ver fk","fk: ${fk}")
+                Log.e("prueba nombre","nom: ${poderesObtenidos2[i].nombre}")
+                listaFKDiscVas.add(fk)
+                i++
             }
+            Log.w("listaFKDiscVas","fk: ${listaFKDiscVas}")
         }
     }
 

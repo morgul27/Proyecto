@@ -56,7 +56,7 @@ interface VastagoDao {
 
     //obtenerPoderesPorVastago
     @Query("""
-    SELECT pv.id, pv.nombre 
+    SELECT pv.id, pv.nombre, pv.fk_disciplinas
     FROM PoderesVas pv
     INNER JOIN DisciplinasVas dv ON pv.fk_disciplinas = dv.id
     WHERE dv.fk_vas = :vastagoId

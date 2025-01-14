@@ -63,6 +63,7 @@ import com.proyecto.ui.theme.DefaultButton
 import com.proyecto.ui.theme.ProyectoTheme
 import com.proyecto.ui.theme.Typography
 import com.proyecto.ui.theme.ghoticFamily
+import java.util.Locale.filter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -145,13 +146,10 @@ fun MejorarPersonajeBody(
 
     Log.i("lista Niveles","${state.listaDisciplinasPorClan}")
     Log.i("listDisc","[${listDisc[0]}, ${listDisc[1]}, ${listDisc[2]}]")
+    Log.e("____Obtenidos", "${viewModel.poderesObtenidos[viewModel.listaIdPoder[0]]}")
+
 
     val poderesSeleccionados = remember { mutableStateMapOf<Int, String>() }
-
-    LaunchedEffect(shared.vasId) {
-        viewModel.cargarPoderes(shared.vasId.value)
-    }
-
 
     //interfaz de usuario
     //experiencia en pantalla
@@ -294,7 +292,10 @@ fun MejorarPersonajeBody(
                                 index + 1,
                                 viewModel,
                                 state.listaIdDisciplinas[index],
-                                poderesSeleccionados
+                                poderesSeleccionados,
+                                viewModel.poderesObtenidos2
+                                    .filter { it.fk_disciplinas == viewModel.listaFKDiscVas[index] }
+                                    .map { it.nombre }
                             )
                         }
                         Spacer(modifier = Modifier.height(5.dp))  // Espacio entre las celdas
@@ -320,6 +321,14 @@ fun MejorarPersonajeBody(
                 Log.i("exp state:","${state.experiencia}")
                 shared.vasExp.value = exp2
 
+                //LLamada a actualizacion de vastago
+                viewModel.ActualizarVastagoConDisciplinas(
+                    puntos = listaNivel,
+                    listaIdDisciplinas = state.listaIdDisciplinas
+                ) {}
+
+                //guardar y actualizar poderes seleccionados
+
 
                 navController.navigate(route = Screens.MenuPrincipal.route)
             },
@@ -343,19 +352,29 @@ private fun DropdownMPoder(
     numero: Int,
     viewModel: MPViewModel,
     idDisciplina: Int,
-    poderesSeleccionados: MutableMap<Int, String>
+    poderesSeleccionados: MutableMap<Int, String>,
+    poderesVas: List<String>
 ) {
     val state = viewModel.state
     var expanded by remember { mutableStateOf(false) }
-    var selectedText by remember { mutableStateOf("Seleccionar Poder $numero") }
+    var selectedText by remember { mutableStateOf(
+        if ((numero-1) in poderesVas.indices) poderesVas[numero -1]
+        else "Seleccionar Poder $numero"
+    ) }
 
     var idTablaDisc by remember { mutableStateOf(0) }
     var listaPoderes by remember { mutableStateOf<List<String>>(emptyList()) }
+
+    poderesVas.forEach { nombre ->
+        Log.w("PoderesVas2", "N: ${nombre}")
+        Log.w("Indice", "I: ${poderesVas.indices}")
+    }
 
     LaunchedEffect(Unit) {
         listaPoderes = state.id?.let { viewModel.ObtenerPoderes(it, idDisciplina) }!!
         idTablaDisc = viewModel.obteneridDisciplina(idDisciplina, state.id!!)
     }
+
 
     Column {
         Text(

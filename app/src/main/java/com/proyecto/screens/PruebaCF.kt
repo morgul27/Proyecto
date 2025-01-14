@@ -117,6 +117,10 @@ fun PruebaCF(navController: NavController, viewModel: MPViewModel, sharedViewMod
                     sharedViewModel.fkClan.value.let { viewModel.getDisciplinasPorClan(it) }
                     sharedViewModel.fkClan.value.let { viewModel.getIdDisciplinasPorClan(it) }
 
+                    LaunchedEffect(sharedViewModel.vasId.value) {
+                        viewModel.cargarPoderes(sharedViewModel.vasId.value)
+                    }
+
                     LaunchedEffect(Unit) {
                         viewModel.state.listaNivelDisciplinas =
                             viewModel.obtenernivelesDisciplinas(
@@ -544,6 +548,8 @@ fun CFBody(navController: NavController, viewModel: MPViewModel, shared: SharedV
                     // Llama a la función para actualizar el estado
                     updateHabilidades(habilidad, puntosH[index], viewModel)
                 }
+                state.fuerza_voluntad = state.resolucion.let { state.compostura.plus(it) }
+                state.salud = state.resistencia.plus(3)
 
                 navController.navigate(route = Screens.MejorarPersonaje2.route)
             },

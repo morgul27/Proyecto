@@ -10,7 +10,7 @@ import com.proyecto.bbdd.entity.PoderesVas
 @Dao
 interface PoderesVasDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert()
     suspend fun insertPoderesVas(poderesVas: PoderesVas)
 
     @Update
