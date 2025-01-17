@@ -144,9 +144,9 @@ fun MejorarPersonajeBody(
     val numerosMult = listOf(5, 3)
     state.id = shared.vasId.value
 
-    Log.i("lista Niveles","${state.listaDisciplinasPorClan}")
-    Log.i("listDisc","[${listDisc[0]}, ${listDisc[1]}, ${listDisc[2]}]")
-    Log.e("____Obtenidos", "${viewModel.poderesObtenidos[viewModel.listaIdPoder[0]]}")
+//    Log.i("lista Niveles","${state.listaDisciplinasPorClan}")
+//    Log.i("listDisc","[${listDisc[0]}, ${listDisc[1]}, ${listDisc[2]}]")
+//    Log.e("____Obtenidos", "${viewModel.poderesObtenidos[viewModel.listaIdPoder[0]]}")
 
 
     val poderesSeleccionados = remember { mutableStateMapOf<Int, String>() }
@@ -288,14 +288,28 @@ fun MejorarPersonajeBody(
                                 .padding(8.dp),
                             contentAlignment = Alignment.Center
                         ) {
+                            Log.i("index?","${index}")
+                            Log.i("index-1?","${index-1}")
+                            Log.w("indice lista?","${viewModel.listaFKDiscVas.indices}")
+                            Log.w("listaFK?","${viewModel.listaFKDiscVas}")
+                            Log.d("poder?","${viewModel.poderesObtenidos2}")
+                            val pode = if (index in viewModel.listaFKDiscVas.indices) {
+                                Log.e("pass","?: passa")
+                                viewModel.poderesObtenidos2
+                                    .filter { it.fk_disciplinas == viewModel.listaFKDiscVas[index] }
+                                    .map { it.nombre }
+                            } else {
+                                Log.e("Npass","?: no passa")
+                                emptyList()
+                            }
+                            Log.e("poe","?: ${pode}")
                             DropdownMPoder(
                                 index + 1,
                                 viewModel,
                                 state.listaIdDisciplinas[index],
                                 poderesSeleccionados,
-                                viewModel.poderesObtenidos2
-                                    .filter { it.fk_disciplinas == viewModel.listaFKDiscVas[index] }
-                                    .map { it.nombre }
+                                i,
+                                pode
                             )
                         }
                         Spacer(modifier = Modifier.height(5.dp))  // Espacio entre las celdas
@@ -328,7 +342,7 @@ fun MejorarPersonajeBody(
                 ) {}
 
                 //guardar y actualizar poderes seleccionados
-
+                Log.i("Lista Poderes","${poderesSeleccionados}")
 
                 navController.navigate(route = Screens.MenuPrincipal.route)
             },
@@ -353,22 +367,29 @@ private fun DropdownMPoder(
     viewModel: MPViewModel,
     idDisciplina: Int,
     poderesSeleccionados: MutableMap<Int, String>,
+    i: Int,
     poderesVas: List<String>
 ) {
     val state = viewModel.state
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf(
-        if ((numero-1) in poderesVas.indices) poderesVas[numero -1]
+        if ((i-1) in poderesVas.indices) poderesVas[i - 1]
         else "Seleccionar Poder $numero"
     ) }
 
     var idTablaDisc by remember { mutableStateOf(0) }
     var listaPoderes by remember { mutableStateOf<List<String>>(emptyList()) }
 
+
     poderesVas.forEach { nombre ->
         Log.w("PoderesVas2", "N: ${nombre}")
-        Log.w("Indice", "I: ${poderesVas.indices}")
+
     }
+//    Log.i("FK", "a: ${viewModel.listaFKDiscVas}")
+//    Log.i("Obtenidos", "O: ${viewModel.poderesObtenidos2}")
+//    Log.w("Indice", "I: ${poderesVas.indices}")
+//    Log.w("numero", "Disc: ${numero}")
+//    Log.e("vuelta", "eltas: ${i}")
 
     LaunchedEffect(Unit) {
         listaPoderes = state.id?.let { viewModel.ObtenerPoderes(it, idDisciplina) }!!

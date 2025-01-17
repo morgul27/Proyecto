@@ -72,6 +72,7 @@ import com.proyecto.MPViewModel
 import com.proyecto.R
 import com.proyecto.SharedViewModel
 import com.proyecto.bbdd.entity.DisciplinasVas
+import com.proyecto.bbdd.entity.PoderesVas
 import com.proyecto.dialog.explicacion
 import com.proyecto.navigation.Screens
 import com.proyecto.ui.theme.Blanco
@@ -159,6 +160,7 @@ fun MCFUBody(
     Log.i("nivel disc 1", "${state.listaNivelDisciplinas[0]}")
     //variable de poderes
     val poderesSeleccionados = remember { mutableStateMapOf<Int, String>() }
+    val poderesSeleccionados2: MutableList<PoderesVas> = mutableListOf()
     var exp2 by remember { mutableStateOf(exp) }
     val numerosMult = listOf(5, 3)
 
@@ -605,7 +607,8 @@ fun MCFUBody(
                                 index + 1,
                                 viewModel,
                                 state.listaIdDisciplinas[index],
-                                poderesSeleccionados
+                                poderesSeleccionados,
+                                poderesSeleccionados2
                             )
                         }
                         Spacer(modifier = Modifier.height(5.dp))  // Espacio entre las celdas
@@ -646,7 +649,12 @@ fun MCFUBody(
 
                     // Llamar al metodo para guardar los poderes seleccionados
                     poderesSeleccionados.forEach { (fkDisciplinas, nombre) ->
-                        viewModel.guardarPoderes(nombre, fkDisciplinas)
+                        Log.w("nombre poderes:","${nombre}")
+                        //viewModel.guardarPoderes(nombre, fkDisciplinas)
+                    }
+                    poderesSeleccionados2.forEach {(id, nombre, fk_disciplinas) ->
+                        Log.w("nombre y FK:","${nombre}, fk: ${fk_disciplinas}")
+                        viewModel.guardarPoderes(nombre, fk_disciplinas)
                     }
                         navController.navigate(route = Screens.MenuPrincipal.route)
                 },
@@ -658,10 +666,12 @@ fun MCFUBody(
 }
 
 @Composable
-private fun DropdownMPoder(numero: Int,
-                   viewModel: MPViewModel,
-                   idDisciplina: Int,
-                   poderesSeleccionados: MutableMap<Int, String>
+private fun DropdownMPoder(
+    numero: Int,
+    viewModel: MPViewModel,
+    idDisciplina: Int,
+    poderesSeleccionados: MutableMap<Int, String>,
+    poderesSeleccionados2: MutableList<PoderesVas> = mutableListOf()
 ) {
     val state = viewModel.state
     var expanded by remember { mutableStateOf(false) }
@@ -700,6 +710,12 @@ private fun DropdownMPoder(numero: Int,
 
                         // Guardar la selección en el estado temporal
                         poderesSeleccionados[idTablaDisc] = opcion
+                        poderesSeleccionados2.add(
+                            PoderesVas(
+                                nombre = opcion,
+                                fk_disciplinas = idTablaDisc
+                            )
+                        )
                     }
                 )
             }

@@ -297,6 +297,7 @@ class MPViewModel(
             val poderes = vasRepository.obtenerPoderesDeVastago(vastagoId)
             var i = 0
             poderesObtenidos2 = poderes
+            listaFKDiscVas.clear()
             poderesObtenidos.clear()
             poderes.forEach { (id, nombre, fk) ->
                 Log.e("ver numero","id: ${id}")
@@ -304,9 +305,12 @@ class MPViewModel(
                 poderesObtenidos[id] = nombre
                 Log.e("ver fk","fk: ${fk}")
                 Log.e("prueba nombre","nom: ${poderesObtenidos2[i].nombre}")
-                listaFKDiscVas.add(fk)
+                if (!listaFKDiscVas.contains(fk)) {
+                    listaFKDiscVas.add(fk)
+                }
                 i++
             }
+            listaFKDiscVas.sort()
             Log.w("listaFKDiscVas","fk: ${listaFKDiscVas}")
         }
     }
