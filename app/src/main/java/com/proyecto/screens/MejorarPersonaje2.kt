@@ -143,6 +143,7 @@ fun MejorarPersonajeBody(
     var exp2 by remember { mutableStateOf(exp) }
     val numerosMult = listOf(5, 3)
     state.id = shared.vasId.value
+    var pode: List<String> = emptyList()
 
 //    Log.i("lista Niveles","${state.listaDisciplinasPorClan}")
 //    Log.i("listDisc","[${listDisc[0]}, ${listDisc[1]}, ${listDisc[2]}]")
@@ -293,7 +294,7 @@ fun MejorarPersonajeBody(
                             Log.w("indice lista?","${viewModel.listaFKDiscVas.indices}")
                             Log.w("listaFK?","${viewModel.listaFKDiscVas}")
                             Log.d("poder?","${viewModel.poderesObtenidos2}")
-                            val pode = if (index in viewModel.listaFKDiscVas.indices) {
+                            pode = if (index in viewModel.listaFKDiscVas.indices) {
                                 Log.e("pass","?: passa")
                                 viewModel.poderesObtenidos2
                                     .filter { it.fk_disciplinas == viewModel.listaFKDiscVas[index] }
@@ -312,7 +313,7 @@ fun MejorarPersonajeBody(
                                 pode
                             )
                         }
-                        Spacer(modifier = Modifier.height(5.dp))  // Espacio entre las celdas
+                        Spacer(modifier = Modifier.height(5.dp))
                     }
                 }
                 Spacer(modifier = Modifier.height(35.dp))
@@ -335,14 +336,21 @@ fun MejorarPersonajeBody(
                 Log.i("exp state:","${state.experiencia}")
                 shared.vasExp.value = exp2
 
+                Log.w("nivelList","${listaNivel[0]}")
                 //LLamada a actualizacion de vastago
-                viewModel.ActualizarVastagoConDisciplinas(
+                shared.ActualizarVastagoConDisciplinasSH(
                     puntos = listaNivel,
-                    listaIdDisciplinas = state.listaIdDisciplinas
+                    listaIdDisciplinas = state.listaIdDisciplinas,
+                    viewModel
                 ) {}
 
                 //guardar y actualizar poderes seleccionados
                 Log.i("Lista Poderes","${poderesSeleccionados}")
+
+                poderesSeleccionados.forEach {(id, nombre) ->
+                    Log.w("id y nombre:","${id}, fk: ${nombre}")
+                    viewModel.actualizarPoder(id, nombre)
+                }
 
                 navController.navigate(route = Screens.MenuPrincipal.route)
             },

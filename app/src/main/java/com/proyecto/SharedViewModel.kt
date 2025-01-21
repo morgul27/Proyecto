@@ -3,6 +3,7 @@ package com.proyecto
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.proyecto.bbdd.entity.DisciplinasVas
 import com.proyecto.bbdd.entity.Vastago
 import com.proyecto.bbdd.repository.ClanRepository
@@ -193,13 +194,14 @@ class SharedViewModel(
     }
 
     //guardar en la mejoras de personajes
-    fun guardarVastagoConDisciplinas(puntos: List<Int>, listaIdDisciplinas: List<Int>, onComplete: () -> Unit) {
+    fun ActualizarVastagoConDisciplinasSH(puntos: List<Int>, listaIdDisciplinas: List<Int>, viewModel: MPViewModel, onComplete: () -> Unit) {
         viewModelScope.launch {
             // 1. Guardar el vástago y obtener su ID
-            val vastagoId: Long = vasRepository.insertVastago(
+            vasRepository.actualizarVastago(
                 Vastago(
-                    nombreVas = (vasName ?: "Cain").toString(),
-                    clan = (vasClan ?: "Nosferatu").toString(),
+                    id = vasId.value ?: 1,
+                    nombreVas = (vasName.value ?: "Cain"),
+                    clan = (vasClan.value ?: "Nosferatu"),
                     experiencia = vasExp.value ?: 0,
                     generacion = vasGeneracion.value ?: 0,
                     // Atributos
@@ -249,19 +251,18 @@ class SharedViewModel(
                     tecnologia = tecnologia.value ?: 0
                 )
             )
+            //solicitar su id
 
             listaIdDisciplinas.forEachIndexed { index, disciplinaId ->
-                vasId.value?.let {
+                val id = viewModel.obteneridDisciplina(disciplinaId, vasId.value?: 1)
+                disciplinasVasRepository.actualizarDisciplinasVas(
                     DisciplinasVas(
+                        id = id,
                         fkDisciplinasVas = disciplinaId,
                         nivel = puntos[index],
-                        fk_vas = it
+                        fk_vas = vasId.value ?: 1
                     )
-                }?.let {
-                    disciplinasVasRepository.saveDisciplinasVas(
-                        it
-                    )
-                }
+                )
             }
 
             // 4. Llamar a la función final cuando _todo esté completo

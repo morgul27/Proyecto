@@ -568,7 +568,7 @@ fun CFBody(navController: NavController, viewModel: MPViewModel, shared: SharedV
             Spacer(modifier = Modifier.height(20.dp))
             DefaultButton(onClick = {
                 shared.vasId.value?.let { viewModel.eliminarVasPorId(it) }
-                navController.navigate(route = Screens.MenuFicha.route)
+                navController.navigate(route = Screens.MenuPrincipal.route)
             },
                 text = ("Borrar vastago")
             )

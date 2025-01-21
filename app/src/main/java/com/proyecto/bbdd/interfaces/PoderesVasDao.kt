@@ -18,4 +18,7 @@ interface PoderesVasDao {
 
     @Query("SELECT * FROM PoderesVas WHERE fk_disciplinas = :fkDisciplinas AND nombre = :nombre")
     suspend fun obtenerPoder(fkDisciplinas: Int, nombre: String): PoderesVas?
+
+    @Query("SELECT * FROM PoderesVas WHERE id = :id AND nombre = :nombre")
+    suspend fun obtenerPoderConId(id: Int, nombre: String): PoderesVas?
 }

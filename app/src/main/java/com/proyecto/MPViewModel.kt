@@ -548,6 +548,15 @@ class MPViewModel(
         }
     }
 
+    fun actualizarPoder(id: Int, nombre: String) {
+        viewModelScope.launch {
+            val poderExistente = PoderesVasRepository.obtenerPoderConId(id, nombre)
+            if (poderExistente != null) {
+                PoderesVasRepository.actualizarPoder(poderExistente.copy(id = id, nombre = nombre))
+            }
+        }
+    }
+
 
 }
 

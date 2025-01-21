@@ -12,7 +12,6 @@ class PoderesVasRepository (
         return poderesVasDao.insertPoderesVas(poderesVas)
     }
 
-    // Función para actualizar un poder existente
     suspend fun actualizarPoder(poder: PoderesVas) {
         poderesVasDao.actualizarPoder(poder)
     }
@@ -20,6 +19,11 @@ class PoderesVasRepository (
     // Función para obtener un poder existente basado en fk_disciplinas y nombre
     suspend fun obtenerPoder(fkDisciplinas: Int, nombre: String): PoderesVas? {
         return poderesVasDao.obtenerPoder(fkDisciplinas, nombre)
+    }
+
+    // Función para obtener un poder existente basado en fk_disciplinas y nombre
+    suspend fun obtenerPoderConId(id: Int, nombre: String): PoderesVas? {
+        return poderesVasDao.obtenerPoder(id, nombre)
     }
 
 }
