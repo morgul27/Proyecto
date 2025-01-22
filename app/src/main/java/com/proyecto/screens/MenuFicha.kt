@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -274,9 +275,14 @@ fun BodyFicha(navController: NavController, viewModel: MPViewModel, sharedViewMo
                                 )
 
                                 Column {
-                                    Text(text = "Nombre: ${user.nombreVas}",
+                                    Text(
+                                        text = "Nombre: ${user.nombreVas}",
                                         fontSize = 15.sp,
-                                        color = Color.Black)
+                                        color = Color.Black,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                        modifier = Modifier.width(150.dp) // Ajusta el ancho según sea necesario
+                                    )
                                     Text(text = "Generacion: ${user.generacion}",
                                         fontSize = 15.sp,
                                         color = Color.Black)
@@ -308,11 +314,6 @@ fun BodyFicha(navController: NavController, viewModel: MPViewModel, sharedViewMo
     }
 }
 
-@Preview
-@Composable
-fun PreviewDialogExample() {
-    DialogExample()
-}
 
 @Composable
 fun DialogExample() {

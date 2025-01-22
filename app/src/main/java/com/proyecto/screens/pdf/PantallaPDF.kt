@@ -142,6 +142,7 @@ fun PantallaPDF(navController: NavController, sharedViewModel: SharedViewModel) 
                     Button(
                         onClick = {
                             GenerarPDF(context, getDirectory(context), sharedViewModel)
+                            navController.navigate(route = Screens.MenuPrincipal.route)
                         },
                         modifier = Modifier
                             .fillMaxWidth(0.5f)

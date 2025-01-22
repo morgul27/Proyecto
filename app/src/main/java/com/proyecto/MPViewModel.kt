@@ -548,12 +548,22 @@ class MPViewModel(
         }
     }
 
-    fun actualizarPoder(id: Int, nombre: String) {
+    fun actualizarPoder(id: Int, nombre: String, fk: Int) {
         viewModelScope.launch {
             val poderExistente = PoderesVasRepository.obtenerPoderConId(id, nombre)
-            if (poderExistente != null) {
-                PoderesVasRepository.actualizarPoder(poderExistente.copy(id = id, nombre = nombre))
+
+            val poder = PoderesVas(
+                id = id,
+                nombre = nombre,
+                fk_disciplinas = fk
+            )
+            if(poderExistente != null){
+                PoderesVasRepository.actualizarPoder(poder)
+            }else{
+                PoderesVasRepository.insertPoderesVas(poder)
             }
+
+            Log.e("poder clase:","${poder}")
         }
     }
 

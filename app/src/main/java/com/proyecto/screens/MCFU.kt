@@ -648,10 +648,6 @@ fun MCFUBody(
                     ) {}
 
                     // Llamar al metodo para guardar los poderes seleccionados
-                    poderesSeleccionados.forEach { (fkDisciplinas, nombre) ->
-                        Log.w("nombre poderes:","${nombre}")
-                        //viewModel.guardarPoderes(nombre, fkDisciplinas)
-                    }
                     poderesSeleccionados2.forEach {(id, nombre, fk_disciplinas) ->
                         Log.w("nombre y FK:","${nombre}, fk: ${fk_disciplinas}")
                         viewModel.guardarPoderes(nombre, fk_disciplinas)

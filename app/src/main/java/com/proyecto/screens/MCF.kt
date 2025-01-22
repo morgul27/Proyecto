@@ -135,7 +135,7 @@ fun MDFBodyContent(navController: NavController, viewModel: MPViewModel, sharedV
     var idClan by remember { mutableStateOf(1) }
     var idGClan: Int? = null
 
-    val maxChar = 5
+    val maxChar = 15
     var expanded by remember { mutableStateOf(false) } // Para controlar si el menú está desplegado o no
 
     var selectedGen = state.generacion?.let { "Generación $it" } ?: "Selecciona una generación"
@@ -177,80 +177,10 @@ fun MDFBodyContent(navController: NavController, viewModel: MPViewModel, sharedV
                 )
             }
 
-
             Spacer(modifier = Modifier.height(25.dp))
             
             //Menu desplegable
             Text("Clan")
-
-            // Mostrar el menú desplegable de clanes
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentSize(Alignment.TopStart)
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .clickable(onClick = { dropdownExpanded = true })
-                        .padding(start = 16.dp, end = 16.dp)
-                        .fillMaxWidth()
-                        .background(Blanco.copy(alpha = 0.5f))
-                ) {
-                    Text(
-                        text = if (state.clanVas.isNullOrEmpty()) "Pulsa aquí" else state.clanVas!!,
-                        textAlign = TextAlign.Center,
-                        color = Color.Black,
-                        modifier = Modifier
-                            .weight(1f) // Hace que el Text ocupe el espacio disponible
-                            .padding(start = 45.dp)
-                    )
-                    IconButton(onClick = { dropdownExpanded = true }) {
-                        val icon = if (!dropdownExpanded) {
-                            R.drawable.abajo
-                        } else {
-                            R.drawable.arriba
-                        }
-
-                        Image(
-                            painter = painterResource(id = icon),
-                            contentDescription = "Flecha personalizada",
-                            modifier = Modifier.size(24.dp) // Tamaño de la imagen
-                        )
-                    }
-                }
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .padding(
-                            top = 48.dp,
-                            end = 20.dp
-                        ) // Ajuste vertical para colocar el menú debajo del texto
-                ) {
-                    DropdownMenu(
-                        expanded = dropdownExpanded,
-                        onDismissRequest = { dropdownExpanded = false },
-                    ) {
-                        state.nombreClanes.forEach { clan ->
-                            DropdownMenuItem(
-                                onClick = {
-                                    viewModel.setClan(clan.nombreClan)
-                                    dropdownExpanded = false
-                                },
-                                text = {
-                                    Text(
-                                        clan.nombreClan,
-                                        color = Color.Black
-                                    )
-                                }
-                            )
-                        }
-                    }
-                }
-            }
-
-            //prueba Clan
-            Text("Prueba Clan")
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -278,7 +208,6 @@ fun MDFBodyContent(navController: NavController, viewModel: MPViewModel, sharedV
                         fontFamily = ghoticFamily
                     ) // Mostrar la opción seleccionada
                 }
-
                 // Menú desplegable
                 DropdownMenu(
                     expanded = dropdownExpanded,
@@ -303,26 +232,10 @@ fun MDFBodyContent(navController: NavController, viewModel: MPViewModel, sharedV
                 }
             }
 
-
-
-            //Generación
             Spacer(modifier = Modifier.height(25.dp))
-            Text("Generación")
-            TextField(
-                value = state.generacion?.toString()
-                    ?: "", // Convertir el Int a String o usar una cadena vacía si es nulo
-                onValueChange = {
-                    // Convertir el valor de String a Int y pasar a la función setGeneracion en el ViewModel
-                    viewModel.setGeneracion(
-                        it.toIntOrNull() ?: 0
-                    ) // Si la conversión falla, usa 0 como valor predeterminado
-                },
-                textStyle = Typography.bodyMedium
-            )
-
 
             //Prueba de generacion
-            Text("Gene2")
+            Text("Generación")
             Box(
                 modifier = Modifier
                     .fillMaxWidth()

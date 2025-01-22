@@ -21,6 +21,42 @@ import java.io.IOException
 fun GenerarPDF(context: Context, directory: File, sharedViewModel: SharedViewModel){
     var cont = 0
     var distancia = 0
+    var ancho = 0f
+    var altura = 0f
+    val HabC1List = listOf(
+        sharedViewModel.armas_de_fuego.value,
+        sharedViewModel.artesania.value,
+        sharedViewModel.atletismo.value,
+        sharedViewModel.conducir.value,
+        sharedViewModel.latrocinio.value,
+        sharedViewModel.pelea.value,
+        sharedViewModel.pelea_con_armas.value,
+        sharedViewModel.sigilo.value,
+        sharedViewModel.superviviencia.value
+    )
+    val HabC2List = listOf(
+        sharedViewModel.callejeo.value,
+        sharedViewModel.etiqueta.value,
+        sharedViewModel.interpretacion.value,
+        sharedViewModel.intimidacion.value,
+        sharedViewModel.liderazgo.value,
+        sharedViewModel.perspicacia.value,
+        sharedViewModel.persuasion.value,
+        sharedViewModel.subterfugio.value,
+        sharedViewModel.trato_con_animales.value
+    )
+    val HabC3List = listOf(
+        sharedViewModel.academicismo.value,
+        sharedViewModel.ciencias.value,
+        sharedViewModel.consciencia.value,
+        sharedViewModel.finanzas.value,
+        sharedViewModel.investigacion.value,
+        sharedViewModel.medicina.value,
+        sharedViewModel.ocultismo.value,
+        sharedViewModel.politica.value,
+        sharedViewModel.tecnologia.value
+    )
+
     val pageHeight = 1120
     val pageWidth = 792
     val pdfDocument = PdfDocument()
@@ -229,6 +265,82 @@ fun GenerarPDF(context: Context, directory: File, sharedViewModel: SharedViewMod
         distancia += 11
     }
 
+    ////////////////////////////////
+    //////////////////
+    /////////
+    //////
+    //Habilidades
+    //columna 1
+    ancho = 220f
+    altura = 453f
+    HabC1List.forEachIndexed{index, _ ->
+        cont = 0
+        distancia = 0
+        while (cont < HabC1List[index]){
+            cont++
+            val bitmap1: Bitmap? = drawableToBitmap(context.resources.getDrawable(R.drawable.puntos))
+            val scaleBitmap1: Bitmap = Bitmap.createScaledBitmap(bitmap1!!, 12, 12, false)
+            canvas.drawBitmap(scaleBitmap1, (ancho + distancia), altura, paint) //primero ancho, luego alt
+            distancia += 11
+        }
+        while (cont < 6){
+            cont++
+            val bitmap1: Bitmap? = drawableToBitmap(context.resources.getDrawable(R.drawable.puntos_blanco))
+            val scaleBitmap1: Bitmap = Bitmap.createScaledBitmap(bitmap1!!, 12, 12, false)
+            canvas.drawBitmap(scaleBitmap1, (ancho + distancia), altura, paint)
+            distancia += 11
+        }
+        altura += 28.5f
+        Log.w("altura","${altura}")
+    }
+
+    //Columna 2
+    ancho = 430f
+    altura = 453f
+    HabC2List.forEachIndexed{index, _ ->
+        cont = 0
+        distancia = 0
+        while (cont < HabC2List[index]){
+            cont++
+            val bitmap1: Bitmap? = drawableToBitmap(context.resources.getDrawable(R.drawable.puntos))
+            val scaleBitmap1: Bitmap = Bitmap.createScaledBitmap(bitmap1!!, 12, 12, false)
+            canvas.drawBitmap(scaleBitmap1, (ancho + distancia), altura, paint) //primero ancho, luego alt
+            distancia += 11
+        }
+        while (cont < 6){
+            cont++
+            val bitmap1: Bitmap? = drawableToBitmap(context.resources.getDrawable(R.drawable.puntos_blanco))
+            val scaleBitmap1: Bitmap = Bitmap.createScaledBitmap(bitmap1!!, 12, 12, false)
+            canvas.drawBitmap(scaleBitmap1, (ancho + distancia), altura, paint)
+            distancia += 11
+        }
+        altura += 28.5f
+        Log.w("altura","${altura}")
+    }
+
+    //Columna 3
+    ancho = 640f
+    altura = 453f
+    HabC3List.forEachIndexed{index, _ ->
+        cont = 0
+        distancia = 0
+        while (cont < HabC3List[index]){
+            cont++
+            val bitmap1: Bitmap? = drawableToBitmap(context.resources.getDrawable(R.drawable.puntos))
+            val scaleBitmap1: Bitmap = Bitmap.createScaledBitmap(bitmap1!!, 12, 12, false)
+            canvas.drawBitmap(scaleBitmap1, (ancho + distancia), altura, paint) //primero ancho, luego alt
+            distancia += 11
+        }
+        while (cont < 6){
+            cont++
+            val bitmap1: Bitmap? = drawableToBitmap(context.resources.getDrawable(R.drawable.puntos_blanco))
+            val scaleBitmap1: Bitmap = Bitmap.createScaledBitmap(bitmap1!!, 12, 12, false)
+            canvas.drawBitmap(scaleBitmap1, (ancho + distancia), altura, paint)
+            distancia += 11
+        }
+        altura += 28.5f
+        Log.w("altura","${altura}")
+    }
 
 
 
@@ -245,7 +357,7 @@ fun GenerarPDF(context: Context, directory: File, sharedViewModel: SharedViewMod
     title.textSize = 14f
     title.textAlign = Paint.Align.CENTER
     //Nombre
-    canvas.drawText("${sharedViewModel.vasName.value}", 165f, 160f, title)
+    canvas.drawText("${sharedViewModel.vasName.value}", 195f, 160f, title)
     //Clan
     canvas.drawText(" ${sharedViewModel.vasClan.value}", 165f, 195f, title)
     //Generación

@@ -170,7 +170,7 @@ fun MejorarPersonajeBody(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 10.dp)
-            .padding(top = 50.dp),
+            .padding(top = 75.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -347,9 +347,11 @@ fun MejorarPersonajeBody(
                 //guardar y actualizar poderes seleccionados
                 Log.i("Lista Poderes","${poderesSeleccionados}")
 
+                var i = 0
                 poderesSeleccionados.forEach {(id, nombre) ->
                     Log.w("id y nombre:","${id}, fk: ${nombre}")
-                    viewModel.actualizarPoder(id, nombre)
+                    viewModel.actualizarPoder(id, nombre, state.listaIdDisciplinas[i])
+                    i += 1
                 }
 
                 navController.navigate(route = Screens.MenuPrincipal.route)
